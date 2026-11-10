@@ -8,7 +8,7 @@ The construction adds layers to a seed while retaining all previous adjacencies.
 | $H_k$ | `4k4` | `4k4` | $4k+4$ | Prefixes at levels one and two, followed by a sixteen-vertex seed at level three; three auxiliaries per layer. |
 | $J_k$ | `6k6` | `6k6` | $6k+6$ | A twelve-vertex seed at level one; five auxiliaries per layer. |
 
-All three commands accept any integer $k\geq1$, subject to the memory available for the resulting graph. For instance:
+The generator accepts any of the three family names and any integer $k\geq1$, subject to the memory available for the resulting graph. For instance:
 
 ```text
 python generate.py --family 3k8 --k 5

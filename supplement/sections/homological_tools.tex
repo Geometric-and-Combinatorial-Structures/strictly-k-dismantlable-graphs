@@ -15,7 +15,7 @@ In particular,
  \Ht_t(\{\varnothing\})=0\quad(t\ne-1).
 \end{equation}
 A complex with a vertex has zero homology in degree \(-1\).
-Its \defi{reduced Betti number} in degree \(t\) is
+The \defi{reduced Betti number} of a complex \(K\) in degree \(t\) is
 \(\widetilde\beta_t(K)=\dim_{\F}\Ht_t(K)\).
 Acyclicity is used as a homological condition, not as a synonym for
 contractibility or for membership in any \(\D_j\).
@@ -41,28 +41,28 @@ Every cycle \(z\) is therefore the boundary of \(h(z)\).
 We will compare complexes by expressing them as unions of acyclic pieces.
 
 \begin{lemma}\label{hom:lem:union}
-If \(K=U\cup V\) and \(U,V\) are acyclic, then for every integer \(t\),
+If \(M=M_1\cup M_2\) and \(M_1,M_2\) are acyclic, then for every integer \(t\),
 \[
- \Ht_t(K)\cong\Ht_{t-1}(U\cap V).
+ \Ht_t(M)\cong\Ht_{t-1}(M_1\cap M_2).
 \]
 The intersection may be \(\{\varnothing\}\).
 \end{lemma}
 \begin{proof}
-For \(t\geq0\), write a cycle \(z=u+v\), with chains in \(U,V\).
-Then \(\partial u=\partial v=b\) is a cycle in \(U\cap V\).
+For \(t\geq0\), write a cycle \(z=u+v\), with chains in \(M_1,M_2\).
+Then \(\partial u=\partial v=b\) is a cycle in \(M_1\cap M_2\).
 Changing the decomposition adds the same chain of the intersection
 to \(u\) and \(v\), so it changes \(b\) by a boundary. If \(z\) is
-changed by a boundary, decompose a filling into chains of \(U,V\);
+changed by a boundary, decompose a filling into chains of \(M_1,M_2\);
 the resulting class of \(b\) is unchanged. This defines
 \([z]\mapsto[b]\).
 
-Every cycle \(b\) of the intersection has fillings \(u\) in \(U\)
-and \(v\) in \(V\), since both complexes are acyclic; then \(u+v\)
+Every cycle \(b\) of the intersection has fillings \(u\) in \(M_1\)
+and \(v\) in \(M_2\), since both complexes are acyclic; then \(u+v\)
 proves surjectivity. If \(b=\partial a\) in the intersection, the
-chains \(u+a,v+a\) are cycles in \(U,V\) and hence boundaries.
+chains \(u+a,v+a\) are cycles in \(M_1,M_2\) and hence boundaries.
 Their sum is \(z\), proving injectivity.
 For \(t=-1\), the left side is zero since the acyclic complexes
-\(U,V\) have vertices; the right side is in degree \(-2\).
+\(M_1,M_2\) have vertices; the right side is in degree \(-2\).
 In lower degrees both sides vanish.
 \end{proof}
 

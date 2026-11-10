@@ -28,7 +28,7 @@ Python 3.11 or later is sufficient; the calculations use its standard library. T
 
 | Your purpose | Where to begin |
 | --- | --- |
-| **Read the proofs** | [Mathematical supplement (PDF)](supplement/supplement.pdf): the two supplementary families, kernel completion and the homological extension, with shared notation and linked results. [LaTeX sources](supplement/main.tex) are included. |
+| **Read the proofs** | [Mathematical supplement (PDF)](supplement/supplement.pdf): the families of orders $4k+4$ and $6k+6$, kernel completion and the homological extension, with shared notation and linked results. [LaTeX sources](supplement/main.tex) are included. |
 | **Reproduce the calculations** | [Reproduction guide](docs/reproduction.md), followed by the [result-by-result correspondence](docs/results.md). Every calculation is linked to its mathematical purpose and expected output. |
 | **Construct examples** | [Guide to the three families](docs/examples.md): choose a family and a level, then obtain the graph with its original seed and layer labels. |
 
@@ -44,7 +44,7 @@ To check the additional finite ranges, run:
 python reproduce.py --extended
 ```
 
-The extended calculation additionally checks all small constructions in the ranges stated in the guide. These finite checks support the explicit data and identities. The proofs in the supplement establish the conclusions for **every** level. The minimum cost of three vertices per layer concerns the construction under its Euler hypotheses, including the non-zero alternating clique sums in all non-central neighbourhoods. The single-deletion check verifies a separate result: for $F_k$ with $k\geq2$, deleting a centre leaves an ordinarily dismantlable graph, whereas deleting any other vertex gives a graph outside every dismantling class. This concerns **one vertex at a time**; Appendix A gives the proof.
+The extended calculation additionally checks all small constructions in the ranges stated in the guide. These finite checks support the explicit data and identities. The proofs in the supplement establish the conclusions for **every** level. The minimum cost of three vertices per layer concerns the construction under its Euler hypotheses, including the non-zero alternating clique sums in all non-central neighbourhoods. The article also proves that, for $F_k$ with $k\geq2$, deleting a centre leaves an ordinarily dismantlable graph, whereas deleting any other vertex gives a graph outside every dismantling class. This concerns **one vertex at a time**. The single-deletion calculation checks $k=2,3,4$; Appendix A gives the proof for every $k\geq2$.
 
 Each run creates a new directory containing a readable `report.txt` and a detailed `report.json`. Earlier results and the distributed inputs are preserved. A failed or interrupted calculation is reported as such; it is never counted as a successful check.
 
