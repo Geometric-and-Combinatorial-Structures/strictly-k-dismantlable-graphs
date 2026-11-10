@@ -15,17 +15,18 @@ In particular,
  \Ht_t(\{\varnothing\})=0\quad(t\ne-1).
 \end{equation}
 A complex with a vertex has zero homology in degree \(-1\).
+Its \defi{reduced Betti number} in degree \(t\) is
+\(\widetilde\beta_t(K)=\dim_{\F}\Ht_t(K)\).
 Acyclicity is used as a homological condition, not as a synonym for
 contractibility or for membership in any \(\D_j\).
+When a homological term is applied to a graph, it refers to its clique
+complex; in particular, \emph{acyclic} here does not mean that the graph is a forest.
 
 A \defi{simplicial cone} with apex \(w\) is a complex
 \(w*J\) whose faces are exactly the faces \(\sigma\) of \(J\)
 and the sets \(\sigma\cup\{w\}\), where \(w\notin V(J)\).
 In particular, if a graph \(H\) is a cone with apex \(w\), then
 \(\Cl(H)=w*\Cl(H-w)\).
-
-\Needspace{6\baselineskip}
-The chain contraction of a cone includes the empty face.
 
 \begin{lemma}\label{hom:lem:cone}
 A simplicial cone is acyclic.

@@ -32,6 +32,8 @@ def source_hashes():
         rel = path.relative_to(ROOT)
         if any(p in ('.git', 'results', '__pycache__', '.ipynb_checkpoints') for p in rel.parts):
             continue
+        if path.name in ('.DS_Store', 'Thumbs.db'):
+            continue
         if path.is_file():
             result[rel.as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
     return result
@@ -45,6 +47,16 @@ def verify_manifest(hashes):
         digest, name = line.split('  ', 1)
         require(name not in expected and len(digest) == 64, 'Invalid checksum entry')
         expected[name] = digest
-    require(expected == {p: h for p, h in hashes.items() if p != 'SHA256SUMS.txt'},
-            'Release contents differ from SHA256SUMS.txt')
+    actual = {p: h for p, h in hashes.items() if p != 'SHA256SUMS.txt'}
+    differences = []
+    for title, names in [
+        ('Missing files', sorted(expected.keys() - actual.keys())),
+        ('Changed files', sorted(p for p in expected.keys() & actual.keys() if expected[p] != actual[p])),
+        ('Unlisted files', sorted(actual.keys() - expected.keys())),
+    ]:
+        if names:
+            differences.append(title + ': ' + ', '.join(names[:12]) +
+                               (f' (and {len(names)-12} more)' if len(names) > 12 else ''))
+    require(not differences, '; '.join(differences) +
+            '. Use the released inputs and place generated files beneath results/.')
     return {'files': len(expected), 'sha256_manifest': hashes['SHA256SUMS.txt']}

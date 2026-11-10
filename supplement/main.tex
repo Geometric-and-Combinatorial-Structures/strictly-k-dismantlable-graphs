@@ -8,7 +8,7 @@
 \linespread{1.1}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{palatino,euler,microtype}
-% Euler expects the upright shape name used by the reference document.
+% Euler uses the upright shape name n.
 \renewcommand{\updefault}{n}
 \usepackage{booktabs,longtable,array}
 \usepackage{graphicx}
@@ -81,8 +81,13 @@ by one degree. The accompanying calculations verify the finite hypotheses,
 clique counts and homological identities used in these arguments.
 \end{abstract}
 \maketitle
-\input{sections/introduction}
+\raggedbottom
+\begin{center}\small
+Repository: \url{https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs}\\
+Release \texttt{v1.0.0}; file checksums in \texttt{SHA256SUMS.txt}.
+\end{center}
 \tableofcontents
+\input{sections/introduction}
 \input{sections/preliminaries}
 \input{sections/layers}
 \input{sections/family4}

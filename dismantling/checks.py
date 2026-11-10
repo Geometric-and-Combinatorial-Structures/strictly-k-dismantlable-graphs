@@ -10,11 +10,11 @@ from .homology import betti
 from .certificates import verify_4k4, read_certificate
 
 
-def secondary_tables(family):
+def secondary_tables(family, adjacency_text=None):
     folder = ROOT / 'supplement' / 'tables' / family
     p = parameters(family)
     a = from_lists(p['A'])
-    text = (folder / 'adjacency.tex').read_text(encoding='utf-8')
+    text = (folder / 'adjacency.tex').read_text(encoding='utf-8') if adjacency_text is None else adjacency_text
     rows = re.findall(r'^(\d+)\s*&([^\n]+)', text, re.M)
     parsed = []
     for v, ns in rows:
@@ -69,6 +69,7 @@ def check_4k4():
             label += 17
         rows.append([label, *[int(x.strip().strip('$')) for x in fields[1:]]])
     expected = [[r['v'], *r['coefficients'][:8], r['q']] for r in c['q_rows']]
+    require(all(not any(r['coefficients'][8:]) for r in c['q_rows']), 'Unprinted higher clique coefficient')
     require(rows == expected, 'The 19 printed clique rows do not match their certificates')
     # Direct proof of H_1 in original seed labels.
     mask = sum(1 << v for v in p['prefix']['1'])
@@ -80,7 +81,38 @@ def check_4k4():
     h1, _ = family_graph('4k4', 1)
     require(all(cone(h1, ns) is None for ns in h1), 'Unexpected first fold in H_1')
     require(membership(h1, 1) and not membership(h1, 0), 'Independent prefix classification differs')
+    prose = (ROOT / 'supplement/sections/family4.tex').read_text(encoding='utf-8')
+    adjacency_block = prose.split(r'\begin{array}{c|l}', 1)[1].split(r'\end{array}', 1)[0]
+    printed = {int(v): list(map(int, ns.split(',')))
+               for v, ns in re.findall(r'^(\d+)&([\d,]+)', adjacency_block, re.M)}
+    prefix_vertices = p['prefix']['1']
+    wanted = {v: [u for u in prefix_vertices if a[v] >> u & 1] for v in prefix_vertices}
+    require(printed == wanted, 'The displayed eight-vertex prefix differs from its induced graph')
+    negative_block = prose.split(r'\label{4k4:tab:manual-prefix-negative}', 1)[1].split(r'\end{table}', 1)[0]
+    obstructions = {}
+    for v, row in re.findall(r'^(\d+)\s*&([^\n]+)', negative_block, re.M):
+        obstructions[int(v)] = [(int(t), int(w)) for t, w in re.findall(r'(\d+)\\mapsto\s*(\d+)', row)]
+    require(set(obstructions) == set(prefix_vertices), 'The prefix obstruction table is incomplete')
+    for v, pairs in obstructions.items():
+        ns = set(wanted[v])
+        require(len(pairs) == len(ns) and {t for t, _ in pairs} == ns, 'A candidate prefix apex is missing or repeated')
+        require(all(w in ns and w != t and not (a[t] >> w & 1) for t, w in pairs), 'A prefix obstruction is not a non-edge')
     result['direct_prefix_proof'] = True
+    result['printed_prefix_rows'] = len(printed)
+    result['printed_prefix_apex_obstructions'] = sum(map(len, obstructions.values()))
+    b, _ = layers(a, p['profiles'], p['R'], 1)
+    h2, _ = family_graph('4k4', 2)
+    assertions = [('H1', h1, 1, True), ('H1', h1, 0, False),
+                  ('H2', h2, 2, True), ('H2', h2, 1, False),
+                  ('A', a, 3, True), ('A', a, 2, False),
+                  ('B-p', induced(b, [v for v in range(len(b)) if v != 16]), 3, True)]
+    direct = []
+    for name, graph, level, wanted in assertions:
+        value = membership(graph, level)
+        require(value is wanted, 'Independent recursive classification differs')
+        direct.append({'graph': name, 'level': level, 'membership': value})
+    require(all(z['strict_verified_by_independent_reference'] is True for z in prefix['levels'].values()), 'Invalid prefix verification flag')
+    result['independent_classifications'] = direct
     return result
 
 
@@ -138,7 +170,8 @@ def check_6k6():
         require(value == (2 if v in (7, 15) else 1), 'Euler obstruction differs')
         rows.append([v, *co, *([0] * (7 - len(co))), value])
     require(numeric_rows(folder / 'cliques.tex', 9) == rows, 'Printed clique table differs')
-    return {'outer_deletions': 12, 'inner_folds': 14, 'negative_degree_rows': 12, 'clique_rows': 17}
+    return {'outer_deletions': len(data['TA']) + len(data['TB']), 'inner_folds': len(inclusions),
+            'negative_degree_rows': len(degrees), 'clique_rows': len(rows)}
 
 
 def compare_constructions():
@@ -189,7 +222,7 @@ def check_kernels():
     for j in (0, 1):
         profile_graph = induced(a, p['profiles'][1 - j])
         require(betti(induced(b, list(vertices(b[12 + j])))) == {i + 1: r for i, r in betti(profile_graph).items()}, 'Auxiliary kernel shift fails')
-    return {'seed_edges': 33, 'kernel_edges': 32, 'kernel_reduced_betti': {}, 'links': shifts,
+    return {'seed_edges': len(edges(a)), 'kernel_edges': len(edges(h)), 'kernel_reduced_betti': betti(h), 'links': shifts,
             'common_neighbours': list(vertices(common)), 'common_neighbour_graph_in_D0': True,
             'remainder_folds_to_join': [[0, 13], [3, 13], [8, 13], [4, 12]]}
 
@@ -212,17 +245,41 @@ def boundaries():
 
 def mutation_controls():
     original = read_certificate('FINITE_CERTIFICATE.json.gz')
+    verify_4k4(c=original)
     tests = []
+    reasons = {}
+    expected = {
+        'changed seed edge': 'Seed and certificate adjacencies differ',
+        'wrong root level': 'Root is not the claimed state',
+        'wrong root subset': 'Root is not the claimed state',
+        'wrong positive root': 'Root is not the claimed state',
+        'missing negative branch': 'Incomplete negative coverage',
+        'missing dependency': 'Missing proof dependency',
+        'self-reference to the parent state': 'Child is not the required induced state',
+        'changed clique coefficient': 'Incorrect clique coefficient',
+        'false negative root value': 'Wrong root truth value',
+        'out-of-range adjacency bit': 'Invalid adjacency row',
+        'negative adjacency mask': 'Invalid adjacency row',
+        'duplicated negative branch': 'Incomplete negative coverage',
+        'wrong child level': 'Child is not the required induced state',
+        'wrong leaf apex': 'Invalid cone',
+        'wrong leaf truth value': 'Invalid cone',
+    }
+
+    def expect_rejection(name, operation, message):
+        try:
+            operation()
+        except ValueError as exc:
+            require(str(exc) == message, 'Unexpected rejection reason for ' + name + ': ' + str(exc))
+            tests.append(name)
+            reasons[name] = str(exc)
+        else:
+            raise ValueError('Invalid data were accepted: ' + name)
 
     def reject(name, change):
         c = copy.deepcopy(original)
         change(c)
-        try:
-            verify_4k4(c=c)
-        except (ValueError, KeyError, TypeError, IndexError):
-            tests.append(name)
-        else:
-            raise ValueError('A deliberately invalid certificate was accepted: ' + name)
+        expect_rejection(name, lambda: verify_4k4(c=c), expected[name])
 
     def edge(c):
         c['A'][0] ^= 1 << 1
@@ -234,7 +291,7 @@ def mutation_controls():
     reject('wrong positive root', lambda c: c.update(A_positive_root=c['A_negative_root']))
     reject('missing negative branch', lambda c: c['A_nodes'][c['A_negative_root']]['obstructions'].pop())
     reject('missing dependency', lambda c: c['A_nodes'][c['A_positive_root']].update(link='missing'))
-    reject('circular dependency', lambda c: c['A_nodes'][c['A_positive_root']].update(link=c['A_positive_root']))
+    reject('self-reference to the parent state', lambda c: c['A_nodes'][c['A_positive_root']].update(link=c['A_positive_root']))
     reject('changed clique coefficient', lambda c: c['q_rows'][0]['coefficients'].__setitem__(1, 999))
     reject('false negative root value', lambda c: c['A_nodes'][c['A_negative_root']].update(value=True))
     reject('out-of-range adjacency bit', lambda c: c['A'].__setitem__(0, c['A'][0] | (1 << 16)))
@@ -254,26 +311,13 @@ def mutation_controls():
     ]:
         params = strict_json((ROOT / 'data/certificates/PARAMETERS.json').read_text(encoding='utf-8'))
         edit(params)
-        try:
-            verify_4k4(params=params)
-        except ValueError:
-            tests.append(name)
-        else:
-            raise ValueError('Invalid construction parameters were accepted: ' + name)
-    try:
-        strict_json('{"state": {"value": true, "value": false}}')
-    except ValueError:
-        tests.append('duplicated JSON field')
-    else:
-        raise ValueError('A duplicated JSON field was accepted')
+        expect_rejection(name, lambda: verify_4k4(params=params),
+                         'Invalid profile vertex' if name.startswith('profile') else 'Invalid ordered edge')
+    expect_rejection('duplicated JSON field', lambda: strict_json('{"state": {"value": true, "value": false}}'),
+                     'Repeated JSON field: value')
     prefix = read_certificate('PREFIX_CERTIFICATES.json.gz')
     prefix['1']['nodes'][prefix['1']['positive_root']]['k'] = 2
-    try:
-        verify_4k4(prefix=prefix)
-    except ValueError:
-        tests.append('wrong prefix level')
-    else:
-        raise ValueError('A changed prefix level was accepted')
+    expect_rejection('wrong prefix level', lambda: verify_4k4(prefix=prefix), 'Root is not the claimed state')
     p = parameters('3k8')
     seed = from_lists(p['A'])
     g, labels = layers(seed, p['profiles'], p['R'], 3)
@@ -286,14 +330,45 @@ def mutation_controls():
     cross[x] &= ~(1 << y)
     cross[y] &= ~(1 << x)
     for name, altered in [('centre joined to its own auxiliary', mutant), ('missing cross-layer type edge', cross)]:
-        try:
+        def check_altered():
             for i in range(3):
                 central_neighbourhood(altered, labels, seed, p['profiles'], p['R'], 3, i)
-        except ValueError:
-            tests.append(name)
-        else:
-            raise ValueError('A modified construction passed its mathematical identities: ' + name)
-    return {'rejected': tests, 'count': len(tests)}
+        expect_rejection(name, check_altered, 'Central relabelling is not injective'
+                         if name.startswith('centre') else 'Central neighbourhood isomorphism fails')
+
+    from .certificates import check_nodes
+    path = from_edges(4, [(0, 1), (1, 2), (2, 3)])
+    states = {'root': {'m': 15, 'k': 0, 'value': False, 'rule': 'blocked',
+                      'obstructions': [{'vertex': v, 'side': 'link', 'child': str(v)} for v in range(4)]}}
+    for v in range(4):
+        apex = cone(path, path[v])
+        states[str(v)] = {'m': path[v], 'k': -1, 'value': apex is not None,
+                          'rule': 'cone' if apex is not None else 'not_cone', 'apex': apex}
+    expect_rejection('negative obstruction points to a true child',
+                     lambda: check_nodes(path, states, 'root', 15, 0, False), 'Wrong child truth value')
+    invalid = {'r': {'m': 3, 'k': 0, 'value': False, 'rule': 'not_cone'}}
+    expect_rejection('non-cone rule at a non-negative level',
+                     lambda: check_nodes((0, 0), invalid, 'r', 3, 0, False), 'Invalid non-cone')
+    invalid_cone = {'r': {'m': 3, 'k': 0, 'value': False, 'rule': 'blocked', 'obstructions': []}}
+    expect_rejection('negative blocked rule on a cone',
+                     lambda: check_nodes((2, 1), invalid_cone, 'r', 3, 0, False), 'Invalid negative state')
+    g = from_edges(3, [(0, 1)])
+    false_rest = {
+        'r': {'m': 7, 'k': 0, 'value': True, 'rule': 'delete', 'vertex': 0, 'link': 'l', 'rest': 's'},
+        'l': {'m': 2, 'k': -1, 'value': True, 'rule': 'cone', 'apex': 1},
+        's': {'m': 6, 'k': 0, 'value': False, 'rule': 'blocked',
+              'obstructions': [{'vertex': v, 'side': 'link', 'child': 'e'} for v in (1, 2)]},
+        'e': {'m': 0, 'k': -1, 'value': False, 'rule': 'empty'},
+    }
+    expect_rejection('positive deletion with a false remainder',
+                     lambda: check_nodes(g, false_rest, 'r', 7, 0, True), 'Wrong child truth value')
+    a = list(from_lists(parameters('4k4')['A']))
+    a[0] ^= 1 << 1
+    a[1] ^= 1 << 0
+    changed_table = '\n'.join(str(v) + ' & ' + ','.join(map(str, vertices(row))) for v, row in enumerate(a))
+    expect_rejection('altered printed adjacency table',
+                     lambda: secondary_tables('4k4', changed_table), 'Supplement adjacency table differs from data')
+    return {'baseline_accepted': True, 'rejected': tests, 'reasons': reasons, 'count': len(tests)}
 
 
 def central_neighbourhood(g, labels, seed, profiles, type_edges, m, i):

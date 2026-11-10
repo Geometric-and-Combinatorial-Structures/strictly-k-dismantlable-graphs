@@ -9,13 +9,13 @@ The first extension $F_2=B$ adds $p,x,y$, with $p$ adjacent to every seed
 vertex and to neither auxiliary. The vertex $x$ is adjacent to $P_0$, the
 vertex $y$ to $P_1$, and $xy$ is an edge. Thus $A$ has eleven vertices and
 thirty-three edges, while $B$ has fourteen vertices and sixty-five edges.
-The figures below use the same incidences and labels as those in the article.
+Figure~\ref{fig:extension} shows the added edges in this first extension.
 
 \begin{figure}[htbp]
 \centering\input{../figures/first_layer.tikz}
 \caption{The thirty-two added edges. The ellipse $W$ represents
-$V(A)\setminus\{1,2\}$; an edge to $W$ means adjacency to all nine vertices.
-Edges within $A$, including $\{1,2\}$, are specified by Table~\ref{ker:tab:seed}.}
+$V(A)\setminus\{1,2\}$, the set $Z$ of Section~\ref{sec:kernels}; an edge to $W$ means adjacency to all nine vertices.
+Edges within $A$, including $\{1,2\}$, are specified by Table~\ref{ker:tab:seed}.}\label{fig:extension}
 \end{figure}
 
 \Needspace{6\baselineskip}
@@ -116,7 +116,7 @@ Every non-central vertex \(v\) of \(B\) satisfies
 \(q(B[N_B(v)])\ne0\).
 \end{lemma}
 \begin{proof}
-For each of the thirteen vertices \(v\ne p\), let \(H_v=B[N_B(v)]\).
+For this clique table only, write \(H_v=B[N_B(v)]\) for each of the thirteen vertices \(v\ne p\). This local notation follows the article table and is unrelated to the family \(H_k\) of Section~\ref{sec:family4}.
 To evaluate \(q(H_v)\), we count the cliques of \(H_v\) by size.
 In Table~\ref{tab:seed-cliques}, \(c_r(H_v)\) counts the cliques of
 size \(r\). The empty clique gives \(c_0(H_v)=1\), and none of the
@@ -167,19 +167,66 @@ for every \(m\geq0\). Taking \(m=k-1\) gives level \(k\) and order
 The report checks all ten outer deletions and twenty-three inner folds of the
 seed, the forced folds excluding level zero, the twelve folds of $B-p$, and
 all thirteen clique rows. It also checks the exact incidences drawn in the
-three figures: eight schematic incidences expand to the thirty-two added
-edges, the complement has twenty-two edges, and the three-layer diagram has
-thirty edges on its nine displayed vertices.
+figures: the eight schematic incidences in Figure~\ref{fig:extension} expand to thirty-two added edges. Figure~\ref{fig:complement} displays the seed by its twenty-two missing edges; Figure~\ref{fig:layers} shows all thirty edges on the nine vertices added in three layers.
 
 \begin{figure}[htbp]
 \centering\input{../figures/seed_complement.tikz}
 \caption{The complement of the eleven-vertex seed, with the twenty-two
-non-edges listed by the adjacency data.}
+non-edges listed by the adjacency data.}\label{fig:complement}
 \end{figure}
 \begin{figure}[htbp]
 \centering\input{../figures/layers.tikz}
 \caption{The new vertices in three layers. Each column contains its centre
 and two auxiliaries. The seed and its incident edges are omitted. A centre
 is adjacent to every other centre and to the auxiliaries outside its own
-column. All six auxiliaries are pairwise adjacent.}
+column. All six auxiliaries are pairwise adjacent.}\label{fig:layers}
 \end{figure}
+
+\subsection{Deleting one vertex}\label{sec:consequences}
+Can a single vertex deletion preserve the strict level of \(F_k\)?
+The proof of strictness already provides two ways to examine the
+remaining graph. After deleting a centre we have an explicit fold
+reduction. For any other vertex, the Euler recurrence relates the value
+of \(q\) on the remaining graph to the value on its neighbourhood graph.
+
+\begin{proposition}\label{prop:single-deletion}
+Let $k\geq2$ and let $F_k$ be the graph of
+Theorem~\ref{thm:family3k8}. Deleting a centre gives a graph in $\D_0$.
+Deleting any other vertex gives a graph outside every class $\D_j$,
+$j\geq-1$. Consequently no single vertex deletion preserves its
+strict level $k$.
+\end{proposition}
+\begin{proof}
+Write \(F_k=G_m\) with \(m=k-1\geq1\). If we delete a centre
+when \(m=1\), the remainder is \(B-p\), which folds to one vertex by
+Lemma~\ref{lem:seed-rest}. For \(m\geq2\), Lemma~\ref{lem:remainder}
+gives a fold reduction after deleting any centre. In both cases
+the remainder belongs to \(\D_0\subseteq\D_{k-1}\) and thus cannot
+have strict level \(k\).
+
+Now let \(v\) be a vertex other than a centre. By
+Lemma~\ref{lem:euler-links}, the non-zero values in
+Table~\ref{tab:seed-cliques} remain non-zero as we add layers, so
+\(q(F_k[N_{F_k}(v)])\ne0\). The graph \(F_k\) itself belongs to
+\(\D_k\) by Theorem~\ref{thm:family3k8}, so
+\(q(F_k)=0\) by Lemma~\ref{lem:qobstruction}. Using these two
+values in the recurrence of Lemma~\ref{lem:qrec} gives
+\[
+ q(F_k-v)=q(F_k)+q(F_k[N_{F_k}(v)])
+         =q(F_k[N_{F_k}(v)])\ne0.
+\]
+Lemma~\ref{lem:qobstruction} therefore excludes \(F_k-v\) from
+every dismantling class.
+\end{proof}
+
+The conclusion concerns one deletion from \(F_k\), starting with
+\(F_2=B\). Minimality among all proper induced subgraphs and least
+order among all graphs of strict level \(k\) would require separate
+arguments.
+
+
+\runcheck{deletions}
+The calculation checks every single-vertex deletion from $F_2,F_3,F_4$.
+It verifies the fold reduction after a centre deletion and the non-zero
+Euler value after any other deletion. Proposition~\ref{prop:single-deletion}
+proves the dichotomy for every $k\geq2$.

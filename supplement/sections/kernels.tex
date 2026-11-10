@@ -23,7 +23,7 @@ The induced graph on \(A\) remains unchanged.
 If every non-central neighbourhood of \(B\) has non-trivial
 reduced homology, then \(S\cup T=V(A)\).
 The same conclusion holds if \(q(L_B(v))\ne0\) for every
-\(v\ne p\), where \(q(H)=1-\chi(\Cl(H))\).
+\(v\ne p\).
 \end{lemma}
 \begin{proof}
 If \(a\notin S\cup T\), then its neighbours in \(B\) are \(N_A(a)\)
@@ -239,7 +239,8 @@ Theorem~\ref{ker:thm:original-links} gives equivalence of the
 conditions on original vertices. Theorem~\ref{ker:thm:auxiliary-links}
 gives equivalence of those on the auxiliaries.
 Under condition (1), the data satisfy precisely the homological
-criterion in Theorem~\ref{hom:thm:criterion}, which applies to
+criterion in Theorem~\ref{hom:thm:criterion}, proved independently in
+Section~\ref{sec:homology}. It applies to
 the displayed layered construction and proves strictness at
 every subsequent level.
 \end{proof}
@@ -251,9 +252,9 @@ starting with a kernel. The equivalence does not dispense with the
 remainder hypothesis.
 Lemma~\ref{ker:lem:cover} gives the covering condition on the profiles.
 
-For any finite complex \(J\) put
+Extend \(q\) from graphs to finite complexes by putting
 \(q(J)=\sum_{\sigma\in J}(-1)^{|\sigma|}\), including the empty
-face, and abbreviate \(q(\Cl(H))\) as \(q(H)\).
+face. This agrees with the existing notation \(q(H)=q(\Cl(H))\).
 Inclusion--exclusion and the zero value on cones give identities
 without homological assumptions.
 
@@ -430,9 +431,14 @@ The homology calculation gives
  \begin{cases}2,&v=10,\\1,&v\ne10,\end{cases}
 \]
 with all other reduced homology groups of these neighbourhoods zero.
-Moreover, $N_H(1)\cap N_H(2)=\{5,6,7,9,10\}$ induces a dismantlable graph.
-Thus the kernel identities describe the non-central obstructions of this
-particular completion as well as its edge set.
+Moreover, $N_H(1)\cap N_H(2)=\{5,6,7,9,10\}$ induces the path
+$10,6,5,9,7$. Proposition~\ref{ker:prop:remainder-folds} therefore gives
+$B-p\in\D_0$. Explicitly, the folds $0,3,8\to y$ followed by $4\to x$
+leave the join of this path with the four-cycle on $1,2,y,x$.
+The displayed neighbourhood groups and Lemma~\ref{ker:lem:delete-vertex}
+give condition~(2) of Theorem~\ref{ker:thm:equivalence}.
+With the strict level of $A$ proved in Appendix~\ref{sec:article}, that
+theorem provides a homological proof of the strict levels of $F_k$.
 \runcheck{kernels}
 The report reconstructs $H$ by removing $\{1,2\}$, restores the seed by adding
 that edge, computes the displayed homology groups over $\F$, and checks the

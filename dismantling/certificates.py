@@ -1,6 +1,7 @@
 """Verify finite recursive proofs without searching for a dismantling order."""
 import gzip
-from .graphs import ROOT, require, validate, from_lists, layers, induced, coefficients, enumerate_cliques, vertices, strict_json
+from itertools import combinations
+from .graphs import ROOT, require, validate, from_lists, from_edges, from_graph6, layers, induced, coefficients, enumerate_cliques, vertices, strict_json
 
 
 def read_certificate(name):
@@ -87,6 +88,11 @@ def verify_4k4(c=None, prefix=None, params=None, prefix_data=None):
     require(a == validate(c['A']), 'Seed and certificate adjacencies differ')
     b, _ = layers(a, params['profile_vertex_sets'], params['R_edges'], 1)
     require(b == validate(c['B']), 'Extension and certificate adjacencies differ')
+    require(params['base_n'] == n and from_graph6(params['base_graph6']) == a, 'Encoded seed differs')
+    require(from_graph6(params['B_graph6']) == b, 'Encoded extension differs')
+    require(params['profiles'] == [sum(1 << v for v in p) for p in params['profile_vertex_sets']], 'Encoded profiles differ')
+    type_pairs = list(combinations(range(3), 2))
+    require(params['R_bits'] == sum(1 << i for i, e in enumerate(type_pairs) if list(e) in params['R_edges']), 'Encoded type graph differs')
     sizes = []
     for g, nodes, root, mask, level, truth in [
         (a, c['A_nodes'], c['A_positive_root'], (1 << n) - 1, s, True),
@@ -97,22 +103,26 @@ def verify_4k4(c=None, prefix=None, params=None, prefix_data=None):
     rows = c['q_rows']
     require(len(rows) == len(b) - 1 and {r['v'] for r in rows} == set(range(len(b))) - {n}, 'Incomplete Euler table')
     for row in rows:
+        require(type(row['v']) is int and type(row['q']) is int and all(type(x) is int and x >= 0 for x in row['coefficients']), 'Invalid clique row')
         co = coefficients(b, b[row['v']])
         require(co == enumerate_cliques(b, b[row['v']]), 'Independent clique counts disagree')
         padded = list(co) + [0] * (len(b) + 1 - len(co))
         require(padded == row['coefficients'], 'Incorrect clique coefficient')
         require(sum((-1) ** i * x for i, x in enumerate(co)) == row['q'] != 0, 'Incorrect Euler obstruction')
+    require(params['q_rows'] == rows, 'Parameter and proof clique tables differ')
     subsets = []
     for k in ('1', '2'):
         z, p = prefix[k], prefix_data['levels'][k]
         subset = p['vertices_in_A16']
         g = validate(z['adjacency'])
         require(len(g) == 4 * int(k) + 4, 'Wrong prefix order')
+        require(p['k'] == int(k) and p['n'] == len(g) and from_graph6(p['graph6']) == g, 'Encoded prefix differs')
         require(g == from_lists(p['adjacency_lists']) == induced(a, subset), 'Prefix is not the specified induced graph')
         subsets.append(set(subset))
         for key, level, truth in [('positive_root', int(k), True), ('negative_root', int(k) - 1, False)]:
             sizes.append(check_nodes(g, z['nodes'], z[key], (1 << len(g)) - 1, level, truth))
     require(subsets[0] < subsets[1] < set(range(n)), 'Prefixes are not nested')
-    return {'roots': 7, 'clique_rows': 19, 'reachable_nodes_per_root': sizes,
+    return {'roots': len(sizes), 'clique_rows': len(rows), 'reachable_nodes_per_root': sizes,
+            'total_nodes': {'A': len(c['A_nodes']), 'B_minus_p': len(c['B_nodes'])},
             'claims': ['A in D_3', 'A outside D_2', 'B-p in D_3',
                        'H_1 in D_1 and outside D_0', 'H_2 in D_2 and outside D_1']}

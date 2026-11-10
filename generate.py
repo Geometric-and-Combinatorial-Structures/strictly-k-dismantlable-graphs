@@ -5,6 +5,9 @@ sys.dont_write_bytecode = True
 if sys.version_info < (3, 11):
     raise SystemExit('Python 3.11 or later is required.')
 import argparse
+import tempfile
+_bytecode_directory = tempfile.TemporaryDirectory(prefix='strict-dismantling-bytecode-')
+sys.pycache_prefix = _bytecode_directory.name
 from dismantling.graphs import family_graph, edges, vertices
 from dismantling.output import new_directory, write_json
 
@@ -18,7 +21,10 @@ def main(argv=None):
     if args.k < 1:
         parser.error('k must be at least 1')
     g, labels = family_graph(args.family, args.k)
-    output = new_directory(args.output, args.family + '-k' + str(args.k))
+    try:
+        output = new_directory(args.output, args.family + '-k' + str(args.k))
+    except ValueError as exc:
+        parser.error(str(exc))
     es = edges(g)
     result = {'family': args.family, 'k': args.k, 'vertices': len(g), 'edges': es,
               'labels': labels, 'adjacency': [list(vertices(ns)) for ns in g]}

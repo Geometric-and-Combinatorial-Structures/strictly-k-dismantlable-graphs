@@ -9,26 +9,26 @@ all three families in this supplement.
 \subsection{The layer construction}
 Start with a non-empty graph \(A\) and fix an integer \(d\geq1\).
 Each layer has a centre and one auxiliary of each type in
-\(T=\{0,\ldots,d-1\}\). To specify the edges from the auxiliaries to the
-seed, choose a subset \(P_j\subseteq V(A)\) for each \(j\in T\).
+\(\mathcal{T}=\{0,\ldots,d-1\}\). To specify the edges from the auxiliaries to the
+seed, choose a subset \(P_j\subseteq V(A)\) for each \(j\in \mathcal{T}\).
 We call \(P_j\) the \defi{profile} of type \(j\). Its vertices are the
 neighbours in \(A\) of every auxiliary of that type. To specify the
 edges between auxiliaries of distinct types, choose a graph \(R\)
-on \(T\).
+on \(\mathcal{T}\).
 
 Let \(G_m\) denote the graph obtained by adding \(m\) layers.
-Index the layers by \(L_m=\{0,\ldots,m-1\}\) for \(m\geq1\), and
-put \(L_0=\varnothing\). The vertices of \(G_m\) form the disjoint union
+Index the layers by \(\mathcal{I}_m=\{0,\ldots,m-1\}\) for \(m\geq1\), and
+put \(\mathcal{I}_0=\varnothing\). The vertices of \(G_m\) form the disjoint union
 \[
- V(G_m)=V(A)\sqcup\{c_i:i\in L_m\}
-                \sqcup\{x_{j,i}:j\in T,\ i\in L_m\}.
+ V(G_m)=V(A)\sqcup\{c_i:i\in \mathcal{I}_m\}
+                \sqcup\{x_{j,i}:j\in \mathcal{T},\ i\in \mathcal{I}_m\}.
 \]
 Here \(c_i\) is the centre of layer \(i\), and \(x_{j,i}\) is its
 auxiliary of type \(j\). The following six rules specify every edge:
 \begin{enumerate}
 \item The vertices of \(A\) induce the original graph \(A\).
 \item The centres form a clique and are adjacent to every vertex of \(A\).
-\item For each type \(j\), its auxiliaries \(x_{j,i}\), \(i\in L_m\),
+\item For each type \(j\), its auxiliaries \(x_{j,i}\), \(i\in \mathcal{I}_m\),
 form a clique.
 \item For distinct types \(j,t\), an auxiliary of type \(j\) is adjacent
 to an auxiliary of type \(t\) exactly when \(jt\in E(R)\), regardless
@@ -41,7 +41,8 @@ The sixth rule is what makes a centre omit its own layer from its
 neighbourhood graph. For later use, write \(B=G_1\), \(p=c_0\) and
 \(x_j=x_{j,0}\). Then \(\Nb{B}{p}=A\).
 The seed itself is \(G_0=A\). Adding a layer preserves all existing
-adjacencies and adds \(d+1\) vertices, so
+adjacencies. A vertex other than a centre is called \defi{non-central}.
+Each added layer contributes \(d+1\) vertices, so
 \begin{equation}\label{eq:general-order}
  |V(G_m)|=|V(A)|+(d+1)m.
 \end{equation}
@@ -49,18 +50,18 @@ adjacencies and adds \(d+1\) vertices, so
 
 
 \begin{lemma}\label{lem:centre}
-For \(m\geq1\) and \(i\in L_m\), the neighbourhood graph of \(c_i\)
+For \(m\geq1\) and \(i\in \mathcal{I}_m\), the neighbourhood graph of \(c_i\)
 in \(G_m\) is isomorphic to \(G_{m-1}\).
 \end{lemma}
 \begin{proof}
 The neighbours of \(c_i\) are the vertices of \(A\) and the vertices
-in layers \(h\in L_m\) with \(h\ne i\):
+in layers \(h\in \mathcal{I}_m\) with \(h\ne i\):
 \[
  N_{G_m}(c_i)=V(A)\sqcup\{c_h:h\ne i\}
-                  \sqcup\{x_{j,h}:j\in T,\ h\ne i\}.
+                  \sqcup\{x_{j,h}:j\in \mathcal{T},\ h\ne i\}.
 \]
 Renumber the remaining layers by the increasing bijection
-\(\rho_i:L_m\setminus\{i\}\to L_{m-1}\). Fix every vertex of \(A\),
+\(\rho_i:\mathcal{I}_m\setminus\{i\}\to \mathcal{I}_{m-1}\). Fix every vertex of \(A\),
 send \(c_h\) to \(c_{\rho_i(h)}\), and send \(x_{j,h}\) to
 \(x_{j,\rho_i(h)}\). The first five rules depend on the seed and on
 the roles or types of the vertices, which the map preserves. The
@@ -75,7 +76,7 @@ dismantle the graph that remains. We will fold each auxiliary outside layer \(i\
 auxiliary of the same type in layer \(i\).
 
 \begin{lemma}\label{lem:remainder}
-If \(m\geq2\), then \(G_m-c_i\in\D_0\) for every \(i\in L_m\).
+If \(m\geq2\), then \(G_m-c_i\in\D_0\) for every \(i\in \mathcal{I}_m\).
 \end{lemma}
 \begin{proof}
 Fix a type \(j\). We will retain \(x_{j,i}\) and fold every
@@ -150,6 +151,14 @@ a cone as its neighbourhood graph. The recurrence thus gives
 \(q(H)=q(H-v)\) for that deletion.
 \end{proof}
 
+Taking coefficients in the polynomial recurrence gives
+\begin{equation}\label{eq:clique-coefficients}
+ c_t(H)=c_t(H-v)+c_{t-1}(H[N_H(v)])\qquad(t\geq1).
+\end{equation}
+The initial values are \(c_0(H)=1\) and
+\(c_t(\varnothing)=0\) for \(t\geq1\). Both graphs on the right
+have fewer vertices, so this determines every coefficient.
+
 The cone calculation provides the base case for an induction on
 the dismantling level.
 
@@ -172,23 +181,23 @@ non-central vertices we need non-zero values on their neighbourhood
 graphs. It suffices to compute \(q\) on the neighbourhood graphs of
 the seed vertices and the auxiliaries in the first extension \(B\),
 because adding a layer changes the sign of the corresponding values.
-For \(a\in V(A)\) and \(j\in T\), write
+For \(a\in V(A)\) and \(j\in \mathcal{T}\), write
 \[
- \alpha_a=q(\Nb{B}{a}),\qquad \beta_j=q(\Nb{B}{x_j}).
+ \eta_a=q(\Nb{B}{a}),\qquad \theta_j=q(\Nb{B}{x_j}).
 \]
 
 \begin{lemma}\label{lem:euler-links}
 For arbitrary seed, profiles and type graph, and every \(m\geq1\),
 \begin{align}
- q(\Nb{G_m}{a})&=(-1)^{m-1}\alpha_a
+ q(\Nb{G_m}{a})&=(-1)^{m-1}\eta_a
        &&(a\in V(A)),\label{eq:fixed-euler}\\
- q(\Nb{G_m}{x_{j,i}})&=(-1)^{m-1}\beta_j
-       &&(j\in T,\ i\in L_m).\label{eq:aux-euler}
+ q(\Nb{G_m}{x_{j,i}})&=(-1)^{m-1}\theta_j
+       &&(j\in \mathcal{T},\ i\in \mathcal{I}_m).\label{eq:aux-euler}
 \end{align}
 \end{lemma}
 \begin{proof}
 We argue by induction on \(m\). For \(m=1\), both assertions follow
-from the definitions of \(\alpha_a\) and \(\beta_j\). Let \(m\geq2\)
+from the definitions of \(\eta_a\) and \(\theta_j\). Let \(m\geq2\)
 and assume the formulas hold at \(m-1\). In each case \(H\) is
 the neighbourhood graph of a non-central vertex. We apply the
 recurrence inside \(H\) to a centre of \(G_m\) that lies in \(H\).
@@ -227,7 +236,7 @@ Now fix a type \(j\) and a layer \(i\), and put
 \(H=\Nb{G_m}{x_{j,i}}\). The vertices of \(H\) are those of
 \(A[P_j]\), all copies of the types adjacent to \(j\) in \(R\),
 the copies \(x_{j,t}\) with \(t\ne i\), and the centres \(c_t\)
-with \(t\ne i\). Choose \(h\in L_m\) with \(h\ne i\). Both \(c_h\)
+with \(t\ne i\). Choose \(h\in \mathcal{I}_m\) with \(h\ne i\). Both \(c_h\)
 and \(x_{j,h}\) belong to \(H\). In this list, \(x_{j,h}\) is
 adjacent to every seed vertex and every other auxiliary, and
 among the centres it omits only \(c_h\). Hence \(x_{j,h}\) is an
@@ -286,7 +295,7 @@ belongs to a dismantling class. Only centres can start a reduction.
 
 For \(m=0\), hypothesis~(1) gives the strict level of the seed.
 In \(G_1=B\), the neighbourhood graph of \(p\) is \(A\in\D_s\),
-so \(p\) is eligible at level \(s+1\). By hypothesis~(2), the
+so deleting \(p\) is admissible at level \(s+1\). By hypothesis~(2), the
 remainder \(B-p\) belongs to \(\D_s\subseteq\D_{s+1}\), so the
 reduction can be completed at level \(s+1\). At level \(s\), the only
 candidate for a first deletion is \(p\). Its neighbourhood graph
@@ -303,7 +312,7 @@ Lemma~\ref{lem:remainder} to complete the reduction, since
 \(\D_0\subseteq\D_{s+m}\). At level \(s+m-1\), a centre would
 need its neighbourhood graph in \(\D_{s+m-2}\). The inductive
 hypothesis rules this out, and the Euler obstruction has already
-excluded the non-central vertices. Thus there is no eligible first
+excluded the non-central vertices. Thus there is no admissible first
 deletion, and \(G_m\) has more than one vertex.
 Lemma~\ref{lem:first} gives \(G_m\notin\D_{s+m-1}\).
 The order formula is~\eqref{eq:general-order}.

@@ -64,6 +64,30 @@ def from_edges(n, edges):
     return tuple(g)
 
 
+def from_graph6(text):
+    """Decode the short graph6 form used by the distributed graphs (n <= 62).
+
+    The upper-triangle order follows Brendan McKay's format specification:
+    https://users.cecs.anu.edu.au/~bdm/data/formats.txt
+    """
+    text = text.removeprefix('>>graph6<<')
+    require(text and all(63 <= ord(c) <= 126 for c in text), 'Invalid graph6 character')
+    n = ord(text[0]) - 63
+    require(n <= 62, 'Only the short graph6 form is used here')
+    count = n * (n - 1) // 2
+    require(len(text) == 1 + (count + 5) // 6, 'Invalid graph6 length')
+    bits = [((ord(c) - 63) >> shift) & 1 for c in text[1:] for shift in range(5, -1, -1)]
+    require(not any(bits[count:]), 'Non-zero graph6 padding')
+    g, pos = [0] * n, 0
+    for v in range(1, n):
+        for u in range(v):
+            if bits[pos]:
+                g[u] |= 1 << v
+                g[v] |= 1 << u
+            pos += 1
+    return validate(g)
+
+
 def edges(g):
     return [(v, u) for v, row in enumerate(g) for u in vertices(row) if v < u]
 
@@ -220,6 +244,9 @@ def family_graph(family, k, independent=False):
     p = parameters(family)
     seed = from_lists(p['A'])
     if k < p['s']:
+        if independent:
+            prefix = strict_json((ROOT / 'data/certificates/PREFIX.json').read_text(encoding='utf-8'))['levels'][str(k)]
+            return from_graph6(prefix['graph6']), [('a', v) for v in prefix['vertices_in_A16']]
         subset = p['prefix'][str(k)]
         return induced(seed, subset), [('a', v) for v in subset]
     constructor = pairwise_layers if independent else layers

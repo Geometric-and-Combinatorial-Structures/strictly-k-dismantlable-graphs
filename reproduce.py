@@ -7,6 +7,10 @@ if sys.version_info < (3, 11):
 if not __debug__:
     raise SystemExit('Run verification without -O or -OO.')
 import argparse
+import tempfile
+# Read the reviewed Python sources even if an earlier session left bytecode.
+_bytecode_directory = tempfile.TemporaryDirectory(prefix='strict-dismantling-bytecode-')
+sys.pycache_prefix = _bytecode_directory.name
 import time
 from datetime import datetime, timezone
 from dismantling import article, checks
@@ -30,7 +34,12 @@ def main(argv=None):
     parser.add_argument('--only', choices=[x[0] for x in CHECKS], help='Reproduce one group of results.')
     parser.add_argument('--output', help='A new directory; the default is a unique directory beneath results/.')
     args = parser.parse_args(argv)
-    output = new_directory(args.output, 'reproduction')
+    if args.extended and args.only:
+        parser.error('--extended applies to the complete run; omit --only')
+    try:
+        output = new_directory(args.output, 'reproduction')
+    except ValueError as exc:
+        parser.error(str(exc))
     report = {'started_utc': datetime.now(timezone.utc).isoformat(), 'python': sys.version,
               'status': 'INCONCLUSIVE', 'extended': args.extended, 'checks': [],
               'mathematical_scope': 'Finite verifications. The supplement proves the statements for every level.'}

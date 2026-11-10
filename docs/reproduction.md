@@ -4,11 +4,11 @@ The calculations answer concrete mathematical questions: does each displayed fol
 
 ## Obtain the material
 
-Download the source archive from [release v1.0.0](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/tag/v1.0.0) and extract it. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
+Download [strictly-k-dismantlable-graphs-v1.0.0.zip](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/download/v1.0.0/strictly-k-dismantlable-graphs-v1.0.0.zip) from release `v1.0.0` and extract it. This is the same archive used by the notebook. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
 
 The calculations require **Python 3.11 or later**, with no additional mathematical packages. Check your installation with `python --version`. On systems where Python is called `python3`, use `python3` in the commands below. On Windows, `py -3` is another usual way to invoke the installed Python interpreter.
 
-For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.0.0/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.0.0`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab. No access to a private project folder is required.
+For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.0.0/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.0.0`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab.
 
 ## Run the required checks
 
@@ -22,7 +22,7 @@ The first check compares the files with their distributed SHA-256 sums. The rema
 2. **The $4k+4$ family.** Verify the seven roots asserting the levels of the two prefixes, the sixteen-vertex seed and its remainder, together with all nineteen neighbourhood clique rows.
 3. **The $6k+6$ family.** Verify both positive reductions, all fourteen inner folds, every displayed neighbourhood inclusion, the twelve first-fold obstructions and all seventeen clique rows.
 4. **Kernel completion and homology.** Recover the eleven-vertex kernel, compute its reduced homology and that of its neighbourhoods, and check the degree shifts and boundary conventions over $\mathbb F_2$.
-5. **Further controls.** Compare two constructions of each family at levels $1,\ldots,6$; check single-vertex deletions from $F_k$ for $k=2,3,4$; reject altered certificates; and check all ten layer templates with a one-vertex seed, one or two auxiliary types, all profiles and type graphs, at zero to three layers.
+5. **Further controls.** Compare two independent implementations of the six adjacency rules for the layered graphs at levels $1,\ldots,6$, and compare the two smaller prefixes of $H_k$ with their separate graph encodings. Check single-vertex deletions from $F_k$ for $k=2,3,4$, reject altered certificates, and test all ten templates with a one-vertex seed and one or two auxiliary types, at zero to three layers.
 
 A successful run ends with `PASS` and the location of its output directory. The directory contains:
 
@@ -47,13 +47,15 @@ This verifies the seven roots and nineteen clique rows for $H_k$, and the direct
 
 ## Check the additional finite ranges
 
+A **layer template** consists of a seed, a number of auxiliary types, their profiles, and the type graph. These finite data determine every layer.
+
 ```text
 python reproduce.py --extended
 ```
 
 In addition to the main checks, this enumerates **every labelled seed on one, two or three vertices**, every choice of profiles for one or two auxiliary types, and every type graph. It checks the construction, centre neighbourhoods, folds and Euler identities at zero, one, two and three layers. It computes the homological shifts for all templates whose seed has at most two vertices. It also checks the kernel identities for every graph on at most three vertices and every ordered pair of profiles covering that graph.
 
-The report states these ranges and the number of identities checked. They are finite tests of the formulas, not an inference from a sample to all graphs or all levels. The corresponding universal statements are proved in the supplement. Runtime depends on the machine; there is no search deadline whose expiry is interpreted as non-membership.
+The report states these ranges and the number of identities checked. The first layer supplies the base case of each shift identity; the later layers test its propagation. These are finite tests of the formulas, not an inference from a sample to all graphs or all levels. The corresponding universal statements are proved in the supplement. Runtime depends on the machine; there is no search deadline whose expiry is interpreted as non-membership.
 
 ## Read or compile the supplement
 

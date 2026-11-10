@@ -18,6 +18,8 @@ Every child has fewer vertices. The verifier checks this decrease, the exact sub
 
 ## The seven roots
 
+Here $A$ is the sixteen-vertex seed and $B$ is its first layer extension; $p$ is the added centre, whose neighbourhood is $A$.
+
 The three main roots assert $A\in\mathcal D_3$, $A\notin\mathcal D_2$, and $B-p\in\mathcal D_3$. The four prefix roots assert $H_1\in\mathcal D_1$, $H_1\notin\mathcal D_0$, $H_2\in\mathcal D_2$, and $H_2\notin\mathcal D_1$. Each root is bound to the complete claimed vertex set and level; the prefix graphs are also checked as the specified induced subgraphs of $A$.
 
 The files in [`data/certificates`](../data/certificates) contain:
@@ -29,8 +31,8 @@ The files in [`data/certificates`](../data/certificates) contain:
 | `FINITE_CERTIFICATE.json.gz` | The seed and extension proof states, their three roots and all nineteen clique rows. |
 | `PREFIX_CERTIFICATES.json.gz` | The prefix proof states and their four roots. |
 
-The `.gz` files are compressed JSON text; Python reads them directly. Each subset is encoded by an integer $m=\sum_{v\in S}2^v$. A node records this integer as `m`, the level as `k`, its truth value as `value`, and its justification as `rule`. The keys `link`, `rest` and `child` refer to other nodes. Vertex labels in the seed are $0,\ldots,15$; the centre is $16$ and the auxiliaries are $17,18,19$.
+The `.gz` files are compressed JSON text; Python reads them directly. Each subset is encoded by an integer $m=\sum_{v\in S}2^v$. A node records this integer as `m`, the level as `k`, its truth value as `value`, and its justification as `rule`. The key `link` refers to the neighbourhood state and `rest` to the state after deleting the chosen vertex. In a negative state, `child` refers to the failed condition specified by `side`, which is either `link` or `rest`. In a prefix certificate, a bit position indexes the ordered list `vertices_in_A16`, rather than the original seed label. The graph6 strings and all duplicate encodings in the data are decoded and compared as well. Vertex labels in the seed are $0,\ldots,15$; the centre is $16$ and the auxiliaries are $17,18,19$.
 
-The verifier [`dismantling/certificates.py`](../dismantling/certificates.py) checks the supplied proof states without searching for a dismantling order. A separate exact recursion is used only for small independent controls. The seven accepted roots are therefore complete finite proofs, not conclusions drawn from an unsuccessful bounded search.
+The verifier [`dismantling/certificates.py`](../dismantling/certificates.py) checks the supplied proof states without searching for a dismantling order. A separate exact recursion recomputes all seven membership assertions directly from the definition, without using the stored proof states. The seven accepted roots are therefore complete finite proofs, not conclusions drawn from an unsuccessful bounded search.
 
 Run `python reproduce.py --only 4k4` to verify the certificates. Run `python reproduce.py --only mutations` to check rejection of altered edges, root levels and subsets, missing branches, missing or circular dependencies, and incorrect clique coefficients.

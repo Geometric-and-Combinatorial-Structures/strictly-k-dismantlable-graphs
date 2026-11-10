@@ -2,7 +2,7 @@
 The kernel calculations compare neighbourhoods in the first extension.
 We now follow those groups through every layer of the general construction,
 with any number of auxiliary types. As in Section~\ref{sec:construction},
-write $T=\{0,\ldots,d-1\}$ for the type set. The coefficients and augmented chain
+write $\mathcal{T}=\{0,\ldots,d-1\}$ for the type set. The coefficients and augmented chain
 conventions are those of Section~\ref{sec:kernels}. The degree shift will
 supply the criterion used in Theorem~\ref{ker:thm:equivalence}.
 
@@ -28,33 +28,33 @@ For \(m\geq1\) and every integer \(t\),
  &&a\in V(A),\label{hom:eq:fixed}\\
  \Ht_t\bigl(\Cl(L_{G_m}(x_{j,i}))\bigr)
  &\cong\Ht_{t-m+1}\bigl(\Cl(L_B(x_j))\bigr),
- &&j\in T,\quad 0\leq i<m.\label{hom:eq:auxiliary}
+ &&j\in \mathcal{T},\quad 0\leq i<m.\label{hom:eq:auxiliary}
 \end{align}
 \end{theorem}
 \begin{proof}
-First fix \(a\in V(A)\) and put \(H_m=L_{G_m}(a)\).
+First fix \(a\in V(A)\) and put \(\Lambda_m=L_{G_m}(a)\).
 Its vertices are \(N_A(a)\), all centres, and all copies of the
 types \(j\) for which \(a\in P_j\). For \(m\geq2\), delete a centre
-\(c_i\) from \(H_m\). The folds \(x_{j,h}\to x_{j,i}\), \(h\ne i\),
-are still valid: restrict the neighbourhood inclusions in
-Lemmas~\ref{lem:centre} and~\ref{lem:remainder} to \(N_A(a)\) and the types present.
+\(c_i\) from \(\Lambda_m\). The folds \(x_{j,h}\to x_{j,i}\), \(h\ne i\),
+are still valid: restrict the neighbourhood inclusions in the proof of
+Lemma~\ref{lem:remainder} to \(N_A(a)\) and the types present.
 After these folds, the remaining graph is a cone with a remaining
 centre as apex.
 If there are no such auxiliary types, it is already a cone.
 Lemmas~\ref{hom:lem:cone} and \ref{hom:lem:fold} imply that
-\(\Cl(H_m-c_i)\) is acyclic.
+\(\Cl(\Lambda_m-c_i)\) is acyclic.
 
-The neighbourhood of \(c_i\) inside \(H_m\) is isomorphic to
-\(H_{m-1}\), using the same layer reindexing restricted to the
+The neighbourhood of \(c_i\) inside \(\Lambda_m\) is isomorphic to
+\(\Lambda_{m-1}\), using the same layer reindexing restricted to the
 vertices under consideration. Hence the decomposition
 \[
- \Cl(H_m)=\Cl(H_m-c_i)
-       \cup\bigl(c_i*\Cl(L_{H_m}(c_i))\bigr)
+ \Cl(\Lambda_m)=\Cl(\Lambda_m-c_i)
+       \cup\bigl(c_i*\Cl(L_{\Lambda_m}(c_i))\bigr)
 \]
-has acyclic pieces and intersection isomorphic to \(\Cl(H_{m-1})\).
+has acyclic pieces and intersection isomorphic to \(\Cl(\Lambda_{m-1})\).
 Lemma~\ref{hom:lem:union} shifts homology by one degree. Iteration
 proves \eqref{hom:eq:fixed}; at \(m=1\) it is the identity.
-The set \(N_A(a)\) may be empty, but \(H_1\) still contains \(p\).
+The set \(N_A(a)\) may be empty, but \(\Lambda_1\) still contains \(p\).
 
 Now fix an auxiliary vertex \(x_{j,i}\). Its neighbourhood has
 the vertices of \(P_j\), all copies of types in \(N_R(j)\),
@@ -130,12 +130,8 @@ The order follows from \eqref{eq:general-order}.
 
 \subsection{Comparison with Euler characteristic}
 
-The alternating sum of reduced Betti numbers recovers the obstruction used for the three families. For a graph \(H\), put
-\[
- q(H)=\sum_{\sigma\in\Cl(H)}(-1)^{|\sigma|}
-     =1-\chi(\Cl(H)).
-\]
-The empty face is included, so \(q(\varnothing)=1\).
+The obstruction \(q\) of Section~\ref{sec:construction} is the alternating
+sum of reduced Betti numbers, with a contribution from degree \(-1\).
 Rank--nullity in the augmented chain complex gives
 \begin{equation}\label{hom:eq:euler}
  q(H)=\sum_{r\geq0}(-1)^r
@@ -162,7 +158,7 @@ The Euler criterion in Theorem~\ref{thm:template} uses
 \(q(L_B(v))\ne0\) for every non-central \(v\), together with
 \(A\in\D_s\setminus\D_{s-1}\) and the stronger remainder condition
 \(B-p\in\D_s\). Equation~\eqref{hom:eq:euler} and
-Lemma~\ref{lem:inclusions} imply the hypotheses above.
+Lemma~\ref{lem:inclusions} imply the hypotheses of Theorem~\ref{hom:thm:criterion}.
 Allowing the remainder in \(\D_{s+1}\) is a separate change from
 replacing Euler characteristic by homology: the first-deletion
 argument at \(m=1\) also permits this weaker remainder in the
@@ -174,7 +170,7 @@ does not ensure the positive reduction.
 \runcheck{homology}
 The calculation checks the empty graph, a cone, $C_4\sqcup K_1$, and an
 auxiliary with an empty first-layer neighbourhood. In the last example,
-after $m$ layers its only non-zero reduced Betti number is $\beta_{m-2}=1$,
+after $m$ layers its only non-zero reduced Betti number is $\widetilde\beta_{m-2}=1$,
 for the tested values $m=1,2,3$. The full command
 \texttt{python reproduce.py --extended} additionally checks all labelled
 seeds on one, two or three vertices, all profiles for one or two types,

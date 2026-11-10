@@ -2,11 +2,11 @@
 
 The construction adds layers to a seed while retaining all previous adjacencies. A layer contains one centre and a fixed number of auxiliary vertices. The neighbours of a centre induce the preceding graph, which is the step that raises the strict dismantling level.
 
-| Family in the mathematics | Command name | Order at level $k$ | Starting graphs |
-| --- | --- | --- | --- |
-| $F_k$ | `3k8` | $3k+8$ | An eleven-vertex seed at level one; two auxiliaries per layer. |
-| $H_k$ | `4k4` | $4k+4$ | Prefixes at levels one and two, followed by a sixteen-vertex seed at level three; three auxiliaries per layer. |
-| $J_k$ | `6k6` | $6k+6$ | A twelve-vertex seed at level one; five auxiliaries per layer. |
+| Family in the mathematics | `generate.py --family` | `reproduce.py --only` | Order at level $k$ | Starting graphs |
+| --- | --- | --- | --- | --- |
+| $F_k$ | `3k8` | `article` | $3k+8$ | An eleven-vertex seed at level one; two auxiliaries per layer. |
+| $H_k$ | `4k4` | `4k4` | $4k+4$ | Prefixes at levels one and two, followed by a sixteen-vertex seed at level three; three auxiliaries per layer. |
+| $J_k$ | `6k6` | `6k6` | $6k+6$ | A twelve-vertex seed at level one; five auxiliaries per layer. |
 
 All three commands accept any integer $k\geq1$, subject to the memory available for the resulting graph. For instance:
 
