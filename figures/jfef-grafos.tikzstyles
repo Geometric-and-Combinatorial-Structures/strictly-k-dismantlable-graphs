@@ -1,0 +1,34 @@
+% Cargar EN EL PREAMBULO, despues de tikz y de los paquetes de fuentes.
+% pdfLaTeX/NFSS: requiere las familias Palatino/Pazo de TeX (psnfss).
+% Esta version matematica no modifica la version normal del manuscrito.
+\DeclareMathVersion{jfefpalatino}
+\SetSymbolFont{operators}{jfefpalatino}{OT1}{zplm}{m}{n}
+\SetSymbolFont{letters}{jfefpalatino}{OML}{zplm}{m}{it}
+\SetSymbolFont{symbols}{jfefpalatino}{OMS}{zplm}{m}{n}
+\SetSymbolFont{largesymbols}{jfefpalatino}{OMX}{zplm}{m}{n}
+\SetMathAlphabet{\mathbf}{jfefpalatino}{OT1}{zplm}{b}{n}
+\SetMathAlphabet{\mathit}{jfefpalatino}{OT1}{ppl}{m}{it}
+\tikzset{
+  jfef text family/.initial=ppl,
+  jfef math version/.initial=jfefpalatino,
+  jfef font size/.initial=8,
+  jfef baseline/.initial=9,
+  jfef label font/.style={font={
+    \fontfamily{\pgfkeysvalueof{/tikz/jfef text family}}\selectfont
+    \fontsize{\pgfkeysvalueof{/tikz/jfef font size}}{\pgfkeysvalueof{/tikz/jfef baseline}}\selectfont
+    \mathversion{\pgfkeysvalueof{/tikz/jfef math version}}
+  }},
+  jfef vertex/.style={
+    circle,draw=black!70,line width=.4pt,
+    minimum size=5.8mm,inner sep=.8pt,outer sep=0pt,
+    fill=white,opacity=1,fill opacity=1,draw opacity=1,text opacity=1,
+    text=black,jfef label font
+  },
+  jfef type/.style={jfef vertex,minimum size=6mm,inner sep=1pt},
+  jfef centre/.style={jfef vertex,minimum size=8mm,inner sep=1pt,fill=orange!20},
+  jfef auxiliary/.style={jfef vertex,rectangle,minimum size=8mm,inner sep=1pt,fill=cyan!15},
+  jfef edge/.style={draw=black!27,line width=.25pt,line cap=round},
+  jfef complement edge/.style={draw=black!48,line width=.35pt,line cap=round},
+  jfef new edge/.style={draw=blue!55!black,opacity=.55,line width=.35pt,line cap=round},
+  jfef new complement edge/.style={draw=blue!65!black,line width=.6pt,line cap=round}
+}

@@ -1,0 +1,97 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage[margin=1in]{geometry}
+\parindent=8pt
+\parskip=3pt
+\linespread{1.1}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{palatino,euler,microtype}
+% Euler expects the upright shape name used by the reference document.
+\renewcommand{\updefault}{n}
+\usepackage{booktabs,longtable,array}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{positioning,fit,backgrounds,calc,shapes.geometric}
+\input{../figures/jfef-grafos.tikzstyles}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{needspace}
+\definecolor{darkblue}{rgb}{0,0,0.7}
+\definecolor{darkred}{rgb}{0.7,0,0}
+\newcommand{\defi}[1]{\textit{\color{blue}#1}}
+\usepackage[pagebackref=true]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=darkred,citecolor=darkblue,urlcolor=darkblue,
+pdftitle={Supplement: Linear-size graphs at every strict dismantling level}}
+\setlength{\emergencystretch}{2em}
+
+
+\newcommand{\D}{\mathcal D}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\card}[1]{\lvert#1\rvert}
+\newcommand{\nb}[2]{N_{#1}(#2)}
+\newcommand{\Nb}[2]{#1[N_{#1}(#2)]}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\renewcommand{\urladdrname}{\textit{ORCID}}
+\title[Constructions and finite verifications]{Constructions and finite verifications\\for strict dismantling levels}
+\author[J. F. Espinoza]{Jes\'us F. Espinoza\textsuperscript{*}}
+\thanks{\textsuperscript{*}Corresponding author}
+\author[M. E. Fr\'ias-Armenta]{Mart\'in Eduardo Fr\'ias-Armenta}
+\author[R. G. Hern\'andez-Amador]{Rosal\'ia G. Hern\'andez-Amador}
+\author[H. A. Hern\'andez-Hern\'andez]{H\'ector A. Hern\'andez-Hern\'andez}
+\address{Departamento de Matem\'aticas, Universidad de Sonora, Hermosillo, Sonora, M\'exico}
+\email[Jes\'us F. Espinoza]{jesusfrancisco.espinoza@unison.mx}
+\urladdr[Jes\'us F. Espinoza]{https://orcid.org/0000-0001-5601-3634}
+\email[Mart\'in Eduardo Fr\'ias-Armenta]{eduardo.frias@unison.mx}
+\urladdr[Mart\'in Eduardo Fr\'ias-Armenta]{https://orcid.org/0000-0002-7687-1270}
+\email[Rosal\'ia G. Hern\'andez-Amador]{rosalia.hernandez@unison.mx}
+\urladdr[Rosal\'ia G. Hern\'andez-Amador]{https://orcid.org/0000-0001-9657-7012}
+\email[H\'ector A. Hern\'andez-Hern\'andez]{hector.hernandez@unison.mx}
+\urladdr[H\'ector A. Hern\'andez-Hern\'andez]{https://orcid.org/0000-0002-4046-4841}
+\date{}
+\subjclass[2020]{Primary 05C75; Secondary 05C69, 05E45}
+\keywords{$k$-dismantlable graph, dismantling hierarchy, clique complex, Euler characteristic, graph construction}
+
+\newcommand{\F}{\mathbb F_2}
+\newcommand{\Ht}{\widetilde H}
+\newcommand{\Ct}{\widetilde C}
+\newcommand{\Lk}[2]{#1[N_{#1}(#2)]}
+\newcommand{\lk}{\operatorname{lk}}
+\newcommand{\runcheck}[1]{\par\smallskip\noindent\textbf{Reproduce this calculation.}
+From the repository directory, run\par\nobreak
+\begin{center}\texttt{python reproduce.py --only #1}\end{center}\par\smallskip}
+\begin{document}
+\begin{abstract}
+The recursive dismantling hierarchy measures how a graph can be reduced to one
+vertex by testing the graphs induced by successive neighbourhoods. This
+supplement supplies complete seed data and finite proofs for families of
+strict level $k$ with $4k+4$ and $6k+6$ vertices. We relate constructions with
+two auxiliary vertices to the graph obtained by deleting edges between the
+exclusive parts of their profiles, and identify the one-edge completion that
+produces the eleven-vertex seed of the $3k+8$ family. Finally, we show that
+adding a layer shifts the reduced homology of every non-central neighbourhood
+by one degree. The accompanying calculations verify the finite hypotheses,
+clique counts and homological identities used in these arguments.
+\end{abstract}
+\maketitle
+\input{sections/introduction}
+\tableofcontents
+\input{sections/preliminaries}
+\input{sections/layers}
+\input{sections/family4}
+\input{sections/family6}
+\input{sections/kernels}
+\input{sections/homology}
+\appendix
+\input{sections/article}
+\FloatBarrier
+\bibliographystyle{siam}
+\bibliography{refs}
+\end{document}

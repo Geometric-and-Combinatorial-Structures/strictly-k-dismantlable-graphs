@@ -1,0 +1,356 @@
+\section{Adding layers and proving strictness}\label{sec:construction}
+A seed at one strict level can produce examples at every higher level if
+each added layer provides an admissible first deletion and excludes all first
+deletions at the preceding level. We arrange for a centre to have the previous
+graph as its neighbourhood graph. The other vertices will be excluded by a
+non-zero alternating sum of clique counts. The same construction is used for
+all three families in this supplement.
+
+\subsection{The layer construction}
+Start with a non-empty graph \(A\) and fix an integer \(d\geq1\).
+Each layer has a centre and one auxiliary of each type in
+\(T=\{0,\ldots,d-1\}\). To specify the edges from the auxiliaries to the
+seed, choose a subset \(P_j\subseteq V(A)\) for each \(j\in T\).
+We call \(P_j\) the \defi{profile} of type \(j\). Its vertices are the
+neighbours in \(A\) of every auxiliary of that type. To specify the
+edges between auxiliaries of distinct types, choose a graph \(R\)
+on \(T\).
+
+Let \(G_m\) denote the graph obtained by adding \(m\) layers.
+Index the layers by \(L_m=\{0,\ldots,m-1\}\) for \(m\geq1\), and
+put \(L_0=\varnothing\). The vertices of \(G_m\) form the disjoint union
+\[
+ V(G_m)=V(A)\sqcup\{c_i:i\in L_m\}
+                \sqcup\{x_{j,i}:j\in T,\ i\in L_m\}.
+\]
+Here \(c_i\) is the centre of layer \(i\), and \(x_{j,i}\) is its
+auxiliary of type \(j\). The following six rules specify every edge:
+\begin{enumerate}
+\item The vertices of \(A\) induce the original graph \(A\).
+\item The centres form a clique and are adjacent to every vertex of \(A\).
+\item For each type \(j\), its auxiliaries \(x_{j,i}\), \(i\in L_m\),
+form a clique.
+\item For distinct types \(j,t\), an auxiliary of type \(j\) is adjacent
+to an auxiliary of type \(t\) exactly when \(jt\in E(R)\), regardless
+of their layers.
+\item The vertex \(a\in V(A)\) is adjacent to \(x_{j,i}\) exactly when
+\(a\in P_j\).
+\item The centre \(c_i\) is adjacent to \(x_{j,h}\) exactly when \(i\ne h\).
+\end{enumerate}
+The sixth rule is what makes a centre omit its own layer from its
+neighbourhood graph. For later use, write \(B=G_1\), \(p=c_0\) and
+\(x_j=x_{j,0}\). Then \(\Nb{B}{p}=A\).
+The seed itself is \(G_0=A\). Adding a layer preserves all existing
+adjacencies and adds \(d+1\) vertices, so
+\begin{equation}\label{eq:general-order}
+ |V(G_m)|=|V(A)|+(d+1)m.
+\end{equation}
+
+
+
+\begin{lemma}\label{lem:centre}
+For \(m\geq1\) and \(i\in L_m\), the neighbourhood graph of \(c_i\)
+in \(G_m\) is isomorphic to \(G_{m-1}\).
+\end{lemma}
+\begin{proof}
+The neighbours of \(c_i\) are the vertices of \(A\) and the vertices
+in layers \(h\in L_m\) with \(h\ne i\):
+\[
+ N_{G_m}(c_i)=V(A)\sqcup\{c_h:h\ne i\}
+                  \sqcup\{x_{j,h}:j\in T,\ h\ne i\}.
+\]
+Renumber the remaining layers by the increasing bijection
+\(\rho_i:L_m\setminus\{i\}\to L_{m-1}\). Fix every vertex of \(A\),
+send \(c_h\) to \(c_{\rho_i(h)}\), and send \(x_{j,h}\) to
+\(x_{j,\rho_i(h)}\). The first five rules depend on the seed and on
+the roles or types of the vertices, which the map preserves. The
+sixth depends on whether the two layer indices agree. Since
+\(h\ne t\) if and only if \(\rho_i(h)\ne\rho_i(t)\), this rule is
+preserved as well. The map is therefore an isomorphism. For \(m=1\)
+it is the identity on \(A\).
+\end{proof}
+
+To complete a reduction after deleting \(c_i\), we also need to
+dismantle the graph that remains. We will fold each auxiliary outside layer \(i\) onto the
+auxiliary of the same type in layer \(i\).
+
+\begin{lemma}\label{lem:remainder}
+If \(m\geq2\), then \(G_m-c_i\in\D_0\) for every \(i\in L_m\).
+\end{lemma}
+\begin{proof}
+Fix a type \(j\). We will retain \(x_{j,i}\) and fold every
+\(x_{j,h}\) with \(h\ne i\) onto it. The two auxiliaries have the
+same neighbours in \(A\) and among other types. Within their own
+type, their closed neighbourhoods agree because the copies form
+a clique. The only difference in their closed neighbourhoods in
+\(G_m-c_i\) comes from the centres: \(x_{j,i}\) is adjacent to all
+remaining centres, while \(x_{j,h}\) is not adjacent to \(c_h\).
+Hence
+\[
+ N_{G_m-c_i}[x_{j,h}]\subseteq N_{G_m-c_i}[x_{j,i}].
+\]
+By Lemma~\ref{lem:dom}, this inclusion permits the fold. We perform
+these folds for every type. The inclusions persist after earlier
+deletions, and all the targets are retained. The vertices left are
+those of \(A\), the auxiliaries of layer \(i\), and the \(m-1\) other
+centres. Each of these centres is adjacent to every other remaining
+vertex. Since \(m\geq2\), there is at least one such centre, so the
+remainder is a cone and folds to a single vertex.
+\end{proof}
+
+With only one layer, deleting \(p\) leaves no centre to serve as an
+apex. We will therefore put a separate hypothesis on \(B-p\).
+
+\subsection{An obstruction that changes sign}
+To rule out a non-central vertex as a first deletion, we will check
+whether the clique complex of its neighbourhood graph has Euler
+characteristic different from one. We express this test through clique
+counts. A \defi{clique} is a set of pairwise adjacent vertices. For a graph
+\(H\), let \(c_t(H)\) count its cliques of cardinality \(t\), including
+the empty clique, so \(c_0(H)=1\). Set
+\[
+ C_H(z)=\sum_{t\geq0}c_t(H)z^t,
+ \qquad q(H)=C_H(-1).
+\]
+The sum is finite, and \(q(\varnothing)=1\). In terms of the \defi{clique
+complex} \(\Cl(H)\), whose faces are the cliques of \(H\),
+\begin{equation}\label{eq:euler}
+ q(H)=1-\chi(\Cl(H))=-\widetilde\chi(\Cl(H)).
+\end{equation}
+Here \(\chi\) sums over the non-empty faces: a clique of cardinality
+\(t\geq1\) contributes \((-1)^{t-1}\). We use the reduced convention
+\(\widetilde\chi=\chi-1\), including
+\(\widetilde\chi(\Cl(\varnothing))=-1\).
+We will prove that \(q\) vanishes on every dismantling class, so a
+non-zero value in a neighbourhood graph rules out deleting its
+vertex. The vertex-deletion recurrence for the \defi{clique
+polynomial}~\cite{HL1994} lets us follow \(q\) through a reduction.
+
+\begin{lemma}\label{lem:qrec}
+For every vertex \(v\) of a graph \(H\),
+\[
+ C_H(z)=C_{H-v}(z)+zC_{\Nb{H}{v}}(z),
+ \qquad q(H)=q(H-v)-q(\Nb{H}{v}).
+\]
+A cone has \(q=0\), and a fold preserves \(q\).
+\end{lemma}
+\begin{proof}
+Partition the cliques of \(H\) according to whether they contain
+\(v\). Those that omit \(v\) are exactly the cliques of \(H-v\).
+Removing \(v\) from each clique that contains it gives a clique of
+\(\Nb{H}{v}\), and adjoining \(v\) reverses the operation. Since
+adjoining \(v\) increases the cardinality by one, these cliques
+contribute the term \(zC_{\Nb{H}{v}}(z)\) in the polynomial identity.
+Evaluating at \(z=-1\) gives the recurrence for \(q\).
+
+In a cone, pair each clique that omits the apex with the clique
+obtained by adjoining the apex. The paired contributions to \(q\)
+cancel. By Lemma~\ref{lem:dom}, a vertex \(v\) deleted by a fold has
+a cone as its neighbourhood graph. The recurrence thus gives
+\(q(H)=q(H-v)\) for that deletion.
+\end{proof}
+
+The cone calculation provides the base case for an induction on
+the dismantling level.
+
+\begin{lemma}\label{lem:qobstruction}
+If \(H\in\D_r\) for an integer \(r\geq-1\), then \(q(H)=0\).
+Consequently, \(q(H)\ne0\) excludes \(H\) from every such class.
+\end{lemma}
+\begin{proof}
+The case \(r=-1\) follows from Lemma~\ref{lem:qrec}, since
+\(\D_{-1}\) consists of cones. For \(r\geq0\), suppose that \(q\)
+vanishes on \(\D_{r-1}\) and take a reduction of \(H\) at level \(r\).
+At each deletion, the neighbourhood graph in the current graph
+belongs to \(\D_{r-1}\). Its value of \(q\) is zero, so the recurrence
+shows that the deletion preserves \(q\). The reduction ends at
+\(K_1\), with \(q(K_1)=1-1=0\). Hence \(q(H)=0\).
+\end{proof}
+
+A zero value of \(q\) leaves membership undecided. To exclude the
+non-central vertices we need non-zero values on their neighbourhood
+graphs. It suffices to compute \(q\) on the neighbourhood graphs of
+the seed vertices and the auxiliaries in the first extension \(B\),
+because adding a layer changes the sign of the corresponding values.
+For \(a\in V(A)\) and \(j\in T\), write
+\[
+ \alpha_a=q(\Nb{B}{a}),\qquad \beta_j=q(\Nb{B}{x_j}).
+\]
+
+\begin{lemma}\label{lem:euler-links}
+For arbitrary seed, profiles and type graph, and every \(m\geq1\),
+\begin{align}
+ q(\Nb{G_m}{a})&=(-1)^{m-1}\alpha_a
+       &&(a\in V(A)),\label{eq:fixed-euler}\\
+ q(\Nb{G_m}{x_{j,i}})&=(-1)^{m-1}\beta_j
+       &&(j\in T,\ i\in L_m).\label{eq:aux-euler}
+\end{align}
+\end{lemma}
+\begin{proof}
+We argue by induction on \(m\). For \(m=1\), both assertions follow
+from the definitions of \(\alpha_a\) and \(\beta_j\). Let \(m\geq2\)
+and assume the formulas hold at \(m-1\). In each case \(H\) is
+the neighbourhood graph of a non-central vertex. We apply the
+recurrence inside \(H\) to a centre of \(G_m\) that lies in \(H\).
+We choose that centre so that
+deleting it leaves a graph with \(q=0\). The remaining term in
+the recurrence is then the negative of \(q\) on the centre's
+neighbourhood graph in \(H\).
+
+First fix \(a\in V(A)\) and put \(H=\Nb{G_m}{a}\). Its vertices
+are the neighbours of \(a\) in \(A\), all the centres, and all
+copies of each type \(j\) with \(a\in P_j\). We may choose any
+layer \(i\), since \(H\) contains every centre. In \(H-c_i\),
+fold \(x_{j,h}\) onto \(x_{j,i}\) for each of the types present and
+every \(h\ne i\). The closed-neighbourhood inclusions from the
+proof of Lemma~\ref{lem:remainder} still hold upon restriction to
+\(H-c_i\), and every target is present and retained. Once these
+folds are done, each of the remaining centres is an apex. At
+least one remains because \(m\geq2\). If no auxiliary type is
+present, the same observation gives an apex without any folds.
+Since folds preserve \(q\) and the resulting cone has \(q=0\),
+we have \(q(H-c_i)=0\).
+
+To identify the other term of the recurrence, take the common
+neighbours of \(a\) and \(c_i\) in \(G_m\). These are the neighbours
+of \(c_i\) in \(H\), and also the neighbours of \(a\) in the
+neighbourhood graph of \(c_i\) in \(G_m\). The isomorphism of
+Lemma~\ref{lem:centre} fixes \(a\), so the graph induced by these
+vertices is isomorphic to \(\Nb{G_{m-1}}{a}\). Thus the recurrence
+inside \(H\) gives
+\[
+ q(\Nb{G_m}{a})=-q(\Nb{G_{m-1}}{a}).
+\]
+Induction proves~\eqref{eq:fixed-euler}.
+
+Now fix a type \(j\) and a layer \(i\), and put
+\(H=\Nb{G_m}{x_{j,i}}\). The vertices of \(H\) are those of
+\(A[P_j]\), all copies of the types adjacent to \(j\) in \(R\),
+the copies \(x_{j,t}\) with \(t\ne i\), and the centres \(c_t\)
+with \(t\ne i\). Choose \(h\in L_m\) with \(h\ne i\). Both \(c_h\)
+and \(x_{j,h}\) belong to \(H\). In this list, \(x_{j,h}\) is
+adjacent to every seed vertex and every other auxiliary, and
+among the centres it omits only \(c_h\). Hence \(x_{j,h}\) is an
+apex of \(H-c_h\), and \(q(H-c_h)=0\).
+
+The graph \(\Nb{H}{c_h}\) is induced by the common neighbours of
+\(x_{j,i}\) and \(c_h\). In the neighbourhood graph of \(c_h\) in
+\(G_m\), these are the neighbours of \(x_{j,i}\).
+The isomorphism of Lemma~\ref{lem:centre} renumbers layer \(i\)
+as \(\rho_h(i)\), so it identifies this graph with
+\(\Nb{G_{m-1}}{x_{j,\rho_h(i)}}\). The recurrence gives
+\[
+ q(\Nb{G_m}{x_{j,i}})
+ =-q(\Nb{G_{m-1}}{x_{j,\rho_h(i)}}).
+\]
+At \(m-1\) the induction hypothesis applies to the auxiliary of
+type \(j\) in every layer, including the layer with index \(\rho_h(i)\).
+This proves~\eqref{eq:aux-euler}.
+\end{proof}
+
+In both cases, deleting a suitable centre from the neighbourhood
+graph leaves a remainder with \(q=0\). The other term of the
+recurrence is the value on the corresponding neighbourhood one
+layer earlier, taken with a minus sign. In the auxiliary case the
+remainder is already a cone, while for a seed vertex folds may be
+needed.
+
+\subsection{Strict levels in the layer construction}
+The seed determines the level at which we can first delete \(p\).
+To finish the reduction of \(B\) we need a hypothesis on \(B-p\),
+and to exclude first deletions away from \(p\) we need the
+Euler test in \(B\). Section~\ref{sec:homology} replaces this Euler obstruction by non-zero reduced homology. Lemmas~\ref{lem:remainder}
+and~\ref{lem:euler-links} carry the corresponding arguments through
+all subsequent layers.
+
+\begin{theorem}\label{thm:template}
+Let \(G_m\) be the layer construction above, with \(B=G_1\) and
+\(p=c_0\). Suppose that, for some integer \(s\geq0\),
+\begin{enumerate}
+\item \(A\in\D_s\setminus\D_{s-1}\);
+\item \(B-p\in\D_s\);
+\item \(q(\Nb{B}{v})\ne0\) for every \(v\in V(B)\setminus\{p\}\).
+\end{enumerate}
+Then, for every integer \(m\geq0\),
+\[
+ G_m\in\D_{s+m}\setminus\D_{s+m-1},\qquad
+ |V(G_m)|=|V(A)|+(d+1)m.
+\]
+\end{theorem}
+\begin{proof}
+We first rule out non-central vertices as candidates for a first
+deletion. By hypothesis~(3) and Lemma~\ref{lem:euler-links}, their
+neighbourhood graphs in \(G_m\) have non-zero \(q\) whenever
+\(m\geq1\). By Lemma~\ref{lem:qobstruction}, none of these graphs
+belongs to a dismantling class. Only centres can start a reduction.
+
+For \(m=0\), hypothesis~(1) gives the strict level of the seed.
+In \(G_1=B\), the neighbourhood graph of \(p\) is \(A\in\D_s\),
+so \(p\) is eligible at level \(s+1\). By hypothesis~(2), the
+remainder \(B-p\) belongs to \(\D_s\subseteq\D_{s+1}\), so the
+reduction can be completed at level \(s+1\). At level \(s\), the only
+candidate for a first deletion is \(p\). Its neighbourhood graph
+is outside \(\D_{s-1}\) by hypothesis~(1), so the deletion is
+forbidden. For \(s=0\) this says that the neighbourhood graph is
+not a non-empty cone. Since \(B\) has more than one vertex,
+Lemma~\ref{lem:first} gives \(B\notin\D_s\).
+
+Now suppose \(m\geq2\) and assume that \(G_{m-1}\) has strict level
+\(s+m-1\). By Lemma~\ref{lem:centre}, the neighbourhood graph of
+any centre of \(G_m\) is isomorphic to \(G_{m-1}\). We may therefore
+delete a centre at level \(s+m\) and then use the folds of
+Lemma~\ref{lem:remainder} to complete the reduction, since
+\(\D_0\subseteq\D_{s+m}\). At level \(s+m-1\), a centre would
+need its neighbourhood graph in \(\D_{s+m-2}\). The inductive
+hypothesis rules this out, and the Euler obstruction has already
+excluded the non-central vertices. Thus there is no eligible first
+deletion, and \(G_m\) has more than one vertex.
+Lemma~\ref{lem:first} gives \(G_m\notin\D_{s+m-1}\).
+The order formula is~\eqref{eq:general-order}.
+\end{proof}
+
+\begin{remark}\label{rem:rest-hypothesis}
+The proof uses the remainder hypothesis only to obtain
+\(B-p\in\D_{s+1}\) in the first step. Thus the conclusion also
+holds if hypothesis~(2) is replaced by this weaker condition, while
+hypotheses~(1) and~(3) are unchanged.
+\end{remark}
+
+Each layer contributes a centre and \(d\) auxiliaries. The Euler
+criterion itself puts a lower bound on \(d\). If the seed and
+the remainder both belong to dismantling classes, the neighbourhood
+graph of a sole auxiliary has \(q=0\).
+
+\begin{proposition}\label{thm:cost-per-layer}
+Any data satisfying the hypotheses of Theorem~\ref{thm:template}
+have \(d\geq2\). Thus this construction with its Euler obstruction
+adds at least three vertices per layer. The same conclusion holds
+under the weaker remainder hypothesis of Remark~\ref{rem:rest-hypothesis}.
+\end{proposition}
+\begin{proof}
+The definition takes \(d\geq1\). Even if we allowed \(d=0\),
+the first extension would consist of \(A\) and its new universal
+centre \(p\). Since \(A\) is non-empty, choose \(a\in V(A)\).
+Then \(p\) is an apex of \(\Nb{B}{a}\), including when \(a\)
+has no neighbours in \(A\). By Lemma~\ref{lem:qrec},
+\(q(\Nb{B}{a})=0\), in contradiction to hypothesis~(3).
+
+For \(d=1\), the sole auxiliary \(x_0\) has neighbourhood graph
+\(A[P_0]\) both in \(B\) and in \(B-p\). Deleting \(x_0\) from
+\(B-p\) leaves \(A\). Applying Lemma~\ref{lem:qrec} to this
+deletion gives
+\[
+ q(B-p)=q(A)-q(A[P_0]).
+\]
+By hypotheses~(1) and~(2), both \(A\) and \(B-p\) belong to
+dismantling classes, so \(q(A)=q(B-p)=0\) by
+Lemma~\ref{lem:qobstruction}. The displayed identity then gives
+\(q(\Nb{B}{x_0})=q(A[P_0])=0\), in contradiction to hypothesis~(3).
+The same calculation applies when \(B-p\in\D_{s+1}\), since \(q\)
+vanishes on that class as well.
+\end{proof}
+
+The bound applies to the layer construction under its Euler hypotheses.
+The family $F_k$ of the article has two auxiliary types and attains this
+cost of three vertices per layer. Appendix~\ref{sec:article} records its
+finite data; the next two sections give the other two applications.

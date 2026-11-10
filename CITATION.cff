@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying article and the release used for the supplementary data and calculations."
+type: software
+title: "Constructions and finite verifications for strict dismantling levels"
+version: 1.0.0
+authors:
+  - family-names: Espinoza
+    given-names: Jesús F.
+    orcid: "https://orcid.org/0000-0001-5601-3634"
+  - family-names: Frías-Armenta
+    given-names: Martín Eduardo
+    orcid: "https://orcid.org/0000-0002-7687-1270"
+  - family-names: Hernández-Amador
+    given-names: Rosalía G.
+    orcid: "https://orcid.org/0000-0001-9657-7012"
+  - family-names: Hernández-Hernández
+    given-names: Héctor A.
+    orcid: "https://orcid.org/0000-0002-4046-4841"
+repository-code: "https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs"
+url: "https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/tag/v1.0.0"
+license:
+  - MIT
+  - CC-BY-4.0
+abstract: "Supplementary proofs, graph data, finite certificates and reproducible calculations accompanying Linear-size graphs at every strict dismantling level."

@@ -1,0 +1,438 @@
+\section{Completing kernels with two auxiliary types}\label{sec:kernels}
+The family $F_k$ adds only two auxiliaries per layer. For this case we can
+understand the neighbourhood obstructions by removing certain edges from the
+seed. We first introduce the homology used to compare the resulting graphs,
+then derive the identities and apply them to the eleven-vertex seed.
+
+\subsection{Homology for the comparison}
+A non-zero reduced homology group excludes a graph from every dismantling
+class. We give the chain conventions and the elementary facts used in this
+section and in Section~\ref{sec:homology}; in particular, empty
+neighbourhoods must remain visible in degree $-1$.
+\input{sections/homological_tools}
+
+\subsection{The extension and its kernel}
+In a construction with two auxiliary types joined by an edge, the profiles
+determine which seed edges contribute to the homological obstructions.
+Let \(A\) be a non-empty graph, and choose \(S,T\subseteq V(A)\).
+Form \(B\) by adding vertices \(p,x,y\). The centre \(p\) is adjacent
+to all of \(A\) and to neither auxiliary vertex. The neighbours of \(x\) in \(A\) are exactly \(S\), those of \(y\) are exactly \(T\), and \(xy\) is an edge.
+The induced graph on \(A\) remains unchanged.
+
+\begin{lemma}\label{ker:lem:cover}
+If every non-central neighbourhood of \(B\) has non-trivial
+reduced homology, then \(S\cup T=V(A)\).
+The same conclusion holds if \(q(L_B(v))\ne0\) for every
+\(v\ne p\), where \(q(H)=1-\chi(\Cl(H))\).
+\end{lemma}
+\begin{proof}
+If \(a\notin S\cup T\), then its neighbours in \(B\) are \(N_A(a)\)
+and \(p\). The centre is an apex of \(L_B(a)\).
+This cone has zero reduced homology and \(q=0\), contradicting
+either condition.
+\end{proof}
+
+Henceforth assume \(S\cup T=V(A)\), and put
+\[
+ S_0=S\setminus T,\qquad T_0=T\setminus S,\qquad Z=S\cap T.
+\]
+Define \(H\) by deleting from \(A\) all its edges between \(S_0\)
+and \(T_0\), and no others. We call \(H\) the \defi{kernel of these profile data}. This name describes an operation on edges; it does
+not impose a homological property on \(H\).
+
+Set
+\[
+ K=\Cl(A),\quad X=\Cl(A[S]),\quad Y=\Cl(A[T]),\quad
+ W=\Cl(A[Z]),\quad U=\Cl(H).
+\]
+Every clique of \(H\) is contained in \(S\) or in \(T\), since it
+cannot meet both \(S_0\) and \(T_0\). Conversely every clique contained
+in \(S\) or in \(T\) survives the edge deletions. Therefore
+\begin{equation}\label{ker:eq:kernel}
+ U=X\cup Y,\qquad W=X\cap Y.
+\end{equation}
+In particular this union is a clique complex, even if it is smaller
+than \(K\).
+
+\subsection{The two auxiliary stars}
+
+To compare the seed, its extension and the remainder, we group the faces containing auxiliary vertices. For a vertex \(z\) outside a complex \(J\), \(z*J\) denotes its cone.
+Define the subcomplex
+\begin{equation}\label{ker:eq:V}
+ V=(x*X)\cup\bigl(y*(Y\cup(x*W))\bigr).
+\end{equation}
+It consists of all faces using an auxiliary vertex together with
+their subfaces. Its two displayed pieces are cones and their
+intersection is \(x*W\), also a cone. This intersection contains
+the vertex \(x\), even when \(W=\{\varnothing\}\).
+By Lemma~\ref{hom:lem:union}, \(V\) is acyclic.
+The faces of \(V\) on the original vertices are exactly \(X\cup Y\).
+Consequently
+\begin{equation}\label{ker:eq:decompositions}
+ \Cl(B)=(p*K)\cup V,\qquad
+ \Cl(B-p)=K\cup V,\qquad
+ (p*K)\cap V=K\cap V=U.
+\end{equation}
+These are equalities of complexes.
+
+\begin{proposition}\label{ker:prop:global}
+For every integer \(t\),
+\[
+ \Ht_t(\Cl(B))\cong\Ht_{t-1}(U).
+\]
+If \(K\) is acyclic, then also
+\[
+ \Ht_t(\Cl(B-p))\cong\Ht_{t-1}(U).
+\]
+Under this extra hypothesis, \(\Cl(B-p)\) is acyclic if and only if
+\(U\) is acyclic.
+\end{proposition}
+\begin{proof}
+The two pieces in the first decomposition of
+\eqref{ker:eq:decompositions} are acyclic and intersect in \(U\).
+Apply Lemma~\ref{hom:lem:union}. For the second decomposition the same
+argument applies when \(K\) is acyclic. The shift covers every
+possible non-zero degree; hence the last equivalence follows.
+\end{proof}
+
+For a seed \(A\in\D_s\), membership of \(B-p\) in a dismantling
+class therefore implies acyclicity of the kernel. The converse
+statement about membership does not follow: the proposition
+characterises acyclicity of the remainder, not its dismantling level.
+
+\subsection{Original and auxiliary neighbourhoods}
+
+The global decomposition also applies within each neighbourhood. For an original vertex, its intersection is the neighbourhood complex in the kernel.
+
+\begin{theorem}\label{ker:thm:original-links}
+For every \(a\in V(A)\) and every integer \(t\),
+\[
+ \Ht_t(\Cl(L_B(a)))
+ \cong \Ht_{t-1}(\Cl(L_H(a))).
+\]
+\end{theorem}
+\begin{proof}
+Put \(K_a=\Cl(A[N_A(a)])\).
+If \(a\in S_0\), its neighbourhood in \(B\) contains \(p,x\) but
+not \(y\), and
+\[
+ \Cl(L_B(a))=(p*K_a)\cup(x*X_a),\qquad
+ X_a=\Cl(A[N_A(a)\cap S]).
+\]
+Both pieces are cones and their intersection is \(X_a\).
+The edge deletions defining \(H\) remove exactly the neighbours
+of \(a\) in \(T_0\). Edges among its remaining neighbours in \(S\)
+are unchanged. Thus \(X_a=\Cl(L_H(a))\), and
+Lemma~\ref{hom:lem:union} proves the assertion. The case \(a\in T_0\)
+is obtained by exchanging the two profiles and auxiliaries.
+
+If \(a\in Z\), none of the edges incident to \(a\) is deleted.
+The neighbourhood contains both auxiliaries. Restrict the
+construction \eqref{ker:eq:V} to \(N_A(a)\), writing
+\[
+ X_a=\Cl(A[N_A(a)\cap S]),\quad
+ Y_a=\Cl(A[N_A(a)\cap T]),\quad
+ W_a=X_a\cap Y_a .
+\]
+The resulting complex \(V_a\) is acyclic by the same union-of-cones
+argument. Now \(\Cl(L_B(a))=(p*K_a)\cup V_a\), with intersection
+\(X_a\cup Y_a\). The proof of \eqref{ker:eq:kernel}, restricted to
+\(N_A(a)\), identifies this intersection with \(\Cl(L_H(a))\).
+Lemma~\ref{hom:lem:union} again applies.
+Augmented chains cover all possible empty neighbourhoods.
+\end{proof}
+
+The auxiliary neighbourhoods have the exact descriptions
+\begin{equation}\label{ker:eq:auxiliary-complexes}
+ \Cl(L_B(x))=X\cup(y*W),\qquad
+ \Cl(L_B(y))=Y\cup(x*W).
+\end{equation}
+They do not contain \(p\).
+
+\begin{lemma}\label{ker:lem:intersection-map}
+If \(U=X\cup Y\) is acyclic, the inclusions induce isomorphisms
+\[
+ \Ht_t(W)\ \longrightarrow\ \Ht_t(X)\oplus\Ht_t(Y)
+\]
+for all integers \(t\).
+\end{lemma}
+\begin{proof}
+For surjectivity, let \(a,b\) be cycles in \(X,Y\).
+Since \(a+b\) is a cycle in \(U\), it bounds a chain
+\(w=w_X+w_Y\) there. Then
+\(z=a+\partial w_X=b+\partial w_Y\) is a cycle in \(W\)
+representing the prescribed pair of homology classes.
+For injectivity, suppose a cycle \(z\) in \(W\) bounds chains
+\(u\) in \(X\) and \(v\) in \(Y\). The cycle \(u+v\) bounds
+\(w=w_X+w_Y\) in \(U\). The chain
+\(u+\partial w_X=v+\partial w_Y\) lies in \(W\) and has
+boundary \(z\). These arguments apply in degree \(-1\) as well,
+using the augmentation, and lower degrees are zero.
+\end{proof}
+
+When the kernel is acyclic, the auxiliary neighbourhoods are controlled by the opposite profile subgraphs.
+
+\begin{theorem}\label{ker:thm:auxiliary-links}
+If \(U\) is acyclic, then for every integer \(t\),
+\[
+ \Ht_t(\Cl(L_B(x)))\cong\Ht_{t-1}(Y),\qquad
+ \Ht_t(\Cl(L_B(y)))\cong\Ht_{t-1}(X).
+\]
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{ker:lem:intersection-map}, the map
+\(\Ht_r(W)\to\Ht_r(X)\) is surjective and its kernel is
+isomorphic to \(\Ht_r(Y)\): under the lemma's isomorphism
+it is the projection onto the first summand.
+
+For \(t\geq0\), write a cycle of \(X\cup(y*W)\) as \(u+y*w\).
+The equations for being a cycle are
+\(\partial w=0\) and \(\partial u=w\).
+Assign to it the class of \(w\), which lies in the kernel of
+\(\Ht_{t-1}(W)\to\Ht_{t-1}(X)\).
+The assignment respects boundaries: the boundary of \(a+y*b\)
+changes \(w\) by \(\partial b\).
+Every class in that kernel has a filling \(u\) in \(X\), so
+the assignment is surjective.
+
+If \(w=\partial d\) in \(W\), adding
+\(\partial(y*d)=d+y*\partial d\) leaves the cycle \(u+d\) in \(X\).
+Surjectivity of \(\Ht_t(W)\to\Ht_t(X)\) lets us replace this
+cycle, modulo a boundary in \(X\), by a cycle in \(W\).
+That cycle bounds in the cone \(y*W\).
+The original cycle therefore bounds in \(X\cup(y*W)\),
+proving injectivity. Its homology in degree \(-1\) is zero
+because it contains \(y\); the claimed right side then has
+degree \(-2\) and is also zero. Lower degrees vanish.
+Use \eqref{ker:eq:auxiliary-complexes} and exchange \(X,Y\)
+for the second identity.
+\end{proof}
+
+\subsection{Equivalent finite conditions and their Euler form}
+
+Here the layer construction of Section~\ref{sec:construction} has
+$d=2$, $R=K_2$ and profiles $S,T$. We may therefore write the auxiliaries
+as $x_i,y_i$, and $|V(G_m)|=|V(A)|+3m$. The identities just proved separate
+the obstructions on original vertices from those on the two auxiliary types.
+
+\begin{theorem}\label{ker:thm:equivalence}
+Assume \(S\cup T=V(A)\), \(s\geq0\),
+\(A\in\D_s\setminus\D_{s-1}\), and \(B-p\in\D_{s+1}\).
+Then the following are equivalent:
+\begin{enumerate}
+\item Every non-central neighbourhood \(L_B(v)\), \(v\ne p\),
+has non-trivial reduced homology.
+\item The clique complex of the kernel \(H\) is acyclic, every \(L_H(a)\),
+\(a\in V(A)\), has non-trivial reduced homology, and both
+\(A[S]\) and \(A[T]\) have non-trivial reduced homology.
+\end{enumerate}
+Either condition implies
+\[
+ G_m\in\D_{s+m}\setminus\D_{s+m-1}\quad(m\geq0).
+\]
+\end{theorem}
+\begin{proof}
+The seed and remainder hypotheses imply acyclicity of \(K\) and
+\(\Cl(B-p)\). Proposition~\ref{ker:prop:global} then implies
+acyclicity of \(U=\Cl(H)\).
+Theorem~\ref{ker:thm:original-links} gives equivalence of the
+conditions on original vertices. Theorem~\ref{ker:thm:auxiliary-links}
+gives equivalence of those on the auxiliaries.
+Under condition (1), the data satisfy precisely the homological
+criterion in Theorem~\ref{hom:thm:criterion}, which applies to
+the displayed layered construction and proves strictness at
+every subsequent level.
+\end{proof}
+
+The remainder hypothesis is present on both sides of this
+equivalence. Acyclicity of the kernel is redundant under that
+hypothesis, but states explicitly the property needed when
+starting with a kernel. It cannot replace the remainder hypothesis.
+Lemma~\ref{ker:lem:cover} gives the covering condition on the profiles.
+
+For any finite complex \(J\) put
+\(q(J)=\sum_{\sigma\in J}(-1)^{|\sigma|}\), including the empty
+face, and abbreviate \(q(\Cl(H))\) as \(q(H)\).
+Inclusion--exclusion and the zero value on cones give identities
+without homological assumptions.
+
+\begin{proposition}\label{ker:prop:euler}
+For the profile data above,
+\begin{align}
+ q(B)&=-q(H),&
+ q(B-p)&=q(A)-q(H),\label{ker:eq:global-q}\\
+ q(L_B(a))&=-q(L_H(a)) &&(a\in V(A)),\label{ker:eq:fixed-q}\\
+ q(L_B(x))&=q(A[S])-q(A[Z]),&
+ q(L_B(y))&=q(A[T])-q(A[Z]).\label{ker:eq:aux-q}
+\end{align}
+If \(q(H)=0\), the last line becomes
+\[
+ q(L_B(x))=-q(A[T]),\qquad
+ q(L_B(y))=-q(A[S]).
+\]
+\end{proposition}
+\begin{proof}
+In \eqref{ker:eq:V}, both pieces and their intersection are cones,
+so \(q(V)=0\). Apply inclusion--exclusion to
+\eqref{ker:eq:decompositions} to obtain \eqref{ker:eq:global-q}.
+The decompositions used to prove
+Theorem~\ref{ker:thm:original-links} likewise have pieces of
+zero \(q\) and intersection \(\Cl(L_H(a))\), yielding
+\eqref{ker:eq:fixed-q}.
+Apply inclusion--exclusion to \eqref{ker:eq:auxiliary-complexes}
+to obtain \eqref{ker:eq:aux-q}.
+Finally \eqref{ker:eq:kernel} gives
+\(q(H)=q(A[S])+q(A[T])-q(A[Z])\).
+\end{proof}
+
+In particular, under \(A\in\D_s\setminus\D_{s-1}\) and
+\(B-p\in\D_s\), both have \(q=0\), so \(q(H)=0\).
+The non-zero Euler conditions on all non-central neighbourhoods
+of \(B\) are then equivalent to
+\[
+ q(L_H(a))\ne0\quad\hbox{for all }a\in V(A),\qquad
+ q(A[S])\ne0,\quad q(A[T])\ne0.
+\]
+This is the kernel formulation of Theorem~\ref{thm:template}. The identities remain valid if the remainder
+is only assumed to lie in \(\D_{s+1}\), as in its separate
+relaxation. The equality \(q=0\) is not used as a
+test for acyclicity or dismantlability.
+
+One further necessary condition can be read from
+Lemma~\ref{ker:lem:intersection-map}. If \(S,T,Z\) are non-empty
+and \(H\) is acyclic, the numbers of connected components satisfy
+\[
+ c(A[Z])=c(A[S])+c(A[T])-1.
+\]
+Indeed, take dimensions in degree zero and use
+\(\dim\Ht_0=c-1\).
+This numerical equality alone does not imply acyclicity; even
+agreement of dimensions in all degrees would not establish that
+the inclusion maps in the lemma are isomorphisms.
+
+\subsection{Completing one edge and reducing the remainder}
+
+The case of a single added edge lets us give an explicit reduction of the remainder. Suppose \(H\) is a graph, \(ab\) is a non-edge, and
+\[
+ A=H+ab,\qquad S=V(H)\setminus\{b\},\qquad
+ T=V(H)\setminus\{a\}.
+\]
+Here \(S_0=\{a\}\) and \(T_0=\{b\}\), so deleting the edges between
+the exclusive profile parts recovers exactly \(H\).
+
+\begin{lemma}\label{ker:lem:delete-vertex}
+If \(\Cl(H)\) is acyclic, inclusion induces
+\[
+ \Ht_t(\Cl(L_H(v)))\cong\Ht_t(\Cl(H-v))
+\]
+for every vertex \(v\) and every integer \(t\).
+\end{lemma}
+\begin{proof}
+Write \(U=\Cl(H-v)\), \(V=v*\Cl(L_H(v))\) and
+\(W=U\cap V=\Cl(L_H(v))\). The union is acyclic by hypothesis,
+and \(V\) is a cone. The same chain argument as in
+Lemma~\ref{ker:lem:intersection-map}, now with the acyclic union
+\(U\cup V=\Cl(H)\), shows that
+\(\Ht_t(W)\to\Ht_t(U)\oplus\Ht_t(V)\) is an isomorphism.
+The second summand is zero.
+\end{proof}
+
+Thus, if \(H\) is acyclic and all its neighbourhoods have
+non-trivial reduced homology, then both \(A[S]=H-b\) and
+\(A[T]=H-a\) have non-trivial reduced homology.
+The remaining obligations for
+Theorem~\ref{ker:thm:equivalence} are the strict level of the completed
+seed and the required level of \(B-p\).
+
+There is a useful sufficient condition for the latter.
+For disjoint graphs \(C,J\), write \(C\star J\) for their
+\defi{complete join}.
+
+\begin{lemma}\label{ker:lem:join}
+If \(C\in\D_j\), \(j\geq-1\), then
+\(C\star J\in\D_j\) for every graph \(J\).
+\end{lemma}
+\begin{proof}
+For \(j=-1\), an apex of \(C\) remains universal.
+Induct on \(j\). Follow a level-\(j\) reduction of \(C\).
+The neighbourhood of a deleted vertex in the join is the join
+of its current neighbourhood in \(C\) with \(J\), and belongs
+to \(\D_{j-1}\) by induction. When only one vertex of \(C\)
+remains, the join is a cone and reduces at level zero, hence at
+level \(j\). This proves the assertion for \(j\geq0\).
+\end{proof}
+
+\begin{proposition}\label{ker:prop:remainder-folds}
+For the one-edge completion, put
+\[
+ C=H[N_H(a)\cap N_H(b)].
+\]
+The remainder \(B-p\) folds onto \(C\star C_4\), where the cycle
+has vertices \(a,b,y,x\) in this order.
+Consequently, if \(C\in\D_j\) for some \(j\geq0\), then
+\(B-p\in\D_j\).
+\end{proposition}
+\begin{proof}
+Every \(z\notin\{a,b\}\) that is not adjacent to \(a\) in \(H\)
+is dominated by \(y\) in \(B-p\). Indeed \(y\) is adjacent to
+every vertex except \(a\), and \(a\) is not in the closed
+neighbourhood of \(z\). Likewise, a vertex not adjacent to \(b\)
+is dominated by \(x\).
+Delete all vertices outside \(C\cup\{a,b,x,y\}\), retaining
+\(a,b,x,y\) and the common neighbours. Each chosen domination
+inclusion remains true after restricting to the vertices still
+present.
+
+In the remaining graph, the edges on \(\{a,b,x,y\}\) are exactly
+\(ab,by,yx,xa\), and every vertex of \(C\) is adjacent to these
+four vertices. Its induced graph is unchanged from \(H\).
+The remainder is therefore \(C\star C_4\).
+If \(C\in\D_j\), Lemma~\ref{ker:lem:join} gives
+\(C\star C_4\in\D_j\). Prepending the displayed folds is valid
+at level \(j\) by nesting of the classes.
+\end{proof}
+
+If \(C\) is a cone, the proposition applies with \(j=0\).
+The argument gives a sufficient certificate of the remainder.
+It does not assert that a failure to dismantle \(C\) at a chosen
+level excludes membership of \(B-p\) at that level.
+In particular, an unsuccessful sufficient test must not replace
+the original remainder condition in the equivalence theorem.
+
+\subsection{The completion underlying the eleven-vertex seed}
+
+Define the completed seed \(A\) on \(0,\ldots,10\) by
+Table~\ref{ker:tab:seed}. It has thirty-three edges.
+The pair \(\{1,2\}\) is an edge; define
+\(V(H)=V(A)\) and \(E(H)=E(A)\setminus\{\{1,2\}\}\).
+Then \(H\) has thirty-two edges and eleven vertices.
+For the profiles \(S=V(A)\setminus\{2\}\) and
+\(T=V(A)\setminus\{1\}\), the exclusive parts are
+\(\{1\}\) and \(\{2\}\), respectively. Hence this \(H\) is
+exactly the kernel of the profile data, and adding the single edge
+\(\{1,2\}\) to \(H\) gives \(A\).
+
+\begin{table}[htbp]
+\centering
+\caption{The complete adjacency data of the completed seed \(A\).}
+\label{ker:tab:seed}\label{tab:seed-adjacency}
+\input{../data/article_tables/seed_adjacency}
+\end{table}
+
+This is the completed seed $F_1$ used in the article. The reductions of
+Appendix~\ref{sec:article} establish its strict level and dismantle $B-p$.
+The homology calculation gives
+\[
+ \Ht_*(\Cl(H))=0,\qquad
+ \dim_{\F}\Ht_1(\Cl(L_H(v)))=
+ \begin{cases}2,&v=10,\\1,&v\ne10,\end{cases}
+\]
+with all other reduced homology groups of these neighbourhoods zero.
+Moreover, $N_H(1)\cap N_H(2)=\{5,6,7,9,10\}$ induces a dismantlable graph.
+Thus the kernel identities describe the non-central obstructions of this
+particular completion as well as its edge set.
+\runcheck{kernels}
+The report reconstructs $H$ by removing $\{1,2\}$, restores the seed by adding
+that edge, computes the displayed homology groups over $\F$, and checks the
+common-neighbour graph. It also compares the homology of each neighbourhood
+in $H$ with the degree-shifted group in $B$.

@@ -1,0 +1,185 @@
+\section{The article's eleven-vertex seed and its extension}\label{sec:article}\label{sec:example}\label{sec:seed3k8}
+The seed $F_1=A$ is given in Table~\ref{ker:tab:seed}. Here we record the
+finite reductions and Euler obstructions that prove the $3k+8$ family.
+Its profiles and type graph are
+\begin{equation}\label{eq:seed-profiles}
+ P_0=V(A)\setminus\{2\},\qquad P_1=V(A)\setminus\{1\},\qquad R=K_2.
+\end{equation}
+The first extension $F_2=B$ adds $p,x,y$, with $p$ adjacent to every seed
+vertex and to neither auxiliary. The vertex $x$ is adjacent to $P_0$, the
+vertex $y$ to $P_1$, and $xy$ is an edge. Thus $A$ has eleven vertices and
+thirty-three edges, while $B$ has fourteen vertices and sixty-five edges.
+The figures below use the same incidences and labels as those in the article.
+
+\begin{figure}[htbp]
+\centering\input{../figures/first_layer.tikz}
+\caption{The thirty-two added edges. The ellipse $W$ represents
+$V(A)\setminus\{1,2\}$; an edge to $W$ means adjacency to all nine vertices.
+Edges within $A$, including $\{1,2\}$, are specified by Table~\ref{ker:tab:seed}.}
+\end{figure}
+
+\Needspace{6\baselineskip}
+\subsection{The seed is strictly \texorpdfstring{$1$}{1}-dismantlable}
+We will use folds in two different graphs. To show that \(A\) belongs
+to level one, we fold each neighbourhood graph needed in a reduction.
+To exclude level zero, we examine the folds available in \(A\) itself.
+
+\begin{lemma}\label{lem:seed-in-D1}
+The graph \(A\) belongs to \(\D_1\).
+\end{lemma}
+\begin{proof}
+We delete the vertices of \(A\) in the order
+\[
+ 5,2,1,4,0,6,7,8,9,3,
+\]
+leaving \(10\). Each row of Table~\ref{tab:seed-reduction} justifies
+one deletion. The second column lists the neighbours of the vertex to
+be deleted, after the preceding deletions from \(A\). The third column
+gives the folds in the graph induced by those neighbours, and the last
+column gives the surviving vertex.
+
+To check a listed fold \(u\to t\), let \(H\) be the neighbourhood
+graph for that row after its preceding folds. The adjacencies in
+Table~\ref{tab:seed-adjacency} give \(N_H[u]\subseteq N_H[t]\), so the
+fold is valid by Lemma~\ref{lem:dom}. In the final two rows the
+neighbourhood graph is already a single vertex. Thus each row gives a
+reduction of its neighbourhood graph to one vertex, which puts that
+graph in \(\D_0\) by Definition~\ref{def:hierarchy}. The ten deletions
+therefore dismantle \(A\) at level one.
+\end{proof}
+
+\begin{table}[htbp]
+\centering\small\setlength{\tabcolsep}{4pt}
+\caption{A complete level-one reduction of \(A\).}\label{tab:seed-reduction}
+\input{../data/article_tables/seed_reduction}
+\end{table}
+\FloatBarrier
+
+\Needspace{7\baselineskip}
+\begin{lemma}\label{lem:seed-not-D0}
+The graph \(A\) does not belong to \(\D_0\).
+\end{lemma}
+\begin{proof}
+To determine whether a level-zero reduction can start, we list the
+folds available in \(A\). By Lemma~\ref{lem:dom}, a fold of \(u\) onto
+\(t\) in the current graph \(H\) is permitted exactly when \(u\ne t\)
+and \(N_H[u]\subseteq N_H[t]\). Comparing the closed neighbourhoods from
+Table~\ref{tab:seed-adjacency} gives the complete lists below, first
+in \(A\) and then after each forced deletion:
+\[
+\begin{array}{c|c}
+ H&\text{all permitted folds}\\\hline
+ A&5\to2\\
+ A-5&9\to7\\
+ A-\{5,9\}&\text{none}.
+\end{array}
+\]
+Any level-zero reduction would have to delete \(5\) and then \(9\).
+The remaining graph on \(\{0,1,2,3,4,6,7,8,10\}\) admits no fold,
+so the reduction stops before reaching \(K_1\).
+\end{proof}
+
+\subsection{A dismantlable remainder}
+The neighbourhood graph of \(p\) is \(A\), so \(p\) can be deleted at
+level two. Theorem~\ref{thm:template} uses the hypothesis that the
+remaining graph \(B-p\) can be dismantled at level one. In fact,
+ordinary folds already suffice.
+
+\begin{lemma}\label{lem:seed-rest}
+The graph \(B-p\) belongs to \(\D_0\).
+\end{lemma}
+\begin{proof}
+After removing \(p\), the remaining vertices are \(0,\ldots,10,x,y\).
+Perform the following twelve folds in order:
+\begin{equation}\label{eq:seed-rest-folds}
+\begin{aligned}
+ &0\to x,\quad3\to x,\quad4\to x,\quad7\to9,\quad8\to y,\quad9\to5,\\
+ &1\to6,\quad2\to6,\quad5\to6,\quad6\to10,\quad10\to x,\quad x\to y.
+\end{aligned}
+\end{equation}
+At each step, the adjacency table and the specified adjacencies
+of \(x,y\) give the closed-neighbourhood inclusion for the indicated
+fold in the graph left by the preceding folds. Only \(y\) survives.
+Thus \(B-p\in\D_0\subseteq\D_1\), giving the required hypothesis of
+Theorem~\ref{thm:template} for \(s=1\).
+\end{proof}
+
+\Needspace{5\baselineskip}
+\subsection{Euler obstructions in the first extension}
+A first deletion at level one would require a neighbourhood graph
+in \(\D_0\). The centre fails this test because its neighbourhood
+graph is \(A\). For each other vertex, we use Lemma~\ref{lem:qobstruction}:
+a non-zero \(q\) excludes its neighbourhood graph from \(\D_0\).
+
+\begin{lemma}\label{lem:seed-euler}
+Every non-central vertex \(v\) of \(B\) satisfies
+\(q(B[N_B(v)])\ne0\).
+\end{lemma}
+\begin{proof}
+For each of the thirteen vertices \(v\ne p\), let \(H_v=B[N_B(v)]\).
+To evaluate \(q(H_v)\), we count the cliques of \(H_v\) by size.
+In Table~\ref{tab:seed-cliques}, \(c_r(H_v)\) counts the cliques of
+size \(r\). The empty clique gives \(c_0(H_v)=1\), and none of the
+neighbourhood graphs has a clique of size greater than four.
+
+To obtain a row directly from the adjacency data, enumerate the
+subsets of \(N_B(v)\) and count those in which every pair of vertices
+is adjacent. These counts are the coefficients of \(C_{H_v}\).
+Alternatively, compute the same polynomial using the recurrence in
+Lemma~\ref{lem:qrec}, starting from \(C_{\varnothing}(z)=1\).
+Each step uses graphs with fewer vertices, so the recursion terminates.
+In either case, evaluation at \(z=-1\) gives the last column of
+Table~\ref{tab:seed-cliques}, where every entry is non-zero.
+\end{proof}
+
+\begin{table}[htbp]
+\centering
+\caption{All clique counts of \(H_v=B[N_B(v)]\) for \(v\ne p\).}\label{tab:seed-cliques}
+\input{../data/article_tables/seed_cliques}
+\end{table}
+
+\subsection{The family at every strict level}
+The checks on \(A\) and \(B\) now let us apply Theorem~\ref{thm:template}
+to any number of layers, including zero layers.
+
+\begin{theorem}\label{thm:family3k8}
+For every integer \(k\geq1\), the graph \(F_k=G_{k-1}\)
+with \(d=2\) and \(R=K_2\), specified by Table~\ref{tab:seed-adjacency},
+\eqref{eq:seed-profiles}, and the adjacency rules of
+Section~\ref{sec:construction} satisfies
+\[
+ F_k\in\D_k\setminus\D_{k-1},\qquad |V(F_k)|=3k+8.
+\]
+\end{theorem}
+\begin{proof}
+Lemmas~\ref{lem:seed-in-D1} and~\ref{lem:seed-not-D0} establish
+\(A\in\D_1\setminus\D_0\). The second hypothesis follows from
+\(B-p\in\D_0\subseteq\D_1\) by Lemma~\ref{lem:seed-rest}, and the
+last is exactly Lemma~\ref{lem:seed-euler}.
+
+Apply Theorem~\ref{thm:template} with \(s=1\) and \(d=2\).
+It gives strict level \(m+1\) and order \(11+3m\) after \(m\) layers,
+for every \(m\geq0\). Taking \(m=k-1\) gives level \(k\) and order
+\(11+3(k-1)=3k+8\). The first two graphs are \(F_1=A\) and \(F_2=B\).
+\end{proof}
+
+\runcheck{article}
+The report checks all ten outer deletions and twenty-three inner folds of the
+seed, the forced folds excluding level zero, the twelve folds of $B-p$, and
+all thirteen clique rows. It also checks the exact incidences drawn in the
+three figures: eight schematic incidences expand to the thirty-two added
+edges, the complement has twenty-two edges, and the three-layer diagram has
+thirty edges on its nine displayed vertices.
+
+\begin{figure}[htbp]
+\centering\input{../figures/seed_complement.tikz}
+\caption{The complement of the eleven-vertex seed, with the twenty-two
+non-edges listed by the adjacency data.}
+\end{figure}
+\begin{figure}[htbp]
+\centering\input{../figures/layers.tikz}
+\caption{The new vertices in three layers. Each column contains its centre
+and two auxiliaries. The seed and its incident edges are omitted. A centre
+is adjacent to every other centre and to the auxiliaries outside its own
+column. All six auxiliaries are pairwise adjacent.}
+\end{figure}

@@ -1,0 +1,180 @@
+\section{The family of order \texorpdfstring{$6k+6$}{6k+6}}\label{sec:family6}
+The same layer construction also applies to a twelve-vertex seed at strict
+level one. This example uses five auxiliary types, and its positive
+certificates can be written out entirely as folds inside successive
+neighbourhoods. It illustrates how the three finite hypotheses are checked
+when no recursive certificate file is needed.
+
+\subsection{The seed and the resulting family}\label{6k6:sec:seed}
+Here five auxiliary types give six new vertices per layer. Let
+\(V(A)=\{a_0,\ldots,a_{11}\}\), with the adjacency list in
+Table~\ref{6k6:tab:Aadj}. The list is symmetric, has no loops, and gives
+\(\card{E(A)}=47\). The profiles are given in Table~\ref{6k6:tab:profiles};
+their cardinalities sum to \(48\). The type graph is
+\begin{equation}\label{6k6:eq:R}
+ E(R)=\{02,03,04,12,14,23,34\},
+\end{equation}
+where \(jt\) abbreviates the unordered pair \(\{j,t\}\).
+There are no other edges of \(R\).
+\input{tables/6k6/adjacency}
+\input{tables/6k6/profiles}
+The graph \(B\) consists of \(A\), the centre \(p\), and the five
+auxiliaries \(x_0,\ldots,x_4\). Its centre is adjacent to every vertex
+of \(A\) and to no auxiliary; the neighbours of \(x_j\) in \(A\)
+are precisely \(P_j\), and its auxiliary adjacencies are those of \(R\).
+Thus
+\[
+ \card{V(B)}=18,\qquad
+ \card{E(B)}=47+12+48+7=114.
+\]
+In the finite certificates, \(a_i\) is abbreviated to \(i\), and
+\(p=12\), \(x_j=13+j\). In particular, vertex \(15\) denotes \(x_2\).
+\begin{proposition}\label{6k6:prop:seed}
+These seed data satisfy
+\[
+ A\in\D_1\setminus\D_0,\qquad B-p\in\D_1,\qquad
+ q(B[N_B(v)])=
+ \begin{cases}
+ 2,&v=a_7\text{ or }v=x_2,\\
+ 1,&v\ne p,a_7,x_2
+ \end{cases}
+ \quad(v\ne p).
+\]
+\end{proposition}
+\begin{proof}
+Table~\ref{6k6:tab:Ano0} gives, for every \(v\in V(A)\), the degree
+\(d_v=\card{N_A(v)}\) and the maximum degree in \(A[N_A(v)]\).
+In each row that maximum is strictly smaller than \(d_v-1\).
+No open neighbourhood graph is a cone; Lemma~\ref{lem:first}
+therefore gives \(A\notin\D_0\).
+
+Tables~\ref{6k6:tab:Apos} and~\ref{6k6:tab:Bpos} specify successive outer
+deletions in \(A\) and \(B-p\), respectively. Each row lists the
+exact neighbourhood set in the current outer graph, the folds
+within that neighbourhood in the stated order, and an apex of
+the resulting neighbourhood. All fourteen required closed
+neighbourhood inclusions are displayed in Table~\ref{6k6:tab:inclusiones}.
+They are obtained by restricting the adjacency data of
+Tables~\ref{6k6:tab:Aadj} and~\ref{6k6:tab:profiles} and~\eqref{6k6:eq:R} to the
+current set. After the outer deletions, the remaining vertex sets
+are cones with the apices specified in Section~\ref{6k6:app:certificates}.
+Each inner reduction is consequently a level-\(0\) reduction, and
+each outer deletion is permitted at level \(1\).
+The final cones also lie in \(\D_1\), by Lemma~\ref{lem:inclusions}.
+This proves \(A\in\D_1\) and \(B-p\in\D_1\).
+
+Table~\ref{6k6:tab:Bq} gives all clique coefficients of the seventeen
+non-central neighbourhood graphs. These coefficients follow by
+the coefficient recurrence in Lemma~\ref{lem:qrec}, with
+\(c_0(H)=1\) and \(c_t(\varnothing)=0\) for \(t\geq1\).
+Their alternating sums are \(2\) in rows \(7\) and \(15\), and
+\(1\) in every other row. This proves the last assertion.
+\end{proof}
+
+In particular, \(B=G_1\) belongs to \(\D_2\setminus\D_1\) by
+Theorem~\ref{thm:template}, with \(s=1\).
+
+For this seed, the graphs of Section~\ref{sec:construction} satisfy
+\begin{equation}\label{6k6:eq:concrete-order}
+ \card{V(G_m)}=12+6m,\qquad
+ \card{E(G_m)}=47+52m+15m^2 .
+\end{equation}
+Indeed, the seven disjoint classes of edges give
+\[
+\begin{aligned}
+ \card{E(G_m)}
+ &=47+12m+48m+\binom m2+5\binom m2+7m^2+5m(m-1)\\
+ &=47+52m+15m^2.
+\end{aligned}
+\]
+The terms count, in order, edges within \(A\), between \(A\) and
+centres, between \(A\) and auxiliaries, between centres, within
+each auxiliary type, between distinct types, and between centres
+and auxiliaries.
+
+\begin{theorem}\label{6k6:thm:family}
+For every $k\geq1$, put $J_k=G_{k-1}$. Then $J_k\in\D_k\setminus\D_{k-1}$ and $|V(J_k)|=6k+6$.
+\end{theorem}
+\begin{proof}
+Proposition~\ref{6k6:prop:seed} supplies the three hypotheses of
+Theorem~\ref{thm:template}, with \(s=1\) and \(d=5\). Consequently
+\[
+ G_m\in\D_{m+1}\setminus\D_m\qquad(m\geq0).
+\]
+For every \(k\geq1\), define \(J_k=G_{k-1}\).
+Then \(J_k\in\D_k\setminus\D_{k-1}\) and
+\(\card{V(J_k)}=12+6(k-1)=6k+6\).
+\end{proof}
+
+\subsection{The finite reductions and obstructions}\label{6k6:app:certificates}
+All labels in this section use \(a_i=i\), \(p=12\), and \(x_j=13+j\).
+The certificates below use only the adjacency list, the profiles,
+and the type edges specified in Section~\ref{6k6:sec:seed}.
+
+\subsubsection{Excluding a first fold in \texorpdfstring{\(A\)}{A}}
+For \(v\in V(A)\), put \(d_v=\card{N_A(v)}\), and write
+\(\Delta(J)\) for the maximum degree in a non-empty graph \(J\).
+The entries of Table~\ref{6k6:tab:Ano0} satisfy
+\(\Delta(A[N_A(v)])<d_v-1\), so none of these neighbourhoods
+has an apex.
+\input{tables/6k6/degrees}
+
+\subsubsection{The two level-1 reductions}
+In each row of Tables~\ref{6k6:tab:Apos} and~\ref{6k6:tab:Bpos}, \(v\) is
+deleted from the outer graph after all preceding outer deletions.
+The set \(S\) is its neighbourhood set at that moment.
+The arrows are folds inside the graph induced by \(S\).
+After each arrow its source vertex is removed before the next
+inclusion is evaluated. The listed apex is universal after
+those inner folds. A row with no folds already has a conical
+neighbourhood graph.
+
+For Table~\ref{6k6:tab:Apos}, the final outer vertex set is
+\(\{5,6,8,9,10,11\}\), with apex \(9\).
+For Table~\ref{6k6:tab:Bpos}, it is
+\(\{3,7,8,9,10,11,13,14,15,16,17\}\), with apex \(11\).
+The centre \(p\) has been removed before Table~\ref{6k6:tab:Bpos}
+begins.
+\input{tables/6k6/certificate_a}
+\Needspace{16\baselineskip}
+\input{tables/6k6/certificate_b}
+For example, the first row of Table~\ref{6k6:tab:Apos} starts with
+\(S=\{0,1,3,9,10,11\}\). Within this neighbourhood,
+\[
+ N_{A[S]}[1]=\{0,1,3,10\}\subseteq
+ N_{A[S]}[0]=\{0,1,3,9,10\}.
+\]
+The fold \(1\to0\) leaves a cone with apex \(9\), so the outer
+vertex \(7\) can be deleted at level \(1\).
+The next row is evaluated in \(A-7\).
+Table~\ref{6k6:tab:inclusiones} provides the corresponding sets for
+every fold in both certificates. Its third column is contained
+in its fourth in each row; both columns are the closed
+neighbourhoods in the current inner graph.
+\input{tables/6k6/inclusions}
+
+\subsubsection{Clique coefficients}
+Table~\ref{6k6:tab:Bq} supplies the coefficients \(c_0,\ldots,c_6\)
+of every non-central neighbourhood graph in \(B\).
+There are no cliques of greater cardinality in these graphs.
+For a finite coefficient computation, the recurrence is
+\[
+ c_t(H)=c_t(H-v)+c_{t-1}(H[N_H(v)])\quad(t\geq1),
+\]
+with \(c_0(H)=1\), \(c_t(\varnothing)=0\) for \(t\geq1\), and
+\(c_{-1}(H)=0\). Both graphs on the right have fewer vertices,
+so this recurrence reaches its stated base cases.
+For instance, the alternating sums in rows \(0\) and \(7\) are
+\[
+ 1-11+41-63+35-2=1,\qquad
+ 1-12+49-86+63-15+2=2.
+\]
+All seventeen sums are non-zero.
+\input{tables/6k6/cliques}
+
+\runcheck{6k6}
+The output confirms twelve outer deletions, fourteen inner folds, twelve
+rows excluding a first fold in the seed, and seventeen clique rows.
+Each displayed neighbourhood and both sides of every fold inclusion are
+recomputed from the adjacency lists. The calculation also verifies the
+final cones in the two reductions.

@@ -1,0 +1,22 @@
+\begin{tikzpicture}[x=1cm,y=1cm]
+\coordinate (w) at (0,0);
+\coordinate (p) at (0,2);
+\coordinate (x) at (-3,.6);
+\coordinate (y) at (3,.6);
+\coordinate (a) at (-3,-1.6);
+\coordinate (b) at (3,-1.6);
+\draw[jfef new edge] (p)--(w);
+\draw[jfef new edge] (x)--(w);
+\draw[jfef new edge] (y)--(w);
+\draw[jfef new edge] (x)--(a);
+\draw[jfef new edge] (y)--(b);
+\draw[jfef new edge] (x) .. controls (-1.7,-1.7) and (1.7,-1.7) .. (y);
+\draw[jfef new edge] (p) .. controls (-5,2.2) and (-5,-1.2) .. (a);
+\draw[jfef new edge] (p) .. controls (5,2.2) and (5,-1.2) .. (b);
+\node[ellipse,draw=black!70,fill=white,minimum width=3cm,minimum height=1.3cm,jfef label font] at (w) {$W$};
+\node[jfef centre] at (p) {$p$};
+\node[jfef auxiliary] at (x) {$x$};
+\node[jfef auxiliary] at (y) {$y$};
+\node[jfef vertex] at (a) {$1$};
+\node[jfef vertex] at (b) {$2$};
+\end{tikzpicture}

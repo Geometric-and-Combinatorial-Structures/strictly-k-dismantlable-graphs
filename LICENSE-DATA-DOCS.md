@@ -1,0 +1,13 @@
+# Data and documentation licence
+Copyright 2026 Jesús F. Espinoza, Martín Eduardo Frías-Armenta,
+Rosalía G. Hernández-Amador and Héctor A. Hernández-Hernández.
+
+The JSON certificates, adjacency data, figures (including TikZ sources and styles),
+article and note TeX/BibTeX sources, compiled PDF files and documentation are
+licensed under Creative Commons Attribution 4.0 International (CC-BY-4.0).
+Licence: https://creativecommons.org/licenses/by/4.0/
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode.en
+
+Attribute the authors and the article Linear-size graphs at every strict
+dismantling level, link to the licence and indicate changes.
+Executable Python scripts use the MIT licence in LICENSE-MIT.txt.

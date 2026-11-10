@@ -1,0 +1,236 @@
+\section{The family of order \texorpdfstring{$4k+4$}{4k+4}}\label{sec:family4}
+The second family in the article begins with graphs on eight, twelve and
+sixteen vertices at strict levels one, two and three. All three occur as
+nested induced subgraphs. From the sixteen-vertex seed onwards, the layer
+construction adds four vertices at a time. We specify these graphs, justify
+their finite reductions and obstructions, and then apply the general theorem.
+
+\subsection{The sixteen-vertex seed and its profiles}\label{4k4:sec:seed}
+We use three auxiliary types, so each layer adds four vertices. Let
+\(V(A)=\{a_0,\ldots,a_{15}\}\), with the adjacency list in
+Table~\ref{4k4:tab:Aadj}. It is symmetric, has no loops, and has 97 edges.
+The profiles in Table~\ref{4k4:tab:profiles} have sizes 13, 14 and 15.
+The type graph is
+\begin{equation}\label{4k4:eq:R}
+E(R)=\{\{0,1\},\{0,2\}\}.
+\end{equation}
+\input{tables/4k4/adjacency}
+\input{tables/4k4/profiles}
+The graph \(B=G_1\) adds \(p=c_0\) and \(x_0,x_1,x_2\) to \(A\).
+The centre is adjacent to every vertex of \(A\) and to no auxiliary.
+The neighbours of \(x_j\) in \(A\) are \(P_j\), and its auxiliary
+adjacencies are specified by \(R\). Thus
+\[
+\card{V(B)}=20,\qquad \card{E(B)}=97+16+42+2=157.
+\]
+For the finite certificates, \(a_i\) has index \(i\), \(p=16\),
+and \(x_j=17+j\). 
+\subsection{The eight- and twelve-vertex prefixes}
+The first two members are induced subgraphs of the same seed. Put
+\[
+\begin{aligned}
+S_1&=\{2,4,5,8,9,10,12,13\},\\
+S_2&=\{2,3,4,5,6,7,8,9,10,11,12,13\},
+\end{aligned}
+\]
+and define
+\[
+H_1=A[\{a_i:i\in S_1\}],\qquad
+H_2=A[\{a_i:i\in S_2\}],\qquad H_3=A.
+\]
+The direct reduction below establishes the strict level of the first prefix.
+The recursive certificates then establish the strict level of the second
+prefix and of the sixteen-vertex seed.
+The two prefixes have 8 and 12 vertices, respectively.
+The inclusions \(S_1\subset S_2\subset V(A)\) give induced inclusions.
+We now verify the first prefix directly. Write \(a_i=i\) and \(J=H_1\). Restricting the adjacency
+table of \(A\) gives
+\[
+\begin{array}{c|l}
+v&N_J(v)\\\hline
+2&8,9,10,12,13\\
+4&5,8,10,12,13\\
+5&4,9,10,12,13\\
+8&2,4,9,10,12\\
+9&2,5,8,13\\
+10&2,4,5,8,13\\
+12&2,4,5,8\\
+13&2,4,5,9,10
+\end{array}
+\]
+\begin{proposition}\label{4k4:prop:manual-prefix}
+The graph \(J\) belongs to \(\D_1\setminus\D_0\).
+\end{proposition}
+\begin{proof}
+First consider \(J[N_J(5)]\), on \(\{4,9,10,12,13\}\).
+The only neighbour of \(9\) there is \(13\), so \(9\to13\)
+is a fold. The remaining graph on \(\{4,10,12,13\}\) is a cone
+with apex \(4\). Consequently \(5\) can be deleted from \(J\)
+at level one.
+
+In \(J-5\), the neighbourhood of \(4\) is
+\(\{8,10,12,13\}\). Within this neighbourhood, \(12\to8\)
+is a fold, and the remaining path \(8,10,13\) is a cone with
+apex \(10\). Thus \(4\) can next be deleted at level one.
+The graph \(J-\{5,4\}\) is a cone with apex \(2\), proving
+\(J\in\D_1\). The inner folds justify only the stated outer
+deletion; they do not delete vertices from the outer graph.
+
+To exclude level zero, Table~\ref{4k4:tab:manual-prefix-negative}
+lists, for every \(v\), each candidate apex \(t\in N_J(v)\)
+and a vertex \(w\in N_J(v)\setminus\{t\}\) not adjacent to it.
+Every candidate occurs, so no neighbourhood has an apex.
+There is no first fold, and \(J\notin\D_0\).
+\end{proof}
+
+\begin{table}[htbp]
+\centering\small
+\begin{tabular}{r l}\toprule
+\(v\)&Candidate apex \(t\mapsto w\), with \(tw\notin E(J)\)\\\midrule
+2 & $8\mapsto 13,\ 9\mapsto 10,\ 10\mapsto 9,\ 12\mapsto 9,\ 13\mapsto 8$\\
+4 & $5\mapsto 8,\ 8\mapsto 5,\ 10\mapsto 12,\ 12\mapsto 10,\ 13\mapsto 8$\\
+5 & $4\mapsto 9,\ 9\mapsto 4,\ 10\mapsto 9,\ 12\mapsto 9,\ 13\mapsto 12$\\
+8 & $2\mapsto 4,\ 4\mapsto 2,\ 9\mapsto 4,\ 10\mapsto 9,\ 12\mapsto 9$\\
+9 & $2\mapsto 5,\ 5\mapsto 2,\ 8\mapsto 5,\ 13\mapsto 8$\\
+10 & $2\mapsto 4,\ 4\mapsto 2,\ 5\mapsto 2,\ 8\mapsto 5,\ 13\mapsto 8$\\
+12 & $2\mapsto 4,\ 4\mapsto 2,\ 5\mapsto 2,\ 8\mapsto 5$\\
+13 & $2\mapsto 4,\ 4\mapsto 2,\ 5\mapsto 2,\ 9\mapsto 4,\ 10\mapsto 9$\\
+\bottomrule
+\end{tabular}
+\caption{Complete exclusion of an apex in every neighbourhood of \(J\).}
+\label{4k4:tab:manual-prefix-negative}
+\end{table}
+\subsection{Certifying the prefixes and the seed}\label{4k4:app:certificates}
+For the larger graphs, the neighbourhood reductions are themselves recursive. We record them as finite proof states so that every required membership and non-membership can be checked.
+Here \(a_i\) has numerical label \(i\), \(p=16\), and \(x_j=17+j\).
+The main certificate contains 1,114 proof nodes for \(A\) and 184
+for \(B\). The prefix certificates use the ordered vertex lists
+\(S_1,S_2\) of this section.
+All neighbourhoods and domination relations are computed in the
+current induced subgraph.
+
+\subsubsection{The recursive proof rule}
+A proof state \((S,j)\), with \(j\geq-1\), asserts whether the
+graph induced by \(S\) belongs to \(\D_j\).
+There are five allowed forms of node.
+\begin{enumerate}
+\item The empty state is false at every level.
+\item A non-empty cone is true at every level, with its apex supplied.
+\item A non-empty non-cone is false at level \(-1\).
+\item A true state with \(j\geq0\) specifies \(v\in S\), a true child
+\((S\cap N(v),j-1)\), and a true child \((S\setminus\{v\},j)\).
+\item A non-empty non-cone state \((S,j)\), with \(j\geq0\)
+(and hence \(\card S\geq2\)), is false if it specifies, for every
+\(v\in S\), a false child of at least one of those two forms.
+\end{enumerate}
+The checker verifies the exact subsets, levels, truth values and
+child references, requires every vertex in a negative node to be
+covered, and rejects cycles. Every child has fewer vertices.
+The correctness of a checked proof graph therefore follows by
+induction on the number of vertices, using Definition~\ref{def:hierarchy}
+and Lemma~\ref{lem:inclusions} for cone states. By
+Definition~\ref{def:hierarchy}, any reduction of a state with
+\(\card S\geq2\) begins with a vertex \(v\) such that
+\((S\cap N(v),j-1)\) is true, and the remaining reduction shows
+that \((S\setminus\{v\},j)\) is true. The false children of a
+form-5 node exclude every such \(v\). This gives a finite certificate
+of non-membership as well as membership, without relying on a bounded
+unsuccessful search.
+
+The three main roots are bound to
+\[
+(V(A),3,\mathrm{true}),\quad (V(A),2,\mathrm{false}),\quad
+(V(B)\setminus\{p\},3,\mathrm{true}).
+\]
+The four prefix roots assert membership at levels \(1,2\) and
+non-membership at levels \(0,1\), respectively.
+The checker also verifies the prefix adjacencies against the
+specified induced subgraphs of \(A\).
+
+The complete finite proof graphs are the files
+\path{data/certificates/FINITE_CERTIFICATE.json.gz} and
+\path{data/certificates/PREFIX_CERTIFICATES.json.gz}.
+The seed and profiles are in \path{data/certificates/PARAMETERS.json};
+the ordered prefix sets and their adjacencies are in
+\path{data/certificates/PREFIX.json}. The checking rules are implemented in
+\path{dismantling/certificates.py}. The verifier checks the supplied proof
+states using integer and set operations; it does not search for reductions.
+
+\subsubsection{The reductions and their obstructions}
+For \(H_1\), delete \(a_5,a_4\) in that order; the remaining graph
+is a cone with apex \(a_2\). Their current neighbourhoods belong
+to \(\D_0\), as proved by the referenced child certificates.
+For \(H_2\), delete \(a_6,a_5,a_4\); the current neighbourhoods
+belong to \(\D_1\), and the remainder is a cone with apex \(a_2\).
+For \(A=H_3\), delete \(a_0,a_1\); the current neighbourhoods belong
+to \(\D_2\), and the remainder is a cone with apex \(a_{15}\).
+For \(B-p\), the outer order is
+\[
+a_3,a_1,a_2,a_0,a_4,a_6,a_5,a_8,a_9,a_{10},a_{11}.
+\]
+Each current neighbourhood belongs to \(\D_2\), and the remainder
+is a cone with apex \(a_7\).
+These orders alone do not certify their neighbourhoods;
+the complete child proof graphs do so by the preceding rules.
+
+The negative root for \(A\notin\D_2\) has one obstruction for each
+of its 16 vertices: every \(A[N_A(a_i)]\) is certified outside
+\(\D_1\). The prefix negative roots similarly provide a complete
+obstruction for every possible first deletion at their claimed
+lower levels. No Euler-zero condition is used as a sufficient
+test of membership.
+
+\subsection{The nineteen neighbourhood obstructions}
+Table~\ref{4k4:tab:Bq} supplies all coefficients through degree seven
+of every non-central neighbourhood in \(B\).
+All higher degrees were computed and verified to vanish.
+They are checked using
+\[
+c_t(H)=c_t(H-v)+c_{t-1}(H[N_H(v)]),\quad t\geq1,
+\]
+with \(c_0(H)=1\), \(c_t(\varnothing)=0\) for \(t\geq1\), and
+\(c_{-1}(H)=0\). Both right-hand graphs have fewer vertices.
+The supplied checker uses this deletion recurrence to verify every
+coefficient and alternating sum in the distributed certificate.
+For example, the row for \(a_0\) gives
+\(1-16+95-263+344-182+20=-1\).
+All 19 sums are non-zero.
+\input{tables/4k4/cliques}
+
+
+\runcheck{4k4}
+The output reports seven checked roots and nineteen clique rows. The root
+checks certify $H_1\in\D_1\setminus\D_0$, $H_2\in\D_2\setminus\D_1$,
+$A\in\D_3\setminus\D_2$, and $B-p\in\D_3$. Every coefficient in the
+printed table is compared with both clique enumeration and the deletion
+recurrence, including the vanishing of higher coefficients.
+
+\subsection{The family at every level}
+The certificates establish the hypotheses needed for the first uniform
+extension. Theorem~\ref{thm:template} then treats any number of layers.
+\begin{theorem}\label{4k4:thm:family}
+With the seed and profiles in this section, put $H_3=A$ and
+$H_k=G_{k-3}$ for $k\geq3$, and use the two induced prefixes for $k=1,2$.
+Then
+\[
+ H_k\in\D_k\setminus\D_{k-1},\qquad |V(H_k)|=4k+4\qquad(k\geq1).
+\]
+Every inclusion $H_k\subset H_{k+1}$ is induced.
+\end{theorem}
+\begin{proof}
+The seven roots give the two prefixes and establish
+$A\in\D_3\setminus\D_2$ and $B-p\in\D_3$. The nineteen non-zero sums
+in Table~\ref{4k4:tab:Bq} exclude every non-central vertex as a first deletion.
+Thus Theorem~\ref{thm:template} applies with $s=3$ and $d=3$.
+For $k\geq3$ it gives strict level $k$ and
+$16+4(k-3)=4k+4$ vertices. The prefix certificates prove the cases
+$k=1,2$. The nested prefix sets and the layer rules give the induced inclusions.
+\end{proof}
+The uniform part also has
+\[
+ |E(G_m)|=97+16m+42m+4\binom m2+2m^2+3m(m-1)
+          =97+53m+7m^2.
+\]
+The terms count seed edges, seed--centre edges, seed--auxiliary edges,
+edges between centres or within one type, edges between the two adjacent
+pairs of types, and centre--auxiliary edges, respectively.

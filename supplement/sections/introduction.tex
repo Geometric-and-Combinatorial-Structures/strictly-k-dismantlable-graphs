@@ -1,0 +1,57 @@
+\section{The constructions and their finite data}
+A graph is dismantled by deleting vertices until one vertex remains. In an
+ordinary dismantling, each deleted vertex is dominated by a neighbour. The
+recursive hierarchy permits a deletion at level $k$ when the graph induced by
+its current neighbours is dismantlable at level $k-1$. A graph has
+\defi{strict level $k$} if it admits a reduction at level $k$ and none at level
+$k-1$.
+
+The article \emph{Linear-size graphs at every strict dismantling level}
+constructs graphs $F_k$ and $H_k$ of strict level $k$, for every $k\geq1$,
+with
+\[
+ |V(F_k)|=3k+8,\qquad |V(H_k)|=4k+4.
+\]
+The title, authors and current article reference are recorded in
+\href{https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/main/ARTICLE.md}{\texttt{ARTICLE.md}}.
+This supplement develops the finite proof for $H_k$, gives a third family
+$J_k$ of order $6k+6$, and explains the kernel completion and homological
+identities behind the layer construction. The two bounds from the article
+give the upper bound $\min\{4k+4,3k+8\}$ on the least order at strict level
+$k$; they do not identify that least order in general.
+
+Each family starts with a finite seed. A new layer contains a centre whose
+neighbourhood graph is the previous graph, together with auxiliary vertices
+that exclude first deletions at the lower level. To apply this construction,
+we need a reduction of the seed at its stated level, an obstruction to the
+preceding level, a reduction after deleting the first centre, and obstructions
+in the remaining neighbourhoods. We supply the finite data for these tasks
+and prove why they suffice for every subsequent layer.
+
+For example, $H_1$ has eight vertices. Its reduction at level one requires
+only two outer deletions, each justified by a single fold in a neighbourhood;
+the remaining graph is a cone. None of its original neighbourhoods is a cone,
+so no level-zero reduction can begin. Section~\ref{sec:family4} gives this
+example in full before treating the larger recursive certificates.
+
+\noindent\textbf{Organization.}
+Sections~\ref{sec:prelim} and~\ref{sec:construction} fix the hierarchy and
+prove the general construction theorem. Section~\ref{sec:family4} supplies
+the $4k+4$ family, including its two prefixes; Section~\ref{sec:family6}
+checks a second application with five auxiliary types. Section~\ref{sec:kernels}
+relates constructions with two auxiliary types to an edge-deleted kernel and
+identifies the completion producing $F_1$. Section~\ref{sec:homology} proves
+the degree shift in non-central neighbourhoods and the resulting homological
+criterion. Appendix~\ref{sec:article} records the finite calculations and
+figures for the article's $3k+8$ family.
+
+\noindent\textbf{Conventions and notation.}
+All graphs are finite, simple and undirected. The symbols $F_k$ and $H_k$
+retain their meanings in the article; $J_k$ denotes the $6k+6$ family.
+Within a section, $A$ denotes its seed, $B$ its first extension and $G_m$ the
+graph with $m$ added layers. The seed vertex $a_i$ has numerical label $i$ in
+the data files. Earlier separate notes used $F_k$ for the $4k+4$ and $6k+6$
+families; here those symbols are $H_k$ and $J_k$, respectively. Homology is
+reduced homology over $\mathbb F_2$, with augmented chains in degree $-1$.
+The command following each finite calculation runs from the root of the
+accompanying repository and requires Python 3.11 or later.

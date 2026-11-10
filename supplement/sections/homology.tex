@@ -1,0 +1,183 @@
+\section{Homology through successive layers}\label{sec:homology}
+The kernel calculations compare neighbourhoods in the first extension.
+We now follow those groups through every layer of the general construction,
+with any number of auxiliary types. As in Section~\ref{sec:construction},
+write $T=\{0,\ldots,d-1\}$ for the type set. The coefficients and augmented chain
+conventions are those of Section~\ref{sec:kernels}. The degree shift will
+supply the criterion used in Theorem~\ref{ker:thm:equivalence}.
+
+\subsection{A degree shift in every non-central neighbourhood}
+
+For complexes on disjoint vertex sets, \(K*J\) consists of unions
+of one face from each factor. If \(S^0\) consists of two vertices
+without an edge, \(K*S^0\) is the union of two cones on \(K\).
+Lemma~\ref{hom:lem:union} gives
+\begin{equation}\label{hom:eq:suspension}
+ \Ht_t(K*S^0)\cong\Ht_{t-1}(K).
+\end{equation}
+This includes \(K=\{\varnothing\}\), for which the join is \(S^0\).
+The clique complex of the complete join of two graphs is the join
+of their clique complexes, since a clique is a union of a clique
+in each graph.
+
+\begin{theorem}\label{hom:thm:shift}
+For \(m\geq1\) and every integer \(t\),
+\begin{align}
+ \Ht_t\bigl(\Cl(L_{G_m}(a))\bigr)
+ &\cong\Ht_{t-m+1}\bigl(\Cl(L_B(a))\bigr),
+ &&a\in V(A),\label{hom:eq:fixed}\\
+ \Ht_t\bigl(\Cl(L_{G_m}(x_{j,i}))\bigr)
+ &\cong\Ht_{t-m+1}\bigl(\Cl(L_B(x_j))\bigr),
+ &&j\in T,\quad 0\leq i<m.\label{hom:eq:auxiliary}
+\end{align}
+\end{theorem}
+\begin{proof}
+First fix \(a\in V(A)\) and put \(H_m=L_{G_m}(a)\).
+Its vertices are \(N_A(a)\), all centres, and all copies of the
+types \(j\) for which \(a\in P_j\). For \(m\geq2\), delete a centre
+\(c_i\) from \(H_m\). The folds \(x_{j,h}\to x_{j,i}\), \(h\ne i\),
+are still valid: restrict the neighbourhood inclusions in
+Lemmas~\ref{lem:centre} and~\ref{lem:remainder} to \(N_A(a)\) and the types present.
+After these folds, the remaining graph is a cone with a remaining
+centre as apex.
+If there are no such auxiliary types, it is already a cone.
+Lemmas~\ref{hom:lem:cone} and \ref{hom:lem:fold} imply that
+\(\Cl(H_m-c_i)\) is acyclic.
+
+The neighbourhood of \(c_i\) inside \(H_m\) is isomorphic to
+\(H_{m-1}\), using the same layer reindexing restricted to the
+vertices under consideration. Hence the decomposition
+\[
+ \Cl(H_m)=\Cl(H_m-c_i)
+       \cup\bigl(c_i*\Cl(L_{H_m}(c_i))\bigr)
+\]
+has acyclic pieces and intersection isomorphic to \(\Cl(H_{m-1})\).
+Lemma~\ref{hom:lem:union} shifts homology by one degree. Iteration
+proves \eqref{hom:eq:fixed}; at \(m=1\) it is the identity.
+The set \(N_A(a)\) may be empty, but \(H_1\) still contains \(p\).
+
+Now fix an auxiliary vertex \(x_{j,i}\). Its neighbourhood has
+the vertices of \(P_j\), all copies of types in \(N_R(j)\),
+the vertices \(x_{j,h}\) for \(h\ne i\), and the centres \(c_h\)
+for \(h\ne i\). For each \(u\in N_R(j)\), fold
+\(x_{u,h}\) onto \(x_{u,i}\) for \(h\ne i\). The source and
+target have the same adjacencies to \(P_j\) and auxiliary types.
+The target sees all centres in this neighbourhood, whereas
+the source may omit \(c_h\). These folds therefore preserve
+homology, and their targets remain throughout.
+
+What remains consists of a copy of \(L_B(x_j)\) on
+\[
+ P_j\ \sqcup\ \{x_{u,i}:u\in N_R(j)\}
+\]
+and the \(m-1\) pairs \(\{c_h,x_{j,h}\}\), \(h\ne i\).
+Each pair has no internal edge. Distinct pairs are completely
+joined, and every pair is completely joined to the displayed copy
+of \(L_B(x_j)\). The remaining clique complex is consequently
+\[
+ \Cl(L_B(x_j))*(S^0)^{*(m-1)}.
+\]
+Apply Lemma~\ref{hom:lem:fold} and then \eqref{hom:eq:suspension}
+\(m-1\) times. If \(L_B(x_j)\) is empty, both \(P_j\) and
+\(N_R(j)\) are empty. There are then no folds, the first factor is
+\(\{\varnothing\}\), and the same suspension identity applies.
+For \(m=1\) there are no pairs, so this case too is the identity.
+\end{proof}
+
+\subsection{The homological criterion}
+
+Non-zero groups in the first layer remain non-zero after every shift. Together with a reduction of the remainder, they give the following criterion for strictness.
+
+\begin{theorem}\label{hom:thm:criterion}
+Let \(s\geq0\). Suppose that
+\begin{enumerate}
+\item \(A\in\D_s\setminus\D_{s-1}\);
+\item \(B-p\in\D_{s+1}\);
+\item for every \(v\in V(B)\setminus\{p\}\), some integer \(t\)
+satisfies \(\Ht_t(\Cl(L_B(v)))\ne0\).
+\end{enumerate}
+Then for every \(m\geq0\),
+\[
+ G_m\in\D_{s+m}\setminus\D_{s+m-1},
+ \qquad |V(G_m)|=|V(A)|+(d+1)m.
+\]
+\end{theorem}
+\begin{proof}
+Theorem~\ref{hom:thm:shift} propagates non-zero reduced homology to
+every non-central neighbourhood in every \(G_m\), \(m\geq1\).
+By Lemma~\ref{hom:lem:acyclic}, none of these neighbourhoods belongs
+to any class \(\D_j\).
+
+The case \(m=0\) is the first hypothesis. For \(m=1\), the centre
+has neighbourhood \(A\in\D_s\) and its deletion leaves
+\(B-p\in\D_{s+1}\). Equation~\eqref{eq:first} yields
+\(B\in\D_{s+1}\). A first deletion at level \(s\) is impossible:
+the centre's neighbourhood is not in \(\D_{s-1}\), and neither is
+any non-central neighbourhood. Since \(B\) has more than one
+vertex, \eqref{eq:first} gives \(B\notin\D_s\).
+This includes \(s=0\), when \(\D_{s-1}\) is the class of cones.
+
+For \(m\geq2\), suppose \(G_{m-1}\) is strictly
+\((s+m-1)\)-dismantlable. Each centre has neighbourhood isomorphic
+to \(G_{m-1}\); deleting it leaves a graph in
+\(\D_0\subseteq\D_{s+m}\) by Lemmas~\ref{lem:centre} and~\ref{lem:remainder}.
+Thus \(G_m\in\D_{s+m}\). A first deletion at level \(s+m-1\)
+would require a neighbourhood in \(\D_{s+m-2}\).
+Centres fail this condition by the induction hypothesis, and
+non-central vertices fail it by homology. This proves strictness.
+The order follows from \eqref{eq:general-order}.
+\end{proof}
+
+\subsection{Comparison with Euler characteristic}
+
+The alternating sum of reduced Betti numbers recovers the obstruction used for the three families. For a graph \(H\), put
+\[
+ q(H)=\sum_{\sigma\in\Cl(H)}(-1)^{|\sigma|}
+     =1-\chi(\Cl(H)).
+\]
+The empty face is included, so \(q(\varnothing)=1\).
+Rank--nullity in the augmented chain complex gives
+\begin{equation}\label{hom:eq:euler}
+ q(H)=\sum_{r\geq0}(-1)^r
+       \dim_{\F}\Ht_{r-1}(\Cl(H)).
+\end{equation}
+Indeed, if \(f_t=\dim\Ct_t\), \(b_t=\dim\Ht_t\), and
+\(\rho_t=\operatorname{rank}\partial_t\), then
+\(f_t=b_t+\rho_t+\rho_{t+1}\). In the finite alternating sum
+the ranks cancel, including the term of degree \(-1\).
+In particular, \(q(H)\ne0\) implies non-trivial reduced homology.
+
+The converse need not hold. The graph \(C_4\sqcup K_1\) has five
+vertices, four edges and no triangles, so \(q=1-5+4=0\).
+Its two components give \(\dim\Ht_0=1\). The boundary matrix of
+the four cycle edges has rank three, and there are no
+two-dimensional faces, giving \(\dim\Ht_1=1\).
+These contributions cancel in \eqref{hom:eq:euler}.
+This example separates the two obstructions on a graph; it does
+not by itself supply initial data satisfying all three hypotheses
+of Theorem~\ref{hom:thm:criterion}.
+
+\Needspace{10\baselineskip}
+The Euler criterion in Theorem~\ref{thm:template} uses
+\(q(L_B(v))\ne0\) for every non-central \(v\), together with
+\(A\in\D_s\setminus\D_{s-1}\) and the stronger remainder condition
+\(B-p\in\D_s\). Equation~\eqref{hom:eq:euler} and
+Lemma~\ref{lem:inclusions} imply the hypotheses above.
+Allowing the remainder in \(\D_{s+1}\) is a separate change from
+replacing Euler characteristic by homology: the first-deletion
+argument at \(m=1\) also permits this weaker remainder in the
+Euler proof. Both criteria retain a distinct requirement on the
+remainder; non-trivial homology of the other neighbourhoods alone
+does not ensure the positive reduction.
+
+
+\runcheck{homology}
+The calculation checks the empty graph, a cone, $C_4\sqcup K_1$, and an
+auxiliary with an empty first-layer neighbourhood. In the last example,
+after $m$ layers its only non-zero reduced Betti number is $\beta_{m-2}=1$,
+for the tested values $m=1,2,3$. The full command
+\texttt{python reproduce.py --extended} additionally checks all labelled
+seeds on one, two or three vertices, all profiles for one or two types,
+and all type graphs, at $m=0,1,2,3$. Homology is computed for the subcollection
+with seed order at most two. These are finite checks of the identities;
+Theorem~\ref{hom:thm:shift} proves them for arbitrary seeds and all layers.
