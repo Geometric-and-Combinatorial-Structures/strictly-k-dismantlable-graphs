@@ -11,7 +11,7 @@ A state consists of a subset $S$ of the vertices of a fixed graph, an integer $j
 | Empty graph | $S=\varnothing$; membership is false at every level. |
 | Cone | A specified vertex is an apex of the non-empty induced graph; membership is true at every level. |
 | Non-cone at level $-1$ | The graph is non-empty and has no apex; membership is false. |
-| Positive deletion | For a vertex $v\in S$, the neighbourhood state $(S\cap N(v),j-1)$ and remainder state $(S\setminus\{v\},j)$ are both true. |
+| Positive deletion | For a vertex $v\in S$, the neighbourhood state $(S\cap N(v),j-1)$ and remainder state $(S\setminus\lbrace v\rbrace,j)$ are both true. |
 | Negative state | For every $v\in S$, at least one of those two states is false. The graph is non-empty, is not a cone, and $j\geq0$. |
 
 Every child has fewer vertices. The verifier checks this decrease, the exact subset and level of each child, every reference to another state, and complete coverage of the vertices in a negative state. It rejects circular dependencies and incorrect truth values. Induction on $|S|$, using the definition of the hierarchy, proves that each accepted state has the asserted meaning.

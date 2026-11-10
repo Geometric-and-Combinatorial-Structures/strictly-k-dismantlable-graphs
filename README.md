@@ -4,7 +4,7 @@ How many vertices are needed for a graph that can be dismantled at level $k$, bu
 
 An ordinary dismantling repeatedly **folds** a vertex onto a neighbour whose closed neighbourhood contains its own. At a higher level, the deletion is allowed when the graph induced by its current neighbours can be dismantled at the preceding level. This repository accompanies **[Linear-size graphs at every strict dismantling level](ARTICLE.md)** and supplies the supplementary proofs, explicit graphs and finite verifications for its constructions.
 
-The article gives two families, $F_k$ and $H_k$, of strict level $k$ for every $k\geq1$, with $3k+8$ and $4k+4$ vertices, respectively. Hence the least order at strict level $k$ is **at most** $\min\{4k+4,3k+8\}$. A third family, $J_k$, developed in the supplement, has $6k+6$ vertices. Each family is obtained from a finite seed by adding a fixed number of vertices per layer.
+The article gives two families, $F_k$ and $H_k$, of strict level $k$ for every $k\geq1$, with $3k+8$ and $4k+4$ vertices, respectively. Hence the least order at strict level $k$ is **at most** $\min\lbrace 4k+4,3k+8\rbrace$. A third family, $J_k$, developed in the supplement, has $6k+6$ vertices. Each family is obtained from a finite seed by adding a fixed number of vertices per layer.
 
 ## Begin with a small example
 
