@@ -1,12 +1,11 @@
 """Verify finite recursive proofs without searching for a dismantling order."""
 import gzip
-import json
-from .graphs import ROOT, require, validate, from_lists, layers, induced, coefficients, enumerate_cliques, vertices
+from .graphs import ROOT, require, validate, from_lists, layers, induced, coefficients, enumerate_cliques, vertices, strict_json
 
 
 def read_certificate(name):
     with gzip.open(ROOT / 'data' / 'certificates' / name, 'rt', encoding='utf-8') as stream:
-        return json.load(stream)
+        return strict_json(stream.read())
 
 
 def check_nodes(g, nodes, root, expected_mask, expected_level, expected_value):
@@ -79,11 +78,12 @@ def verify_4k4(c=None, prefix=None, params=None, prefix_data=None):
     folder = ROOT / 'data' / 'certificates'
     c = read_certificate('FINITE_CERTIFICATE.json.gz') if c is None else c
     prefix = read_certificate('PREFIX_CERTIFICATES.json.gz') if prefix is None else prefix
-    params = json.loads((folder / 'PARAMETERS.json').read_text()) if params is None else params
-    prefix_data = json.loads((folder / 'PREFIX.json').read_text()) if prefix_data is None else prefix_data
+    params = strict_json((folder / 'PARAMETERS.json').read_text(encoding='utf-8')) if params is None else params
+    prefix_data = strict_json((folder / 'PREFIX.json').read_text(encoding='utf-8')) if prefix_data is None else prefix_data
     a = from_lists(params['A_adjacency_lists'])
     n, s = len(a), params['base_level']
     require(n == 16 and s == 3, 'Wrong seed order or level')
+    require(len(params['profile_vertex_sets']) == 3, 'The 4k+4 family has three auxiliary types')
     require(a == validate(c['A']), 'Seed and certificate adjacencies differ')
     b, _ = layers(a, params['profile_vertex_sets'], params['R_edges'], 1)
     require(b == validate(c['B']), 'Extension and certificate adjacencies differ')

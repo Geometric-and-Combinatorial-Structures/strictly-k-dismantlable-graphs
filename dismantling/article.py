@@ -7,7 +7,7 @@ def run():
     import datetime
     import hashlib
     import itertools
-    import json
+    from .graphs import strict_json
     import re
     from pathlib import Path
     
@@ -85,7 +85,7 @@ def run():
     assert all(v in A[w] for v, ns in A.items() for w in ns)
     EA = edges_of(A)
     assert len(EA) == 33
-    family_data = json.loads(TXT['data/family_3k8.json'])
+    family_data = strict_json(TXT['data/family_3k8.json'])
     assert family_data['family'] == '3k8' and family_data['n'] == 11 and family_data['s'] == 1
     assert family_data['A'] == [sorted(map(int, A[str(v)])) for v in range(11)]
     assert family_data['profiles'] == [[v for v in range(11) if v != 2], [v for v in range(11) if v != 1]]
@@ -128,7 +128,7 @@ def run():
     new_edges.add(pair('x', 'y'))
     B = graph(set(A) | {'p', 'x', 'y'}, EA | new_edges)
     assert len(new_edges) == 32 and len(edges_of(B)) == 65
-    rest_folds = json.loads(TXT['data/article_remainder.json'])['folds']
+    rest_folds = strict_json(TXT['data/article_remainder.json'])['folds']
     rest = induced(B, set(B)-{'p'})
     for u, target in rest_folds:
         rest = do_fold(rest, u, target)

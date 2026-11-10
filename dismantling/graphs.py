@@ -16,6 +16,17 @@ def require(condition, message):
         raise ValueError(message)
 
 
+def strict_json(text):
+    """Read mathematical data without silently replacing repeated fields."""
+    def unique(pairs):
+        obj = {}
+        for key, value in pairs:
+            require(key not in obj, 'Repeated JSON field: ' + key)
+            obj[key] = value
+        return obj
+    return json.loads(text, object_pairs_hook=unique)
+
+
 def vertices(mask):
     while mask:
         bit = mask & -mask
@@ -122,7 +133,7 @@ def q(g, mask=None):
 
 def parameters(family):
     require(family in ('3k8', '4k4', '6k6'), 'Unknown family')
-    data = json.loads((ROOT / 'data' / f'family_{family}.json').read_text(encoding='utf-8'))
+    data = strict_json((ROOT / 'data' / f'family_{family}.json').read_text(encoding='utf-8'))
     g = from_lists(data['A'])
     require(data['n'] == len(g) and type(data['s']) is int and data['s'] >= 0, 'Invalid seed parameters')
     profiles = data['profiles']
@@ -133,9 +144,19 @@ def parameters(family):
     return data
 
 
+def validate_template(seed, profiles, type_edges, m):
+    validate(seed)
+    require(type(m) is int and m >= 0, 'The number of layers must be a non-negative integer')
+    require(len(profiles) >= 1, 'At least one auxiliary type is required')
+    for profile in profiles:
+        require(all(type(v) is int and 0 <= v < len(seed) for v in profile), 'Invalid profile vertex')
+        require(len(profile) == len(set(profile)), 'Repeated profile vertex')
+    from_edges(len(profiles), type_edges)
+
+
 def layers(seed, profiles, type_edges, m):
     """Construct G_m by adding the six edge classes of the definition."""
-    require(type(m) is int and m >= 0, 'The number of layers must be a non-negative integer')
+    validate_template(seed, profiles, type_edges, m)
     n, d = len(seed), len(profiles)
     labels = [('a', v) for v in range(n)] + [('c', i) for i in range(m)]
     labels += [('x', j, i) for i in range(m) for j in range(d)]
@@ -173,6 +194,7 @@ def layers(seed, profiles, type_edges, m):
 
 def pairwise_layers(seed, profiles, type_edges, m):
     """Independent construction: decide adjacency for each unordered pair."""
+    validate_template(seed, profiles, type_edges, m)
     n, d = len(seed), len(profiles)
     labels = [('a', v) for v in range(n)] + [('c', i) for i in range(m)]
     labels += [('x', j, i) for i in range(m) for j in range(d)]

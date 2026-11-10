@@ -2,11 +2,10 @@
 from itertools import combinations, product
 from collections import Counter
 import copy
-import json
 import re
 from .graphs import (ROOT, require, from_lists, from_edges, edges, induced, cone, fold,
                      coefficients, enumerate_cliques, q, parameters, layers,
-                     pairwise_layers, family_graph, membership, vertices)
+                     pairwise_layers, family_graph, membership, vertices, strict_json)
 from .homology import betti
 from .certificates import verify_4k4, read_certificate
 
@@ -15,14 +14,14 @@ def secondary_tables(family):
     folder = ROOT / 'supplement' / 'tables' / family
     p = parameters(family)
     a = from_lists(p['A'])
-    text = (folder / 'adjacency.tex').read_text()
+    text = (folder / 'adjacency.tex').read_text(encoding='utf-8')
     rows = re.findall(r'^(\d+)\s*&([^\n]+)', text, re.M)
     parsed = []
     for v, ns in rows:
         require(int(v) == len(parsed), 'Adjacency table labels out of order')
         parsed.append(list(map(int, re.findall(r'\d+', ns))))
     require(from_lists(parsed) == a, 'Supplement adjacency table differs from data')
-    profile_text = (folder / 'profiles.tex').read_text()
+    profile_text = (folder / 'profiles.tex').read_text(encoding='utf-8')
     profiles = []
     for line in profile_text.splitlines():
         if not re.match(r'^\d+\s*&', line):
@@ -40,7 +39,7 @@ def secondary_tables(family):
 
 def numeric_rows(path, columns):
     rows = []
-    for line in path.read_text().splitlines():
+    for line in path.read_text(encoding='utf-8').splitlines():
         if not re.match(r'^\d+\s*&', line):
             continue
         fields = line.removesuffix(r'\\').split('&')
@@ -52,16 +51,16 @@ def numeric_rows(path, columns):
 
 def check_4k4():
     folder, p, a = secondary_tables('4k4')
-    params = json.loads((ROOT / 'data/certificates/PARAMETERS.json').read_text())
+    params = strict_json((ROOT / 'data/certificates/PARAMETERS.json').read_text(encoding='utf-8'))
     require(a == from_lists(params['A_adjacency_lists']) and p['s'] == params['base_level'], 'Generator seed mismatch')
     require(p['profiles'] == params['profile_vertex_sets'] and p['R'] == params['R_edges'], 'Generator profiles mismatch')
-    prefix = json.loads((ROOT / 'data/certificates/PREFIX.json').read_text())
+    prefix = strict_json((ROOT / 'data/certificates/PREFIX.json').read_text(encoding='utf-8'))
     for k in ('1', '2'):
         require(p['prefix'][k] == prefix['levels'][k]['vertices_in_A16'], 'Generator prefix mismatch')
     result = verify_4k4()
     c = read_certificate('FINITE_CERTIFICATE.json.gz')
     rows = []
-    for line in (folder / 'cliques.tex').read_text().splitlines():
+    for line in (folder / 'cliques.tex').read_text(encoding='utf-8').splitlines():
         if not line.startswith((r'\(a_', r'\(x_')):
             continue
         fields = line.removesuffix(r'\\').split('&')
@@ -87,7 +86,7 @@ def check_4k4():
 
 def check_6k6():
     folder, p, a = secondary_tables('6k6')
-    data = json.loads((ROOT / 'data/seed_6k6_original.json').read_text())
+    data = strict_json((ROOT / 'data/seed_6k6_original.json').read_text(encoding='utf-8'))
     require(a == from_lists(data['A']) and p['profiles'] == data['P'] and p['R'] == data['R'], 'Seed witness mismatch')
     b, _ = layers(a, p['profiles'], p['R'], 1)
     require(len(edges(a)) == 47 and len(edges(b)) == 114, 'Wrong edge counts')
@@ -109,7 +108,7 @@ def check_6k6():
             mask ^= 1 << v
         require(list(vertices(mask)) == final and mask & ~(b[tip] | (1 << tip)) == 0, 'Invalid final cone')
         printed = []
-        for line in (folder / table).read_text().splitlines():
+        for line in (folder / table).read_text(encoding='utf-8').splitlines():
             if not re.match(r'^\d+\s*&', line):
                 continue
             fields = line.removesuffix(r'\\').split('&')
@@ -118,7 +117,7 @@ def check_6k6():
             printed.append([int(fields[0]), list(map(int, ns[1].split(','))), fs, int(fields[3])])
         require(printed == rows, 'Printed positive witness differs')
     printed = []
-    for line in (folder / 'inclusions.tex').read_text().splitlines():
+    for line in (folder / 'inclusions.tex').read_text(encoding='utf-8').splitlines():
         if not line.startswith(('$A$;', '$B-p$;')):
             continue
         name, outer = line.split('&', 1)[0].split(';')
@@ -179,12 +178,20 @@ def check_kernels():
     common = h[1] & h[2]
     c = induced(h, list(vertices(common)))
     require(membership(c, 0), 'Common-neighbour graph is not dismantlable')
+    remainder = ((1 << len(b)) - 1) ^ (1 << 11)
+    for source, target in [(0, 13), (3, 13), (8, 13), (4, 12)]:
+        remainder = fold(b, remainder, source, target)
+    four_cycle = {1, 2, 12, 13}
+    require(set(vertices(remainder)) == set(vertices(common)) | four_cycle, 'Unexpected one-edge completion remainder')
+    require(all(common & ~b[v] == 0 for v in four_cycle), 'The common-neighbour graph is not completely joined to the cycle')
+    require(induced(b, [1, 2, 13, 12]) == from_edges(4, [(0, 1), (0, 3), (1, 2), (2, 3)]), 'The completion remainder is not the stated four-cycle join')
     require(q(b) == -q(h) and q(b, ((1 << len(b)) - 1) ^ (1 << 11)) == q(a) - q(h), 'Global kernel identities fail')
     for j in (0, 1):
         profile_graph = induced(a, p['profiles'][1 - j])
         require(betti(induced(b, list(vertices(b[12 + j])))) == {i + 1: r for i, r in betti(profile_graph).items()}, 'Auxiliary kernel shift fails')
     return {'seed_edges': 33, 'kernel_edges': 32, 'kernel_reduced_betti': {}, 'links': shifts,
-            'common_neighbours': list(vertices(common)), 'common_neighbour_graph_in_D0': True}
+            'common_neighbours': list(vertices(common)), 'common_neighbour_graph_in_D0': True,
+            'remainder_folds_to_join': [[0, 13], [3, 13], [8, 13], [4, 12]]}
 
 
 def boundaries():
@@ -231,6 +238,34 @@ def mutation_controls():
     reject('changed clique coefficient', lambda c: c['q_rows'][0]['coefficients'].__setitem__(1, 999))
     reject('false negative root value', lambda c: c['A_nodes'][c['A_negative_root']].update(value=True))
     reject('out-of-range adjacency bit', lambda c: c['A'].__setitem__(0, c['A'][0] | (1 << 16)))
+    reject('negative adjacency mask', lambda c: c['A'].__setitem__(0, -1))
+    reject('duplicated negative branch', lambda c: c['A_nodes'][c['A_negative_root']]['obstructions'].__setitem__(0, copy.deepcopy(c['A_nodes'][c['A_negative_root']]['obstructions'][1])))
+    reject('wrong child level', lambda c: c['A_nodes'][c['A_nodes'][c['A_positive_root']]['link']].update(k=4))
+    leaf = original['A_positive_root']
+    while original['A_nodes'][leaf]['rule'] == 'delete':
+        leaf = original['A_nodes'][leaf]['link']
+    require(original['A_nodes'][leaf]['rule'] == 'cone', 'Expected a positive cone leaf')
+    reject('wrong leaf apex', lambda c: c['A_nodes'][leaf].update(apex=16))
+    reject('wrong leaf truth value', lambda c: c['A_nodes'][leaf].update(value=False))
+    for name, edit in [
+        ('profile contains the centre', lambda p: p['profile_vertex_sets'][0].append(16)),
+        ('negative type index', lambda p: p['R_edges'].append([-1, 0])),
+        ('type index out of range', lambda p: p['R_edges'].append([0, 3])),
+    ]:
+        params = strict_json((ROOT / 'data/certificates/PARAMETERS.json').read_text(encoding='utf-8'))
+        edit(params)
+        try:
+            verify_4k4(params=params)
+        except ValueError:
+            tests.append(name)
+        else:
+            raise ValueError('Invalid construction parameters were accepted: ' + name)
+    try:
+        strict_json('{"state": {"value": true, "value": false}}')
+    except ValueError:
+        tests.append('duplicated JSON field')
+    else:
+        raise ValueError('A duplicated JSON field was accepted')
     prefix = read_certificate('PREFIX_CERTIFICATES.json.gz')
     prefix['1']['nodes'][prefix['1']['positive_root']]['k'] = 2
     try:
@@ -241,15 +276,34 @@ def mutation_controls():
         raise ValueError('A changed prefix level was accepted')
     p = parameters('3k8')
     seed = from_lists(p['A'])
-    g, labels = layers(seed, p['profiles'], p['R'], 2)
+    g, labels = layers(seed, p['profiles'], p['R'], 3)
     ci, xi = labels.index(('c', 0)), labels.index(('x', 0, 0))
     mutant = list(g)
     mutant[ci] |= 1 << xi
     mutant[xi] |= 1 << ci
-    expected, _ = pairwise_layers(seed, p['profiles'], p['R'], 2)
-    require(tuple(mutant) != expected, 'The altered centre incidence was not detected')
-    tests.append('centre joined to its own auxiliary')
+    cross = list(g)
+    x, y = labels.index(('x', 0, 0)), labels.index(('x', 1, 1))
+    cross[x] &= ~(1 << y)
+    cross[y] &= ~(1 << x)
+    for name, altered in [('centre joined to its own auxiliary', mutant), ('missing cross-layer type edge', cross)]:
+        try:
+            for i in range(3):
+                central_neighbourhood(altered, labels, seed, p['profiles'], p['R'], 3, i)
+        except ValueError:
+            tests.append(name)
+        else:
+            raise ValueError('A modified construction passed its mathematical identities: ' + name)
     return {'rejected': tests, 'count': len(tests)}
+
+
+def central_neighbourhood(g, labels, seed, profiles, type_edges, m, i):
+    c = labels.index(('c', i))
+    ns = list(vertices(g[c]))
+    renamed = [lab if lab[0] == 'a' else lab[:-1] + (lab[-1] - (lab[-1] > i),)
+               for lab in [labels[v] for v in ns]]
+    old, old_labels = layers(seed, profiles, type_edges, m - 1)
+    require(len(set(renamed)) == len(ns), 'Central relabelling is not injective')
+    require(induced(g, ns) == old and renamed == old_labels, 'Central neighbourhood isomorphism fails')
 
 
 def deletion_controls():
@@ -263,7 +317,7 @@ def deletion_controls():
             if label[0] == 'c':
                 mask = full ^ (1 << v)
                 if k == 2:
-                    raw = json.loads((ROOT / 'data/article_remainder.json').read_text())
+                    raw = strict_json((ROOT / 'data/article_remainder.json').read_text(encoding='utf-8'))
                     index = {str(i): i for i in range(11)} | {'x': 12, 'y': 13}
                     for u, t in raw['folds']:
                         mask = fold(g, mask, index[u], index[t])
@@ -303,10 +357,7 @@ def template_controls(extended=False):
                             count['orders'] += 1
                             for i in range(m):
                                 c = labels.index(('c', i))
-                                ns = list(vertices(g[c]))
-                                renamed = [lab if lab[0] == 'a' else lab[:-1] + (lab[-1] - (lab[-1] > i),) for lab in [labels[v] for v in ns]]
-                                old, old_labels = layers(seed, profiles, re, m - 1)
-                                require(induced(g, ns) == old and renamed == old_labels, 'Central neighbourhood isomorphism fails')
+                                central_neighbourhood(g, labels, seed, profiles, re, m, i)
                                 count['central_isomorphisms'] += 1
                                 if m >= 2:
                                     mask = ((1 << len(g)) - 1) ^ (1 << c)

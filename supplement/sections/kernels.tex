@@ -247,7 +247,8 @@ every subsequent level.
 The remainder hypothesis is present on both sides of this
 equivalence. Acyclicity of the kernel is redundant under that
 hypothesis, but states explicitly the property needed when
-starting with a kernel. It cannot replace the remainder hypothesis.
+starting with a kernel. The equivalence does not dispense with the
+remainder hypothesis.
 Lemma~\ref{ker:lem:cover} gives the covering condition on the profiles.
 
 For any finite complex \(J\) put
@@ -328,12 +329,12 @@ If \(\Cl(H)\) is acyclic, inclusion induces
 for every vertex \(v\) and every integer \(t\).
 \end{lemma}
 \begin{proof}
-Write \(U=\Cl(H-v)\), \(V=v*\Cl(L_H(v))\) and
-\(W=U\cap V=\Cl(L_H(v))\). The union is acyclic by hypothesis,
-and \(V\) is a cone. The same chain argument as in
+Write \(P=\Cl(H-v)\), \(Q=v*\Cl(L_H(v))\) and
+\(I=P\cap Q=\Cl(L_H(v))\). The union is acyclic by hypothesis,
+and \(Q\) is a cone. The same chain argument as in
 Lemma~\ref{ker:lem:intersection-map}, now with the acyclic union
-\(U\cup V=\Cl(H)\), shows that
-\(\Ht_t(W)\to\Ht_t(U)\oplus\Ht_t(V)\) is an isomorphism.
+\(P\cup Q=\Cl(H)\), shows that
+\(\Ht_t(I)\to\Ht_t(P)\oplus\Ht_t(Q)\) is an isomorphism.
 The second summand is zero.
 \end{proof}
 
@@ -373,7 +374,7 @@ Consequently, if \(C\in\D_j\) for some \(j\geq0\), then
 \(B-p\in\D_j\).
 \end{proposition}
 \begin{proof}
-Every \(z\notin\{a,b\}\) that is not adjacent to \(a\) in \(H\)
+Every \(z\in V(H)\setminus\{a,b\}\) that is not adjacent to \(a\) in \(H\)
 is dominated by \(y\) in \(B-p\). Indeed \(y\) is adjacent to
 every vertex except \(a\), and \(a\) is not in the closed
 neighbourhood of \(z\). Likewise, a vertex not adjacent to \(b\)
@@ -386,7 +387,8 @@ present.
 In the remaining graph, the edges on \(\{a,b,x,y\}\) are exactly
 \(ab,by,yx,xa\), and every vertex of \(C\) is adjacent to these
 four vertices. Its induced graph is unchanged from \(H\).
-The remainder is therefore \(C\star C_4\).
+The remainder is therefore \(C\star C_4\); when \(C\) is empty,
+it is just the four-cycle.
 If \(C\in\D_j\), Lemma~\ref{ker:lem:join} gives
 \(C\star C_4\in\D_j\). Prepending the displayed folds is valid
 at level \(j\) by nesting of the classes.
