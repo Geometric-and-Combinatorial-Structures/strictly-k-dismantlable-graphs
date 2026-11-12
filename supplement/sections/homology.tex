@@ -117,8 +117,8 @@ any non-central neighbourhood. Since \(B\) has more than one
 vertex, \eqref{eq:first} gives \(B\notin\D_s\).
 This includes \(s=0\), when \(\D_{s-1}\) is the class of cones.
 
-For \(m\geq2\), suppose \(G_{m-1}\) is strictly
-\((s+m-1)\)-dismantlable. Each centre has neighbourhood isomorphic
+For \(m\geq2\), suppose \(G_{m-1}\) has strict level
+\(s+m-1\). Each centre has neighbourhood isomorphic
 to \(G_{m-1}\); deleting it leaves a graph in
 \(\D_0\subseteq\D_{s+m}\) by Lemmas~\ref{lem:centre} and~\ref{lem:remainder}.
 Thus \(G_m\in\D_{s+m}\). A first deletion at level \(s+m-1\)
@@ -152,6 +152,18 @@ These contributions cancel in \eqref{hom:eq:euler}.
 This example separates the two obstructions on a graph; it does
 not by itself supply initial data satisfying all three hypotheses
 of Theorem~\ref{hom:thm:criterion}.
+
+The degree shifts in Theorem~\ref{hom:thm:shift} consequently give, for
+$m\geq1$,
+\begin{equation}\label{hom:eq:sign}
+\begin{aligned}
+ q(L_{G_m}(a))&=(-1)^{m-1}q(L_B(a)), &&a\in V(A),\\
+ q(L_{G_m}(x_{j,i}))&=(-1)^{m-1}q(L_B(x_j)),
+ &&j\in\mathcal T,\quad 0\leq i<m.
+\end{aligned}
+\end{equation}
+Indeed, shifting every homology degree by $m-1$ multiplies the alternating
+sum in~\eqref{hom:eq:euler} by $(-1)^{m-1}$.
 
 \Needspace{10\baselineskip}
 The Euler criterion in Theorem~\ref{thm:template} uses

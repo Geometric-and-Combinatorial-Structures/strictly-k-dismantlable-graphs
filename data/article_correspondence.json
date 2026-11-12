@@ -1,0 +1,107 @@
+{
+  "scientific_text_date": "2026-11-12",
+  "manuscript_pdf_sha256": "c2b1061ed81cb52f9ede74dd1ddbf998d9840cff0e8ae6921cf44fb8634c596d",
+  "pages": 23,
+  "files": [
+    {
+      "repository_file": "data/article_tables/seed_adjacency.tex",
+      "manuscript_source": "tables/seed_adjacency.tex",
+      "sha256": "bd722e83115c572a0dc839e9fc7993b490e45851e6bcda7c999c653ea2c0b3c1",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "data/article_tables/seed_reduction.tex",
+      "manuscript_source": "tables/seed_reduction.tex",
+      "sha256": "32332836976ad117342ce7c765f5eb88bc36120336ee5677616bb6367cc9dbcd",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "data/article_tables/seed_cliques.tex",
+      "manuscript_source": "tables/seed_cliques.tex",
+      "sha256": "dcb45efb966cdae7d6c0743641e8852df6985ce87f2e9864e80a1fb7aec29589",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "figures/first_layer.tikz",
+      "manuscript_source": "figures/first_layer.tikz",
+      "sha256": "b00a0a17643fd05a3648022f98653949b04a286975018279d9435bf13378a4e8",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "figures/seed_complement.tikz",
+      "manuscript_source": "figures/seed_complement.tikz",
+      "sha256": "92f07ea67f8000188f88ac4b623d901826e10578b8c65af2c474f34f12a1302b",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "figures/layers.tikz",
+      "manuscript_source": "figures/layers.tikz",
+      "sha256": "31f975eab709c593c557573734e44d403877df07eafa01d0c0ebe0cd236f95a3",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "figures/layers_scheme.tex",
+      "manuscript_source": "figures/layers_scheme.tex",
+      "sha256": "038bb2d66a338390ec47cab8304e587a6a6009e7235ce3631c6e101ef5e59f5d",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "figures/jfef-grafos.tikzstyles",
+      "manuscript_source": "figures/jfef-grafos.tikzstyles",
+      "sha256": "3612af427e4be1d021b0591028924ae326ee996aaba25f550a0280efab90fb1b",
+      "extent": "whole source file"
+    },
+    {
+      "repository_file": "data/article_tables/small_seeds.tex",
+      "manuscript_source": "sections/lower_bounds.tex",
+      "source_sha256": "537706a3be627218ce5cf72415150199630fb4e110c9cecc6a799b9f2eedd1b5",
+      "source_label": "tab:small-seeds",
+      "sha256": "b91dea720247f4c4590ce272015f86047da2eb68668d9d0d97c9637386819ff3",
+      "extent": "complete tabular environment, followed by one newline"
+    },
+    {
+      "repository_file": "data/article_tables/small_reductions.tex",
+      "manuscript_source": "sections/lower_bounds.tex",
+      "source_sha256": "537706a3be627218ce5cf72415150199630fb4e110c9cecc6a799b9f2eedd1b5",
+      "source_label": "tab:seed-certificates",
+      "sha256": "1b2464a4ddcf2b78c1bad09dc64e55cc8a4f44394a23a8b60e10e07f8ea08500",
+      "extent": "complete tabular environment, followed by one newline"
+    },
+    {
+      "repository_file": "data/article_tables/small_extensions.tex",
+      "manuscript_source": "sections/lower_bounds.tex",
+      "source_sha256": "537706a3be627218ce5cf72415150199630fb4e110c9cecc6a799b9f2eedd1b5",
+      "source_label": "tab:small-extensions",
+      "sha256": "86464943b73d1c0f2a62a016bcd48a461e5b113da29ac57d70257ba2cd1201dd",
+      "extent": "complete tabular environment, followed by one newline"
+    },
+    {
+      "repository_file": "data/article_tables/secondary_missing.tex",
+      "manuscript_source": "sections/secondary.tex",
+      "source_sha256": "04e019e7d090d932d029efab5169d725d8300c32ef7427d55f67d40dff3992f7",
+      "source_label": "eq:secondary-missing",
+      "sha256": "4f7a1afa6a82ae28b70652b4b6c96ec2dd63504313238db75331b4b5584edb46",
+      "extent": "complete equation environment, followed by one newline"
+    },
+    {
+      "repository_file": "data/article_tables/secondary_profiles.tex",
+      "manuscript_source": "sections/secondary.tex",
+      "source_sha256": "04e019e7d090d932d029efab5169d725d8300c32ef7427d55f67d40dff3992f7",
+      "source_label": "eq:secondary-profiles",
+      "sha256": "3fab91297e1b1d9db992ab4af10524da93e31e446b0430773663e36e1d4073d8",
+      "extent": "complete equation environment, followed by one newline"
+    },
+    {
+      "repository_file": "data/article_tables/h2_folds.tex",
+      "manuscript_source": "sections/h2_witness.tex",
+      "source_sha256": "51a25e6287c8de5f8e436fbb082117ff3292c91da4a347649dfcddcf26f6a7ef",
+      "source_label": "tab:h2-folds",
+      "sha256": "ed0a3877bf8f3c6600284d440ce01189582cef625582246e0a6d6ac4680097b6",
+      "extent": "complete tabular environment, followed by one newline"
+    }
+  ],
+  "scope": "These are the actual table and figure sources from the identified manuscript. Runtime calculations validate their mathematical content; the PDF checksum identifies the typeset document and is not itself a mathematical test.",
+  "citation_only_derivatives": [
+    "497f77f99348cbd1113b79a5c661658dcec1b7d8bc1abae546b5c61ab33411f2"
+  ]
+}

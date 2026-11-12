@@ -59,6 +59,7 @@ def run():
     def figure(name):
         text = TXT['figures/' + name]
         lines = [s for s in text.splitlines() if s.startswith('\\draw')]
+        assert len(lines) == text.count('\\draw'), 'Unparsed drawing command'
         es = []
         for line in lines:
             endpoints = re.findall(r'\(([a-z]+\d*)\)', line)

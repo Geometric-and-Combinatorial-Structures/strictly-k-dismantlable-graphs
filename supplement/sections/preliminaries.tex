@@ -1,112 +1,60 @@
 \section{The dismantling hierarchy}\label{sec:prelim}
-All graphs are finite, simple and undirected. For a graph \(H\), write
-\(V(H)\) and \(E(H)\) for its vertex and edge sets and \(H[S]\) for the
-subgraph induced by \(S\subseteq V(H)\). In particular,
-\(H-v=H[V(H)\setminus\{v\}]\). The \defi{open and closed neighbourhood
-sets} of \(v\) are
+All graphs are finite, simple and undirected. For $S\subseteq V(H)$, write
+$H[S]$ for the induced subgraph and $H-v=H[V(H)\setminus\{v\}]$.
+The open and closed neighbourhood sets are
 \[
- N_H(v)=\{u\in V(H):uv\in E(H)\},\qquad N_H[v]=N_H(v)\cup\{v\}.
+ N_H(v)=\{u:uv\in E(H)\},\qquad N_H[v]=N_H(v)\cup\{v\}.
 \]
-The \defi{open neighbourhood graph} \(H[N_H(v)]\) is the graph
-tested by the deletion rule.
-
+We write $L_H(v)=H[N_H(v)]$ for the \defi{neighbourhood graph}.
 A \defi{cone} is a non-empty graph with a universal vertex, called an
-\defi{apex}. The one-vertex graph \(K_1\) is a cone, and the empty graph
-is not. A vertex \(u\) is \defi{dominated} by \(t\ne u\) if
-\(N_H[u]\subseteq N_H[t]\). Deleting \(u\) under this condition is a
-\defi{fold}, written \(u\to t\). We can recognise a fold either
-from these closed neighbourhoods or by finding an apex in the
-open neighbourhood graph.
+\defi{apex}. Thus $K_1$ is a cone and the empty graph is not.
+
+A vertex $u$ is \defi{dominated} by $w\ne u$ when
+$N_H[u]\subseteq N_H[w]$. Deleting it is a \defi{fold}, written $u\to w$.
+All neighbourhoods in a sequence of folds are taken in the graph then remaining.
 
 \begin{lemma}\label{lem:dom}
-The graph \(H[N_H(u)]\) is a cone if and only if \(u\) is dominated
-by another vertex.
+A vertex $u$ is dominated if and only if $L_H(u)$ is a cone.
 \end{lemma}
 \begin{proof}
-Suppose \(N_H[u]\subseteq N_H[t]\) with \(t\ne u\). Since \(u\)
-belongs to \(N_H[t]\), the vertices \(u\) and \(t\) are adjacent.
-The same inclusion makes \(t\) adjacent to every vertex of
-\(N_H(u)\setminus\{t\}\), so \(t\) is an apex of \(H[N_H(u)]\).
-Conversely, if \(t\) is an apex of \(H[N_H(u)]\), it is adjacent
-to \(u\) and to every other vertex of \(N_H(u)\). Together with
-\(t\in N_H[t]\), this gives \(N_H[u]\subseteq N_H[t]\).
-For an isolated vertex the open neighbourhood graph is empty, and
-there is no vertex that dominates it.
+The inclusion $N_H[u]\subseteq N_H[w]$ says exactly that $w$ is a
+neighbour of $u$ adjacent to all its other neighbours.
 \end{proof}
 
-The cone test supplies the base of the recursive definition.
-At each higher level the same kind of test is applied to the graph
-on the neighbours, using the class from the preceding level.
-
+The hierarchy of Fieux and Jouve~\cite{FJ2020} replaces the cone test by
+a reduction in the preceding class. At level one these are the
+$s$-dismantling moves of~\cite{BFJ2010}.
 \begin{definition}\label{def:hierarchy}
-Let \(\D_{-1}\) be the class of non-empty cones. For each integer
-\(j\geq0\), a non-empty graph \(H\) belongs to \(\D_j\) if it can
-be reduced to \(K_1\) by successive vertex deletions such that the
-open neighbourhood graph of each deleted vertex, in the graph remaining
-at that step, belongs to \(\D_{j-1}\). A vertex whose open neighbourhood
-graph lies in \(\D_{j-1}\) is \defi{\(j\)-dismantlable}.
-A graph in \(\D_j\setminus\D_{j-1}\) is \defi{strictly
-\(j\)-dismantlable}. The empty graph belongs to none of these classes.
+Let $\D_{-1}$ consist of the non-empty cones. For $j\geq0$, a graph is
+in $\D_j$ if it reduces to $K_1$ by successive deletions whose current
+neighbourhood graphs belong to $\D_{j-1}$. Such a graph has
+\defi{strict level $j$} when it is outside $\D_{j-1}$.
+The empty graph belongs to none of these classes.
 \end{definition}
-
-This is the hierarchy of Fieux and Jouve
-\cite{FJ2020}, also used in
-\cite{DEFH2023}.
-By Lemma~\ref{lem:dom}, the deletions allowed in \(\D_0\) are folds,
-so \(\D_0\) is the usual class of dismantlable graphs. At level one,
-the allowed deletions are the \(s\)-dismantling moves~\cite{BFJ2010}.
-The graph \(K_1\) belongs to every \(\D_j\) because its reduction is empty.
-Membership is invariant under graph isomorphism. An isomorphism
-takes the apex of a cone to an apex and identifies the open
-neighbourhood graphs at each step of a reduction. Induction on
-\(j\) therefore preserves the admissibility of each deletion.
-
-To compare two successive levels, we test the same deletion
-sequence at both levels.
+The empty reduction puts $K_1$ in every class. Membership is invariant under
+isomorphism, since an isomorphism preserves every neighbourhood test.
 
 \begin{lemma}\label{lem:inclusions}
-The classes satisfy
-\[
- \D_{-1}\subseteq\D_0\subseteq\D_1\subseteq\D_2\subseteq\cdots .
-\]
+The classes are nested: $\D_{-1}\subseteq\D_0\subseteq\D_1\subseteq\cdots$.
 \end{lemma}
 \begin{proof}
-Start with a cone of apex \(z\). Each other vertex can be folded onto
-\(z\), which remains an apex as those vertices are deleted. This
-gives \(\D_{-1}\subseteq\D_0\).
-Now suppose \(\D_{j-1}\subseteq\D_j\) and \(H\in\D_j\).
-Every neighbourhood graph tested in a level-\(j\) reduction of
-\(H\) belongs to \(\D_{j-1}\) and hence to \(\D_j\).
-The same sequence is therefore a level-\((j+1)\) reduction, completing
-the induction.
+A cone folds onto its apex. If $\D_{j-1}\subseteq\D_j$, every
+neighbourhood in a level-$j$ reduction also passes the level-$(j+1)$ test.
+The same sequence proves the next inclusion.
 \end{proof}
-
-For a graph with more than one vertex, a reduction must start with
-an admissible deletion. To use such a deletion to prove membership,
-we must also be able to reduce the graph it leaves.
 
 \begin{lemma}\label{lem:first}
-Let \(\card{V(H)}>1\) and \(j\geq0\).
-\begin{enumerate}
-\item If \(H[N_H(v)]\notin\D_{j-1}\) for every \(v\in V(H)\), then
-\(H\notin\D_j\).
-\item If \(H[N_H(v)]\in\D_{j-1}\) and \(H-v\in\D_j\) for some
-\(v\in V(H)\), then \(H\in\D_j\).
-\end{enumerate}
-\end{lemma}
-\begin{proof}
-In the first case the neighbourhood test fails at every vertex,
-so no reduction can start. In the second, the test permits deleting
-\(v\). The reduction of \(H-v\) to \(K_1\) at the same level then
-completes the sequence.
-\end{proof}
-
-For later use, abbreviate the neighbourhood graph by $L_H(v)=H[N_H(v)]$.
-For $|V(H)|>1$ and $j\geq0$, the first deletion and the remaining reduction
-give the equivalence
+For $|V(H)|>1$ and $j\geq0$,
 \begin{equation}\label{eq:first}
  H\in\D_j\quad\Longleftrightarrow\quad
- L_H(v)\in\D_{j-1}\ \text{and}\ H-v\in\D_j
- \quad\text{for some }v\in V(H).
+ \text{some }v\in V(H)\text{ satisfies }L_H(v)\in\D_{j-1}
+ \text{ and }H-v\in\D_j.
 \end{equation}
-This equivalence will also justify the finite recursive certificates.
+\end{lemma}
+\begin{proof}
+Read the first deletion of a reduction for the forward implication.
+For the converse, prepend the permitted deletion of $v$ to a reduction of $H-v$.
+\end{proof}
+In particular, failure of the neighbourhood test at every vertex excludes
+membership. Equation~\eqref{eq:first}, together with the empty graph and cone
+cases, is also the finite recursion used by the verification programs.

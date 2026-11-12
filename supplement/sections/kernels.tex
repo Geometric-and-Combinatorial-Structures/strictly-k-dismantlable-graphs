@@ -4,7 +4,7 @@ understand the neighbourhood obstructions by removing certain edges from the
 seed. We first introduce the homology used to compare the resulting graphs,
 then derive the identities and apply them to the eleven-vertex seed.
 
-\subsection{Homology for the comparison}
+\subsection{Homology for the comparison}\label{sec:homological-tools}
 A non-zero reduced homology group excludes a graph from every dismantling
 class. We give the chain conventions and the elementary facts used in this
 section and in Section~\ref{sec:homology}; in particular, empty
@@ -36,16 +36,16 @@ Henceforth assume \(S\cup T=V(A)\), and put
 \[
  S_0=S\setminus T,\qquad T_0=T\setminus S,\qquad Z=S\cap T.
 \]
-Define \(H\) by deleting from \(A\) all its edges between \(S_0\)
-and \(T_0\), and no others. We call \(H\) the \defi{kernel of these profile data}. This name describes an operation on edges; it does
-not impose a homological property on \(H\).
+Define \(Q\) by deleting from \(A\) all its edges between \(S_0\)
+and \(T_0\), and no others. We call \(Q\) the \defi{kernel of these profile data}. This name describes an operation on edges; it does
+not impose a homological property on \(Q\).
 
 Set
 \[
  K=\Cl(A),\quad X=\Cl(A[S]),\quad Y=\Cl(A[T]),\quad
- W=\Cl(A[Z]),\quad U=\Cl(H).
+ W=\Cl(A[Z]),\quad U=\Cl(Q).
 \]
-Every clique of \(H\) is contained in \(S\) or in \(T\), since it
+Every clique of \(Q\) is contained in \(S\) or in \(T\), since it
 cannot meet both \(S_0\) and \(T_0\). Conversely every clique contained
 in \(S\) or in \(T\) survives the edge deletions. Therefore
 \begin{equation}\label{ker:eq:kernel}
@@ -108,7 +108,7 @@ The global decomposition also applies within each neighbourhood. For an original
 For every \(a\in V(A)\) and every integer \(t\),
 \[
  \Ht_t(\Cl(L_B(a)))
- \cong \Ht_{t-1}(\Cl(L_H(a))).
+ \cong \Ht_{t-1}(\Cl(L_Q(a))).
 \]
 \end{theorem}
 \begin{proof}
@@ -120,9 +120,9 @@ not \(y\), and
  X_a=\Cl(A[N_A(a)\cap S]).
 \]
 Both pieces are cones and their intersection is \(X_a\).
-The edge deletions defining \(H\) remove exactly the neighbours
+The edge deletions defining \(Q\) remove exactly the neighbours
 of \(a\) in \(T_0\). Edges among its remaining neighbours in \(S\)
-are unchanged. Thus \(X_a=\Cl(L_H(a))\), and
+are unchanged. Thus \(X_a=\Cl(L_Q(a))\), and
 Lemma~\ref{hom:lem:union} proves the assertion. The case \(a\in T_0\)
 is obtained by exchanging the two profiles and auxiliaries.
 
@@ -137,7 +137,7 @@ construction \eqref{ker:eq:V} to \(N_A(a)\), writing
 The resulting complex \(V_a\) is acyclic by the same union-of-cones
 argument. Now \(\Cl(L_B(a))=(p*K_a)\cup V_a\), with intersection
 \(X_a\cup Y_a\). The proof of \eqref{ker:eq:kernel}, restricted to
-\(N_A(a)\), identifies this intersection with \(\Cl(L_H(a))\).
+\(N_A(a)\), identifies this intersection with \(\Cl(L_Q(a))\).
 Lemma~\ref{hom:lem:union} again applies.
 Augmented chains cover all possible empty neighbourhoods.
 \end{proof}
@@ -222,7 +222,7 @@ Then the following are equivalent:
 \begin{enumerate}
 \item Every non-central neighbourhood \(L_B(v)\), \(v\ne p\),
 has non-trivial reduced homology.
-\item The clique complex of the kernel \(H\) is acyclic, every \(L_H(a)\),
+\item The clique complex of the kernel \(Q\) is acyclic, every \(L_Q(a)\),
 \(a\in V(A)\), has non-trivial reduced homology, and both
 \(A[S]\) and \(A[T]\) have non-trivial reduced homology.
 \end{enumerate}
@@ -234,7 +234,7 @@ Either condition implies
 \begin{proof}
 The seed and remainder hypotheses imply acyclicity of \(K\) and
 \(\Cl(B-p)\). Proposition~\ref{ker:prop:global} then implies
-acyclicity of \(U=\Cl(H)\).
+acyclicity of \(U=\Cl(Q)\).
 Theorem~\ref{ker:thm:original-links} gives equivalence of the
 conditions on original vertices. Theorem~\ref{ker:thm:auxiliary-links}
 gives equivalence of those on the auxiliaries.
@@ -254,20 +254,20 @@ Lemma~\ref{ker:lem:cover} gives the covering condition on the profiles.
 
 Extend \(q\) from graphs to finite complexes by putting
 \(q(J)=\sum_{\sigma\in J}(-1)^{|\sigma|}\), including the empty
-face. This agrees with the existing notation \(q(H)=q(\Cl(H))\).
+face. This agrees with the existing notation \(q(Q)=q(\Cl(Q))\).
 Inclusion--exclusion and the zero value on cones give identities
 without homological assumptions.
 
 \begin{proposition}\label{ker:prop:euler}
 For the profile data above,
 \begin{align}
- q(B)&=-q(H),&
- q(B-p)&=q(A)-q(H),\label{ker:eq:global-q}\\
- q(L_B(a))&=-q(L_H(a)) &&(a\in V(A)),\label{ker:eq:fixed-q}\\
+ q(B)&=-q(Q),&
+ q(B-p)&=q(A)-q(Q),\label{ker:eq:global-q}\\
+ q(L_B(a))&=-q(L_Q(a)) &&(a\in V(A)),\label{ker:eq:fixed-q}\\
  q(L_B(x))&=q(A[S])-q(A[Z]),&
  q(L_B(y))&=q(A[T])-q(A[Z]).\label{ker:eq:aux-q}
 \end{align}
-If \(q(H)=0\), the last line becomes
+If \(q(Q)=0\), the last line becomes
 \[
  q(L_B(x))=-q(A[T]),\qquad
  q(L_B(y))=-q(A[S]).
@@ -279,20 +279,20 @@ so \(q(V)=0\). Apply inclusion--exclusion to
 \eqref{ker:eq:decompositions} to obtain \eqref{ker:eq:global-q}.
 The decompositions used to prove
 Theorem~\ref{ker:thm:original-links} likewise have pieces of
-zero \(q\) and intersection \(\Cl(L_H(a))\), yielding
+zero \(q\) and intersection \(\Cl(L_Q(a))\), yielding
 \eqref{ker:eq:fixed-q}.
 Apply inclusion--exclusion to \eqref{ker:eq:auxiliary-complexes}
 to obtain \eqref{ker:eq:aux-q}.
 Finally \eqref{ker:eq:kernel} gives
-\(q(H)=q(A[S])+q(A[T])-q(A[Z])\).
+\(q(Q)=q(A[S])+q(A[T])-q(A[Z])\).
 \end{proof}
 
 In particular, under \(A\in\D_s\setminus\D_{s-1}\) and
-\(B-p\in\D_s\), both have \(q=0\), so \(q(H)=0\).
+\(B-p\in\D_s\), both have \(q=0\), so \(q(Q)=0\).
 The non-zero Euler conditions on all non-central neighbourhoods
 of \(B\) are then equivalent to
 \[
- q(L_H(a))\ne0\quad\hbox{for all }a\in V(A),\qquad
+ q(L_Q(a))\ne0\quad\hbox{for all }a\in V(A),\qquad
  q(A[S])\ne0,\quad q(A[T])\ne0.
 \]
 This is the kernel formulation of Theorem~\ref{thm:template}. The identities remain valid if the remainder
@@ -302,7 +302,7 @@ test for acyclicity or dismantlability.
 
 One further necessary condition can be read from
 Lemma~\ref{ker:lem:intersection-map}. If \(S,T,Z\) are non-empty
-and \(H\) is acyclic, the numbers of connected components satisfy
+and \(Q\) is acyclic, the numbers of connected components satisfy
 \[
  c(A[Z])=c(A[S])+c(A[T])-1.
 \]
@@ -314,34 +314,34 @@ the inclusion maps in the lemma are isomorphisms.
 
 \subsection{Completing one edge and reducing the remainder}
 
-The case of a single added edge lets us give an explicit reduction of the remainder. Suppose \(H\) is a graph, \(ab\) is a non-edge, and
+The case of a single added edge lets us give an explicit reduction of the remainder. Suppose \(Q\) is a graph, \(ab\) is a non-edge, and
 \[
- A=H+ab,\qquad S=V(H)\setminus\{b\},\qquad
- T=V(H)\setminus\{a\}.
+ A=Q+ab,\qquad S=V(Q)\setminus\{b\},\qquad
+ T=V(Q)\setminus\{a\}.
 \]
 Here \(S_0=\{a\}\) and \(T_0=\{b\}\), so deleting the edges between
-the exclusive profile parts recovers exactly \(H\).
+the exclusive profile parts recovers exactly \(Q\).
 
 \begin{lemma}\label{ker:lem:delete-vertex}
-If \(\Cl(H)\) is acyclic, inclusion induces
+If \(\Cl(Q)\) is acyclic, inclusion induces
 \[
- \Ht_t(\Cl(L_H(v)))\cong\Ht_t(\Cl(H-v))
+ \Ht_t(\Cl(L_Q(v)))\cong\Ht_t(\Cl(Q-v))
 \]
 for every vertex \(v\) and every integer \(t\).
 \end{lemma}
 \begin{proof}
-Write \(P=\Cl(H-v)\), \(Q=v*\Cl(L_H(v))\) and
-\(I=P\cap Q=\Cl(L_H(v))\). The union is acyclic by hypothesis,
-and \(Q\) is a cone. The same chain argument as in
+Write \(M_1=\Cl(Q-v)\), \(M_2=v*\Cl(L_Q(v))\) and
+\(I=M_1\cap M_2=\Cl(L_Q(v))\). The union is acyclic by hypothesis,
+and \(M_2\) is a cone. The same chain argument as in
 Lemma~\ref{ker:lem:intersection-map}, now with the acyclic union
-\(P\cup Q=\Cl(H)\), shows that
-\(\Ht_t(I)\to\Ht_t(P)\oplus\Ht_t(Q)\) is an isomorphism.
+\(M_1\cup M_2=\Cl(Q)\), shows that
+\(\Ht_t(I)\to\Ht_t(M_1)\oplus\Ht_t(M_2)\) is an isomorphism.
 The second summand is zero.
 \end{proof}
 
-Thus, if \(H\) is acyclic and all its neighbourhoods have
-non-trivial reduced homology, then both \(A[S]=H-b\) and
-\(A[T]=H-a\) have non-trivial reduced homology.
+Thus, if \(Q\) is acyclic and all its neighbourhoods have
+non-trivial reduced homology, then both \(A[S]=Q-b\) and
+\(A[T]=Q-a\) have non-trivial reduced homology.
 The remaining obligations for
 Theorem~\ref{ker:thm:equivalence} are the strict level of the completed
 seed and the required level of \(B-p\).
@@ -367,7 +367,7 @@ level \(j\). This proves the assertion for \(j\geq0\).
 \begin{proposition}\label{ker:prop:remainder-folds}
 For the one-edge completion, put
 \[
- C=H[N_H(a)\cap N_H(b)].
+ C=Q[N_Q(a)\cap N_Q(b)].
 \]
 The remainder \(B-p\) folds onto \(C\star C_4\), where the cycle
 has vertices \(a,b,y,x\) in this order.
@@ -375,7 +375,7 @@ Consequently, if \(C\in\D_j\) for some \(j\geq0\), then
 \(B-p\in\D_j\).
 \end{proposition}
 \begin{proof}
-Every \(z\in V(H)\setminus\{a,b\}\) that is not adjacent to \(a\) in \(H\)
+Every \(z\in V(Q)\setminus\{a,b\}\) that is not adjacent to \(a\) in \(Q\)
 is dominated by \(y\) in \(B-p\). Indeed \(y\) is adjacent to
 every vertex except \(a\), and \(a\) is not in the closed
 neighbourhood of \(z\). Likewise, a vertex not adjacent to \(b\)
@@ -387,7 +387,7 @@ present.
 
 In the remaining graph, the edges on \(\{a,b,x,y\}\) are exactly
 \(ab,by,yx,xa\), and every vertex of \(C\) is adjacent to these
-four vertices. Its induced graph is unchanged from \(H\).
+four vertices. Its induced graph is unchanged from \(Q\).
 The remainder is therefore \(C\star C_4\); when \(C\) is empty,
 it is just the four-cycle.
 If \(C\in\D_j\), Lemma~\ref{ker:lem:join} gives
@@ -407,13 +407,13 @@ the original remainder condition in the equivalence theorem.
 Define the completed seed \(A\) on \(0,\ldots,10\) by
 Table~\ref{ker:tab:seed}. It has thirty-three edges.
 The pair \(\{1,2\}\) is an edge; define
-\(V(H)=V(A)\) and \(E(H)=E(A)\setminus\{\{1,2\}\}\).
-Then \(H\) has thirty-two edges and eleven vertices.
+\(V(Q)=V(A)\) and \(E(Q)=E(A)\setminus\{\{1,2\}\}\).
+Then \(Q\) has thirty-two edges and eleven vertices.
 For the profiles \(S=V(A)\setminus\{2\}\) and
 \(T=V(A)\setminus\{1\}\), the exclusive parts are
-\(\{1\}\) and \(\{2\}\), respectively. Hence this \(H\) is
+\(\{1\}\) and \(\{2\}\), respectively. Hence this \(Q\) is
 exactly the kernel of the profile data, and adding the single edge
-\(\{1,2\}\) to \(H\) gives \(A\).
+\(\{1,2\}\) to \(Q\) gives \(A\).
 
 \begin{table}[htbp]
 \centering
@@ -426,12 +426,12 @@ This is the completed seed $F_1$ used in the article. The reductions of
 Appendix~\ref{sec:article} establish its strict level and dismantle $B-p$.
 The homology calculation gives
 \[
- \Ht_*(\Cl(H))=0,\qquad
- \dim_{\F}\Ht_1(\Cl(L_H(v)))=
+ \Ht_*(\Cl(Q))=0,\qquad
+ \dim_{\F}\Ht_1(\Cl(L_Q(v)))=
  \begin{cases}2,&v=10,\\1,&v\ne10,\end{cases}
 \]
 with all other reduced homology groups of these neighbourhoods zero.
-Moreover, $N_H(1)\cap N_H(2)=\{5,6,7,9,10\}$ induces the path
+Moreover, $N_Q(1)\cap N_Q(2)=\{5,6,7,9,10\}$ induces the path
 $10,6,5,9,7$. Proposition~\ref{ker:prop:remainder-folds} therefore gives
 $B-p\in\D_0$. One such reduction begins with the folds $0,3,8\to y$ followed by $4\to x$, which
 leave the join of this path with the four-cycle on $1,2,y,x$.
@@ -440,7 +440,7 @@ give condition~(2) of Theorem~\ref{ker:thm:equivalence}.
 With the strict level of $A$ proved in Appendix~\ref{sec:article}, that
 theorem provides a homological proof of the strict levels of $F_k$.
 \runcheck{kernels}
-The report reconstructs $H$ by removing $\{1,2\}$, restores the seed by adding
+The report reconstructs $Q$ by removing $\{1,2\}$, restores the seed by adding
 that edge, computes the displayed homology groups over $\F$, and checks the
 common-neighbour graph. It also compares the homology of each neighbourhood
-in $H$ with the degree-shifted group in $B$.
+in $Q$ with the degree-shifted group in $B$.

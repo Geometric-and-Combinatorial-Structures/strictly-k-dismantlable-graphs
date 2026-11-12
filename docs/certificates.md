@@ -14,7 +14,7 @@ A state consists of a subset $S$ of the vertices of a fixed graph, an integer $j
 | Positive deletion | For a vertex $v\in S$, the neighbourhood state $(S\cap N(v),j-1)$ and remainder state $(S\setminus\lbrace v\rbrace,j)$ are both true. |
 | Negative state | For every $v\in S$, at least one of those two states is false. The graph is non-empty, is not a cone, and $j\geq0$. |
 
-Every child has fewer vertices. The verifier checks this decrease, the exact subset and level of each child, every reference to another state, and complete coverage of the vertices in a negative state. It rejects circular dependencies and incorrect truth values. Induction on $|S|$, using the definition of the hierarchy, proves that each accepted state has the asserted meaning.
+Every child has fewer vertices. The verifier checks this decrease, the exact subset and level of each child, every reference to another state, and complete coverage of the vertices in a negative state. It rejects self-referential dependencies and incorrect truth values. Induction on $|S|$, using the definition of the hierarchy, proves that each accepted state has the asserted meaning.
 
 ## The seven roots
 
@@ -35,4 +35,4 @@ The `.gz` files are compressed JSON text; Python reads them directly. Each subse
 
 The verifier [`dismantling/certificates.py`](../dismantling/certificates.py) checks the supplied proof states without searching for a dismantling order. A separate exact recursion recomputes all seven membership assertions directly from the definition, without using the stored proof states. The seven accepted roots are therefore complete finite proofs, not conclusions drawn from an unsuccessful bounded search.
 
-Run `python reproduce.py --only 4k4` to verify the certificates. Run `python reproduce.py --only mutations` to check rejection of altered edges, root levels and subsets, missing branches, missing or circular dependencies, and incorrect clique coefficients.
+Run `python reproduce.py --only 4k4` to verify the certificates. Run `python reproduce.py --only mutations` to check rejection of altered edges, root levels and subsets, missing branches, missing or self-referential dependencies, and incorrect clique coefficients.

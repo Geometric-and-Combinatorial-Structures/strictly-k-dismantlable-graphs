@@ -12,11 +12,13 @@ import tempfile
 _bytecode_directory = tempfile.TemporaryDirectory(prefix='strict-dismantling-bytecode-')
 sys.pycache_prefix = _bytecode_directory.name
 import time
+import traceback
 from datetime import datetime, timezone
-from dismantling import article, checks
+from dismantling import article, checks, small_orders, h2, order_eleven, correspondence, catalogues
 from dismantling.output import new_directory, write_json, source_hashes, verify_manifest
 
 CHECKS = [
+    ('correspondence', 'Recorded identities of article extracts and agreement with calculation inputs', correspondence.run),
     ('article', 'The 3k+8 family: reductions, clique counts and figures', article.run),
     ('4k4', 'The 4k+4 family: seven proof roots and nineteen clique rows', checks.check_4k4),
     ('6k6', 'The 6k+6 family: reductions and neighbourhood obstructions', checks.check_6k6),
@@ -24,6 +26,11 @@ CHECKS = [
     ('homology', 'Reduced homology and the empty-complex convention', checks.boundaries),
     ('examples', 'Independent constructions at levels 1 to 6', checks.compare_constructions),
     ('deletions', 'Deleting one vertex from the 3k+8 family at levels 2 to 4', checks.deletion_controls),
+    ('levels', 'Direct strict-level tests for F_k and H_k, levels 1 to 7', checks.strict_levels),
+    ('catalogue-completeness', 'Completeness of the small-graph catalogues by isomorphism and Burnside counts', catalogues.run),
+    ('small-orders', 'The seven eight-vertex graphs and the small-order classification', small_orders.run),
+    ('h2', 'The twelve-vertex witness of strict level two', h2.run),
+    ('order-eleven', 'The remaining 917,504 ordered eleven-vertex extensions', order_eleven.run),
     ('mutations', 'Rejection of deliberately altered certificates', checks.mutation_controls),
 ]
 
@@ -33,6 +40,7 @@ def main(argv=None):
     parser.add_argument('--extended', action='store_true', help='Also check all small templates in the ranges stated in the guide.')
     parser.add_argument('--only', choices=[x[0] for x in CHECKS], help='Reproduce one group of results.')
     parser.add_argument('--output', help='A new directory; the default is a unique directory beneath results/.')
+    parser.add_argument('--article-pdf', help='Optionally compare a local manuscript PDF with its recorded SHA-256 identity.')
     args = parser.parse_args(argv)
     if args.extended and args.only:
         parser.error('--extended applies to the complete run; omit --only')
@@ -42,7 +50,9 @@ def main(argv=None):
         parser.error(str(exc))
     report = {'started_utc': datetime.now(timezone.utc).isoformat(), 'python': sys.version,
               'status': 'INCONCLUSIVE', 'extended': args.extended, 'checks': [],
-              'mathematical_scope': 'Finite verifications. The supplement proves the statements for every level.'}
+              'selection': args.only or 'all',
+              'unselected_groups': [x[0] for x in CHECKS if args.only and x[0] != args.only],
+              'mathematical_scope': 'Finite verifications. The article and supplement give the mathematical arguments, including the coverage of the minimum-order calculation.'}
     before = source_hashes()
     jobs = [('integrity', 'Integrity of the released files', lambda: verify_manifest(before))]
     jobs += [x for x in CHECKS if args.only is None or x[0] == args.only]
@@ -51,6 +61,9 @@ def main(argv=None):
                      lambda: checks.template_controls(args.extended)))
         if args.extended:
             jobs.append(('kernel-identities', 'Kernel identities on all covered profiles with seed order at most 3', checks.kernel_controls))
+    if args.article_pdf:
+        jobs.append(('article-pdf', 'Identity of the supplied manuscript PDF',
+                     lambda: correspondence.run(args.article_pdf)))
     exit_code = 0
     for identifier, title, fn in jobs:
         print(title + ' ...', flush=True)
@@ -62,7 +75,10 @@ def main(argv=None):
             record = {'id': identifier, 'title': title, 'status': 'INCONCLUSIVE', 'reason': 'Interrupted before completion.'}
             exit_code = 130
         except Exception as exc:
-            record = {'id': identifier, 'title': title, 'status': 'FAIL', 'reason': f'{type(exc).__name__}: {exc}'}
+            record = {'id': identifier, 'title': title, 'status': 'FAIL',
+                      'reason': f'{type(exc).__name__}: {exc}',
+                      'traceback': traceback.format_exc(),
+                      'failure_location': traceback.format_list(traceback.extract_tb(exc.__traceback__)[-1:])[0].strip()}
             exit_code = 1
         record['seconds'] = round(time.monotonic() - start, 4)
         report['checks'].append(record)
@@ -80,17 +96,23 @@ def main(argv=None):
     report['finished_utc'] = datetime.now(timezone.utc).isoformat()
     report['source_sha256'] = before
     write_json(output / 'report.json', report)
-    lines = ['Reproduction of the finite calculations', '', 'Overall result: ' + report['status'], '']
+    selection = 'all required groups' if args.only is None else 'selected group: ' + args.only
+    lines = ['Reproduction of the finite calculations', '', 'Scope: ' + selection,
+             'Result for this scope: ' + report['status'], '']
     for r in report['checks']:
         lines.append(f"{r['status']}: {r.get('title', r['id'])}")
         if 'reason' in r:
             lines.append('  ' + r['reason'])
+        if 'failure_location' in r:
+            lines.append('  ' + r['failure_location'])
     if report['not_run']:
         lines.append('Not run: ' + ', '.join(report['not_run']))
-    lines += ['', 'The calculations verify finite data. Results for every level follow from the proofs in the supplement.',
+    if report['unselected_groups']:
+        lines.append('Not selected: ' + ', '.join(report['unselected_groups']))
+    lines += ['', 'The calculations verify finite data. The article and supplement provide the all-level arguments and the case reduction for the minimum at level two.',
               'report.json records the computed values, the exact scope and the source checksums.', '']
     (output / 'report.txt').write_text('\n'.join(lines), encoding='utf-8')
-    print('\n' + report['status'] + '. Results: ' + str(output), flush=True)
+    print('\n' + report['status'] + ' (' + selection + '). Results: ' + str(output), flush=True)
     return exit_code
 
 

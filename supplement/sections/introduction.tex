@@ -3,7 +3,7 @@ A graph is dismantled by deleting vertices until one vertex remains. In an
 ordinary dismantling, each deleted vertex is dominated by a neighbour. The
 recursive hierarchy permits a deletion at level $k$ when the graph induced by
 its current neighbours is dismantlable at level $k-1$. A graph has
-\defi{strict level $k$} if it admits a reduction at level $k$ and none at level
+\emph{strict level $k$} if it admits a reduction at level $k$ and none at level
 $k-1$.
 
 The article \emph{Linear-size graphs at every strict dismantling level}
@@ -13,12 +13,15 @@ with
  |V(F_k)|=3k+8,\qquad |V(H_k)|=4k+4.
 \]
 The title, authors and current article reference are recorded in
-\href{https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/main/ARTICLE.md}{\texttt{ARTICLE.md}}.
+\href{https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.0/ARTICLE.md}{\texttt{ARTICLE.md}}.
 This supplement develops the finite proof for $H_k$, gives a third family
 $J_k$ of order $6k+6$, and explains the kernel completion and homological
-identities behind the layer construction. The two bounds from the article
-give the upper bound $\min\{4k+4,3k+8\}$ on the least order at strict level
-$k$; they do not identify that least order in general.
+identities behind the layer construction. Let $m_k$ be the least order
+of a graph of strict level $k$. The two families give
+$m_k\leq\min\{4k+4,3k+8\}$; they do not determine $m_k$ in general.
+References here to sections, figures and results of the article concern the
+identified 23-page manuscript; \texttt{ARTICLE.md} distinguishes it from
+the version at the public article locator.
 
 Each family starts with a finite seed. A new layer contains a centre whose
 neighbourhood graph is the previous graph, together with auxiliary vertices
@@ -26,7 +29,8 @@ that exclude first deletions at the lower level. To apply this construction,
 we need a reduction of the seed at its stated level, an obstruction to the
 preceding level, a reduction after deleting the first centre, and obstructions
 in the remaining neighbourhoods. We supply the finite data for these tasks
-and prove why they suffice for every subsequent layer.
+and use the homological argument of Section~\ref{sec:homology} to justify the
+criterion for every subsequent layer.
 
 For example, $H_1$ has eight vertices. Its reduction at level one requires
 only two outer deletions, each justified by a single fold in a neighbourhood;
@@ -36,20 +40,25 @@ example in full before treating the larger recursive certificates.
 
 \noindent\textbf{Organisation.}
 Sections~\ref{sec:prelim} and~\ref{sec:construction} fix the hierarchy and
-prove the general construction theorem. Section~\ref{sec:family4} supplies
+recall the common construction and its Euler criterion. Section~\ref{sec:family4} supplies
 the $4k+4$ family, including its two prefixes; Section~\ref{sec:family6}
 checks a second application with five auxiliary types. Section~\ref{sec:kernels}
 relates constructions with two auxiliary types to an edge-deleted kernel and
-identifies the completion producing $F_1$. Section~\ref{sec:homology} proves
+identifies the completion producing $F_1$. Its first subsection supplies the
+homological preliminaries for Sections~\ref{sec:homology} and~\ref{sec:minimum}.
+Section~\ref{sec:homology} proves
 the degree shift in non-central neighbourhoods and the resulting homological
-criterion. Appendix~\ref{sec:article} records the finite calculations and
+criterion. Section~\ref{sec:minimum} explains the finite verification that the minimum at
+strict level two is twelve. Appendix~\ref{sec:article} records the finite calculations and
 figures for the article's $3k+8$ family.
 
 \noindent\textbf{Conventions and notation.}
-The symbols $F_k$ and $H_k$
+The layer indices form $\mathcal L_m$ (written $L_m$ in the article); clique counts are
+written $\kappa_t$, reserving $c_i$ for centres. The symbols $F_k$ and $H_k$
 retain their meanings in the article; $J_k$ denotes the $6k+6$ family.
 Within a section, $A$ denotes its seed, $B$ its first extension and $G_m$ the
-graph with $m$ added layers. The seed vertex $a_i$ has numerical label $i$ in
+graph with $m$ added layers; this layer count is distinct from the minimum
+order $m_k$. The seed vertex $a_i$ has numerical label $i$ in
 the data files. Homology is
 reduced homology over $\mathbb F_2$, with augmented chains in degree $-1$.
 The command following each finite calculation runs from the root of the

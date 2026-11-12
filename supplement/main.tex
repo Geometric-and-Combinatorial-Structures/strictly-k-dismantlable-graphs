@@ -24,7 +24,7 @@
 \newcommand{\defi}[1]{\textit{\color{blue}#1}}
 \usepackage[pagebackref=true]{hyperref}
 \hypersetup{colorlinks=true,linkcolor=darkred,citecolor=darkblue,urlcolor=darkblue,
-pdftitle={Supplement: Linear-size graphs at every strict dismantling level}}
+pdftitle={Constructions and finite verifications for strict dismantling levels}}
 \setlength{\emergencystretch}{2em}
 
 
@@ -78,13 +78,15 @@ exclusive parts of their profiles, and identify the one-edge completion that
 produces the eleven-vertex seed of the $3k+8$ family. Finally, we show that
 adding a layer shifts the reduced homology of every non-central neighbourhood
 by one degree. The accompanying calculations verify the finite hypotheses,
-clique counts and homological identities used in these arguments.
+clique counts and homological identities used in these arguments. We also
+explain and reproduce the finite verification of the least order at strict
+level two, including its reduction to seven eight-vertex seeds.
 \end{abstract}
 \maketitle
 \raggedbottom
 \begin{center}\small
 Repository: \url{https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs}\\
-Release \texttt{v1.0.0}; file checksums in \texttt{SHA256SUMS.txt}.
+Release \texttt{v1.1.0}; \url{https://doi.org/10.5281/zenodo.24157746}.
 \end{center}
 \tableofcontents
 \input{sections/introduction}
@@ -94,6 +96,7 @@ Release \texttt{v1.0.0}; file checksums in \texttt{SHA256SUMS.txt}.
 \input{sections/family6}
 \input{sections/kernels}
 \input{sections/homology}
+\input{sections/minimum_orders}
 \appendix
 \input{sections/article}
 \FloatBarrier

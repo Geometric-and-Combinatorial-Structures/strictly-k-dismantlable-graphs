@@ -1,0 +1,131 @@
+\section{The finite verification of the minimum at level two}\label{sec:minimum}
+The minimum at strict level one is $m_1=8$~\cite{DEFH2023}.
+This section explains the verification that $m_2=12$. The calculations
+exclude the finite set of eleven-vertex extensions left by the
+mathematical reduction below. The twelve-vertex graph $H_2$ from
+Section~\ref{sec:family4} supplies the matching example.
+
+\subsection{Why these extensions suffice}
+First let $k\geq2$ and choose a graph $J$ of strict level $k$ and order $m_k$.
+If $v$ is the first vertex of a level-$k$ reduction, then $J-v\in\D_{k-1}$
+by minimality. The graph $X=L_J(v)$ lies in $\D_{k-1}\setminus\D_{k-2}$:
+otherwise that first deletion would put $J$ in $\D_{k-1}$. Since $J$ is not
+a cone, $v$ has a non-neighbour. Counting $X$, $v$ and that non-neighbour gives
+\[
+ m_k\geq m_{k-1}+2\qquad(k\geq2).
+\]
+If a graph of strict level two had at most eleven vertices, we could choose
+$J$ above with $k=2$ and $|V(J)|\leq11$. Put
+$U=V(J)\setminus N_J[v]$. Since $m_1=8$ and $U$ is non-empty,
+the only possible sizes are
+\[
+ (|V(X)|,|U|)=(8,1),\ (9,1),\ (8,2).
+\]
+We use the following small-order classification~\cite{DEFH2023}:
+every non-empty graph of order at most eight whose clique complex is acyclic
+over $\F$ belongs to $\D_1$; exactly seven isomorphism classes among these
+graphs lie outside $\D_0$, all of order eight.
+
+If $U=\{u\}$, put $Z=N_J(u)\subseteq V(X)$. Fold each vertex of
+$V(X)\setminus Z$ onto $v$. The remainder is the complete join
+$X[Z]\star\overline{K_2}$, where the two new vertices are $u,v$.
+By Lemmas~\ref{hom:lem:acyclic} and~\ref{hom:lem:fold}, its clique complex
+is acyclic. The suspension identity~\eqref{hom:eq:suspension} then gives
+acyclicity of $\Cl(X[Z])$, including degree $-1$; in particular $Z$ is non-empty.
+If $Z=V(X)$, we already have $X[Z]\in\D_1$. Otherwise $|Z|\leq8$, so the
+small-order classification gives the same conclusion. Lemma~\ref{ker:lem:join}
+now puts the remainder in $\D_1$, and prepending the folds puts $J$ in $\D_1$,
+a contradiction. Both cases with $|U|=1$ are therefore excluded without
+enumerating nine-vertex graphs.
+
+Only $(|V(X)|,|U|)=(8,2)$ remains. Since $X\in\D_1\setminus\D_0$, it is
+one of the seven graphs in the classification. This is why the following
+seven seeds, rather than a catalogue of all eleven-vertex graphs, suffice.
+
+\subsection{Seven seeds with explicit reductions}
+Use labels $0,\ldots,7$ and specify each seed by its missing edges in
+Table~\ref{min:tab:seeds}. The notation $ab$ means the unordered pair $\{a,b\}$.
+\begin{table}[htbp]
+\centering\small
+\caption{The seven eight-vertex seeds, specified by their missing edges.}\label{min:tab:seeds}
+\input{../data/article_tables/small_seeds}
+\end{table}
+None has a dominated vertex. In Table~\ref{min:tab:reductions}, the first
+vertex has a four-vertex path as its neighbourhood, so it may be deleted at
+level one. The subsequent folds leave the indicated cone. Each seed
+therefore has strict level one.
+\begin{table}[htbp]
+\centering\small
+\caption{First deletions and folds of the seven seeds. Paths list the
+neighbours in path order; folds take place after the first deletion.}\label{min:tab:reductions}
+\input{../data/article_tables/small_reductions}
+\end{table}
+Their edge counts are $17,18,18,18,18,19,19$. For $X_2,\ldots,X_5$, the
+vertices of degree four induce graphs with degree sequences
+$(1,1,1,1)$, $(0,1,1,2)$, $(1,1,2,2)$ and $(2,2,2,2)$, respectively.
+The two degree-four vertices are non-adjacent in $X_6$ and adjacent in $X_7$.
+These invariants distinguish all seven classes.
+\runcheck{small-orders}
+The calculation verifies these reductions and invariants. It also reads all
+$13\,599$ graphs in the supplied catalogues of orders zero through eight,
+computes augmented reduced homology over $\F$, and tests membership in
+$\D_0$ and $\D_1$. It finds exactly the seven classes above and records an
+explicit isomorphism for each. The empty graph is included and has
+$\widetilde\beta_{-1}=1$; it is not counted as acyclic.
+The catalogue sources and file identities are recorded in
+\path{THIRD_PARTY.md} and \path{data/catalogues/provenance.json}.
+The main command \texttt{python reproduce.py} also checks completeness
+independently: it tests pairwise non-isomorphism and compares the number of
+entries at each order with Burnside's count of the orbits of edge sets under
+all vertex permutations.
+
+\subsection{All choices of the two external neighbourhoods}
+For each $X_i$, add $v,u_1,u_2$. The neighbours of $v$ are precisely
+$V(X_i)$; the vertices $u_1,u_2$ may have arbitrary neighbourhoods
+$Z_1,Z_2\subseteq V(X_i)$, and their mutual edge may be present or absent.
+The program considers all $2\cdot256^2=131\,072$ ordered choices for each
+seed. It also records those with $Z_1\leq Z_2$, ordering subsets by their
+binary encodings. Exchanging $u_1,u_2$ identifies the two orders, leaving
+$2\binom{257}{2}=65\,792$ choices per seed and $460\,544$ in total.
+These are choices of extension data; different choices can produce
+isomorphic graphs.
+
+For each extension, a non-zero $q$ excludes every dismantling class by
+Lemma~\ref{lem:qobstruction}. If $q=0$, the program applies the exact
+recursion~\eqref{eq:first} at levels zero, one and two. Every possible first
+deletion is considered when necessary, and each recursive call has fewer
+vertices. A zero $q$ alone never establishes membership.
+\begin{table}[htbp]
+\centering\small
+\caption{The $65\,792$ extension choices per seed, after exchanging the two
+external vertices. The four columns partition the choices; the last column
+has $q=0$ and lies outside $\D_2$.}\label{min:tab:extensions}
+\input{../data/article_tables/small_extensions}
+\end{table}
+\runcheck{order-eleven}
+The program evaluates all $917\,504$ ordered choices and compares the
+classification of all $460\,544$ choices up to exchange with a separate
+implementation using sets of vertices and clique enumeration. The report gives the
+ordered counts, the counts in Table~\ref{min:tab:extensions}, and the counts
+with $Z_1=Z_2$. For each category it checks
+$N_{\rm ordered}=2N_{\rm unordered}-N_{\rm equal}$.
+No extension has strict level two. Combined with the preceding case
+reduction, this proves that no graph of order at most eleven has strict level two.
+
+The seven-root certificate in Section~\ref{sec:family4} proves that $H_2$
+has strict level two and twelve vertices. The command below is an additional
+check of the article's direct verification, not a further requirement for
+this proof. It uses the automorphism
+$(4\,5)(6\,7)(8\,9)(10\,11)(12\,13)$ of $H_2$ to group its neighbourhoods.
+Four representative neighbourhoods fold to the octahedral graph
+$K_{2,2,2}$, whose non-zero $q$ excludes ordinary dismantling; the other
+representatives have no dominated vertex. The calculation checks these
+obstructions and the positive reduction.
+\runcheck{h2}
+It verifies a level-two reduction and excludes a first level-one deletion
+at every vertex, retaining the original labels $2,\ldots,13$.
+Thus the upper and lower bounds give $m_2=12$.
+The descent inequality proved above therefore gives $m_k\geq2k+8$
+for $k\geq2$. The constructed families give
+the upper bound $\min\{4k+4,3k+8\}$; these inequalities do not determine
+the exact minimum for $k\geq3$.

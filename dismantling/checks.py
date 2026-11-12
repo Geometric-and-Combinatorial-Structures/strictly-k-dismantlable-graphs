@@ -111,7 +111,6 @@ def check_4k4():
         value = membership(graph, level)
         require(value is wanted, 'Independent recursive classification differs')
         direct.append({'graph': name, 'level': level, 'membership': value})
-    require(all(z['strict_verified_by_independent_reference'] is True for z in prefix['levels'].values()), 'Invalid prefix verification flag')
     result['independent_classifications'] = direct
     return result
 
@@ -492,3 +491,16 @@ def kernel_controls():
                         require(betti(lb) == {i + 1: r for i, r in betti(induced(a, opposite)).items()}, 'Auxiliary homology kernel shift fails')
                         count['acyclic_kernel_auxiliary_shifts'] += 1
     return {'seed_orders': [1, 2, 3], 'coverage': 'All labelled graphs and all ordered pairs of profiles covering their vertices.', 'counts': dict(count)}
+
+
+def strict_levels():
+    """Test the defining recursion itself, without applying a layer theorem."""
+    rows = []
+    for family in ('3k8', '4k4'):
+        for k in range(1, 8):
+            graph, _ = family_graph(family, k)
+            upper, lower = membership(graph, k), membership(graph, k-1)
+            require(upper and not lower, f'Strict level differs for {family}, k={k}')
+            rows.append({'family': family, 'k': k, 'vertices': len(graph),
+                         'in_D_k': upper, 'in_D_previous': lower})
+    return {'graphs': rows, 'scope': 'F_k and H_k for 1 <= k <= 7 only; exact recursive membership, no all-level inference.'}

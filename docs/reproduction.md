@@ -4,11 +4,11 @@ The calculations answer concrete mathematical questions: does each displayed fol
 
 ## Obtain the material
 
-Download [strictly-k-dismantlable-graphs-v1.0.0.zip](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/download/v1.0.0/strictly-k-dismantlable-graphs-v1.0.0.zip) from release `v1.0.0` and extract it. This is the same archive used by the notebook. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
+Download [strictly-k-dismantlable-graphs-v1.1.0.zip](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/download/v1.1.0/strictly-k-dismantlable-graphs-v1.1.0.zip) from release `v1.1.0` and extract it. This is the same archive used by the notebook. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
 
 The calculations require **Python 3.11 or later**, with no additional mathematical packages. Check your installation with `python --version`. On systems where Python is called `python3`, use `python3` in the commands below. On Windows, `py -3` is another usual way to invoke the installed Python interpreter.
 
-For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.0.0/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.0.0`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab.
+For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.0/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.1.0`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab.
 
 ## Run the required checks
 
@@ -22,9 +22,10 @@ The first check compares the files with their distributed SHA-256 sums. The rema
 2. **The $4k+4$ family.** Verify the seven roots asserting the levels of the two prefixes, the sixteen-vertex seed and its remainder, together with all nineteen neighbourhood clique rows.
 3. **The $6k+6$ family.** Verify both positive reductions, all fourteen inner folds, every displayed neighbourhood inclusion, the twelve first-fold obstructions and all seventeen clique rows.
 4. **Kernel completion and homology.** Recover the eleven-vertex kernel, compute its reduced homology and that of its neighbourhoods, and check the degree shifts and boundary conventions over $\mathbb F_2$.
-5. **Further controls.** Compare two independent implementations of the six adjacency rules for the layered graphs at levels $1,\ldots,6$, and compare the two smaller prefixes of $H_k$ with their separate graph encodings. Check single-vertex deletions from $F_k$ for $k=2,3,4$, reject altered certificates, and test all ten templates with a one-vertex seed and one or two auxiliary types, at zero to three layers.
+5. **The minimum at level two.** Check the seven eight-vertex graphs and the classification through order eight; verify the explicit twelve-vertex example; then evaluate all 917,504 ordered eleven-vertex extensions. The program compares the 460,544 choices up to exchanging the two external vertices with a second decision procedure and with all 28 expected counts; the correspondence check compares those values with the displayed table. The [minimum-order guide](minimum-orders.md) explains why these extensions suffice.
+6. **Further controls.** Compare two independent implementations of the six adjacency rules for the layered graphs at levels $1,\ldots,6$, and compare the two smaller prefixes of $H_k$ with their separate graph encodings. Test membership at levels $k$ and $k-1$ directly for both $F_k$ and $H_k$, for $1\leq k\leq7$. Check single-vertex deletions from $F_k$ for $k=2,3,4$, reject altered certificates, and test all ten templates with a one-vertex seed and one or two auxiliary types, at zero to three layers.
 
-A successful run ends with `PASS` and the location of its output directory. The directory contains:
+A local run with Python 3.13 took about five minutes, including the extended checks. Runtime depends on the machine; allow longer on slower systems. It has no search deadline. A successful run ends with `PASS (all required groups)` and the location of its output directory. The directory contains:
 
 | File | Contents |
 | --- | --- |
@@ -43,7 +44,7 @@ The [correspondence table](results.md) gives a command for each group. For examp
 python reproduce.py --only 4k4
 ```
 
-This verifies the seven roots and nineteen clique rows for $H_k$, and the direct proof for its eight-vertex prefix. A positive root supplies an admissible first deletion and certificates for its neighbourhood and remainder. A negative root supplies, for every possible first vertex, a certificate that at least one of those required conditions fails. The [certificate description](certificates.md) gives the exact rules and explains why the resulting finite proof is valid.
+This verifies the seven roots and nineteen clique rows for $H_k$, and the direct proof for its eight-vertex prefix. The report explicitly identifies a selected group; its `PASS` does not cover the unselected groups. A positive root supplies an admissible first deletion and certificates for its neighbourhood and remainder. A negative root supplies, for every possible first vertex, a certificate that at least one of those required conditions fails. The [certificate description](certificates.md) gives the exact rules and explains why the resulting finite proof is valid.
 
 ## Check the additional finite ranges
 
@@ -54,6 +55,8 @@ python reproduce.py --extended
 ```
 
 In addition to the main checks, this enumerates **every labelled seed on one, two or three vertices**, every choice of profiles for one or two auxiliary types, and every type graph. It checks the construction, centre neighbourhoods, folds and Euler identities at zero, one, two and three layers. It computes the homological shifts for all templates whose seed has at most two vertices. It also checks the kernel identities for every graph on at most three vertices and every ordered pair of profiles covering that graph.
+
+Both the required and extended runs check that no two entries of the small-graph catalogues are isomorphic and derive the number of classes at each order from Burnside's lemma. Agreement of these counts proves that the catalogues omit no class; see [catalogue provenance and completeness](catalogues.md).
 
 The report states these ranges and the number of identities checked. The first layer supplies the base case of each shift identity; the later layers test its propagation. These are finite tests of the formulas, not an inference from a sample to all graphs or all levels. The corresponding universal statements are proved in the supplement. Runtime depends on the machine; there is no search deadline whose expiry is interpreted as non-membership.
 
@@ -66,3 +69,7 @@ latexmk -pdf -outdir=../results/latex main.tex
 ```
 
 This places the generated document and auxiliary files under `results/latex`, leaving the distributed PDF and sources unchanged. The PDF contains linked section and result numbers, numerical citations, and blue italic text when a new concept is defined.
+
+## Compare a manuscript copy
+
+The [source correspondence](article-correspondence.md) records the actual table and figure sources. To also compare a local manuscript PDF with the recorded identity, use `python reproduce.py --only correspondence --article-pdf /path/to/manuscript.pdf`. This identifies the exact document; the mathematical checks use its distributed source extracts.

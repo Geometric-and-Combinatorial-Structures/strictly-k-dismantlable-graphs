@@ -28,8 +28,11 @@ def main():
     archive = out / 'release.zip'
     with zipfile.ZipFile(archive, 'w', compression=zipfile.ZIP_DEFLATED) as zipped:
         for name in hashes:
-            zipped.write(ROOT / name, 'strictly-k-dismantlable-graphs-v1.0.0/' + name)
+            zipped.write(ROOT / name, 'strictly-k-dismantlable-graphs-v1.1.0/' + name)
     nb = json.loads((ROOT / 'notebooks/reproduce.ipynb').read_text(encoding='utf-8'))
+    ids = [cell.get('id') for cell in nb['cells']]
+    if not all(isinstance(identifier,str) and identifier for identifier in ids) or len(set(ids)) != len(ids):
+        raise ValueError('Every notebook cell must have a unique, non-empty id')
     codes = [''.join(cell['source']) for cell in nb['cells'] if cell['cell_type'] == 'code']
     runner = out / 'execute_cells.py'
     runner.write_text(
