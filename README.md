@@ -24,7 +24,7 @@ The command writes its adjacency list, edge list and vertex labels to a new dire
 python reproduce.py
 ```
 
-Python 3.11 or later is sufficient; the calculations use its standard library. The [reproduction guide](docs/reproduction.md) explains how to obtain the files, run these commands and read the results. You can also [open the guided notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.0/notebooks/reproduce.ipynb) and run the same calculations in a browser.
+Python 3.11 or later is sufficient; the calculations use its standard library. The [reproduction guide](docs/reproduction.md) explains how to obtain the files, run these commands and read the results. You can also [open the guided notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.1/notebooks/reproduce.ipynb) and run the same calculations in a browser.
 
 ## Choose a route
 
@@ -56,6 +56,6 @@ Each run creates a new directory containing a readable `report.txt` and a detail
 
 ## Citation and licences
 
-Use [ARTICLE.md](ARTICLE.md) for the authors and article reference, and cite [release `v1.1.0` (DOI 10.5281/zenodo.24157746)](https://doi.org/10.5281/zenodo.24157746) when referring to its data or calculations. [CITATION.cff](CITATION.cff) supplies the repository citation. The code is distributed under the [MIT licence](LICENSE-MIT.txt); the authors' documentation, data, figures and supplement are distributed under [CC BY 4.0](LICENSE-DATA-DOCS.md). The external graph catalogues retain the source attribution described in [THIRD_PARTY.md](THIRD_PARTY.md) and are excluded from that licence grant.
+Use [ARTICLE.md](ARTICLE.md) for the authors and article reference, and cite [release `v1.1.1` (DOI 10.5281/zenodo.24164550)](https://doi.org/10.5281/zenodo.24164550) when referring to its data or calculations. [CITATION.cff](CITATION.cff) supplies the repository citation. [CHANGELOG.md](CHANGELOG.md) records the changes in each release. The code is distributed under the [MIT licence](LICENSE-MIT.txt); the authors' documentation, data, figures and supplement are distributed under [CC BY 4.0](LICENSE-DATA-DOCS.md). The external graph catalogues retain the source attribution described in [THIRD_PARTY.md](THIRD_PARTY.md) and are excluded from that licence grant.
 
 [SHA256SUMS.txt](SHA256SUMS.txt) records the checksum of every distributed file. The reproduction command checks these sums before beginning the mathematical calculations.

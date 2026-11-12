@@ -4,11 +4,11 @@ The calculations answer concrete mathematical questions: does each displayed fol
 
 ## Obtain the material
 
-Download [strictly-k-dismantlable-graphs-v1.1.0.zip](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/download/v1.1.0/strictly-k-dismantlable-graphs-v1.1.0.zip) from release `v1.1.0` and extract it. This is the same archive used by the notebook. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
+Download [strictly-k-dismantlable-graphs-v1.1.1.zip](https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/download/v1.1.1/strictly-k-dismantlable-graphs-v1.1.1.zip) from release `v1.1.1` and extract it. This is the same archive used by the notebook. The extracted directory contains `reproduce.py`, `generate.py` and the mathematical supplement. Open a terminal in that directory.
 
 The calculations require **Python 3.11 or later**, with no additional mathematical packages. Check your installation with `python --version`. On systems where Python is called `python3`, use `python3` in the commands below. On Windows, `py -3` is another usual way to invoke the installed Python interpreter.
 
-For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.0/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.1.0`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab.
+For a browser-based calculation, [open the notebook in Google Colab](https://colab.research.google.com/github/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/blob/v1.1.1/notebooks/reproduce.ipynb). Choose **Runtime → Run all**. The notebook obtains release `v1.1.1`, explains the mathematical purpose of each calculation and uses the same scripts as the local route. A Google account is needed to execute cells in Colab.
 
 ## Run the required checks
 

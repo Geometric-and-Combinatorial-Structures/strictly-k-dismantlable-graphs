@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "Please cite the accompanying article and the release used for the supplementary data and calculations."
 type: software
 title: "Constructions and finite verifications for strict dismantling levels"
-version: 1.1.0
-doi: "10.5281/zenodo.24157746"
+version: 1.1.1
+doi: "10.5281/zenodo.24164550"
 date-released: 2026-11-12
 authors:
   - family-names: Espinoza
@@ -19,7 +19,7 @@ authors:
     given-names: Héctor A.
     orcid: "https://orcid.org/0000-0002-4046-4841"
 repository-code: "https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs"
-url: "https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/tag/v1.1.0"
+url: "https://github.com/Geometric-and-Combinatorial-Structures/strictly-k-dismantlable-graphs/releases/tag/v1.1.1"
 license:
   - MIT
   - CC-BY-4.0
