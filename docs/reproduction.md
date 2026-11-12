@@ -54,7 +54,7 @@ A **layer template** consists of a seed, a number of auxiliary types, their prof
 python reproduce.py --extended
 ```
 
-In addition to the main checks, this enumerates **every labelled seed on one, two or three vertices**, every choice of profiles for one or two auxiliary types, and every type graph. It checks the construction, centre neighbourhoods, folds and Euler identities at zero, one, two and three layers. It computes the homological shifts for all templates whose seed has at most two vertices. It also checks the kernel identities for every graph on at most three vertices and every ordered pair of profiles covering that graph.
+In addition to the main checks, this enumerates **every labelled seed on one, two or three vertices**, every choice of profiles for one or two auxiliary types, and every type graph. It checks the construction, centre neighbourhoods, folds and Euler identities at zero, one, two and three layers. It computes the homological shifts for all templates whose seed has at most two vertices. It also checks the kernel identities for every labelled graph on one, two or three vertices and every ordered pair of profiles covering that graph.
 
 Both the required and extended runs check that no two entries of the small-graph catalogues are isomorphic and derive the number of classes at each order from Burnside's lemma. Agreement of these counts proves that the catalogues omit no class; see [catalogue provenance and completeness](catalogues.md).
 
